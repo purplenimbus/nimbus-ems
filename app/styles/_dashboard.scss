@@ -1,0 +1,21 @@
+section {
+  #toolbar{
+    
+  }
+  main{
+    .widget{
+      .title{
+        margin:0px;
+      }
+      .toolbar{
+        li{
+          a{
+              line-height: 1.7;
+              vertical-align: middle;
+          }
+        }
+      }
+    }
+  }
+}
+

@@ -1,0 +1,25 @@
+<nav class="uk-navbar-container uk-light" uk-navbar ng-controller="NavCtrl">
+  <a class="uk-navbar-item uk-logo" href="#">Logo</a>
+  <div class="uk-navbar-right">
+	<div ng-if="!loggedin" class="uk-navbar-item">
+	  <button class="uk-button uk-button-primary" ng-click="showLogin()">login</button>
+	</div>
+	<div ng-if="loggedin" class="uk-navbar-item">
+	  <article class="uk-comment user">
+		<header class="uk-comment-header uk-grid-medium uk-flex-middle" uk-grid>
+		  <div class="uk-width-auto">
+			<img class="uk-comment-avatar" src="{{ user.picture }}" width="40" height="40" alt="">
+			<div uk-dropdown mode: click>
+			  <ul class="uk-nav uk-dropdown-nav">
+				<li class="uk-nav-header">Logged in as {{ user.fname }}</li>
+				<li><a href="#">Account Details</a></li>
+				<li class="uk-nav-divider"></li>
+				<li><a href="#">Sign Out <span class="uk-margin-small-left" uk-icon="icon: sign-out"></span></a></li>
+			  </ul>
+			</div>
+		  </div>
+		</header>
+	  </article>
+	</div>
+  </div>
+</nav>

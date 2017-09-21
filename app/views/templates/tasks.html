@@ -1,0 +1,29 @@
+<div class="uk-card uk-card-default widget">
+  <div class="uk-card-header uk-clear-fix">
+	<h3 class="uk-card-title uk-align-left title">{{ widgetTitle }}</h3>
+	<div class="uk-align-right">
+	  <ul class="uk-iconnav toolbar">
+		<li><a ng-click="showAddTask()" uk-icon="icon: plus"></a></li>
+		</ul>
+	  </div>
+  </div>
+  <div class="uk-card-body">
+	<div class="uk-margin">
+		  <form class="uk-search uk-search-default uk-width-1-1">
+			  <span uk-search-icon></span>
+			  <input class="uk-search-input uk-width-1-1" type="search" placeholder="Search...">
+		  </form>
+	  </div>
+	<ul class="uk-list uk-list-divider">
+		<li ng-repeat="task in tasks" class="uk-clearfix">
+		  <a class="uk-align-left uk-margin-remove">{{ task.name }}</a>
+		  <div class="uk-align-right">
+			<ul class="uk-iconnav">
+			  <li ng-if="!task.completed"><a ng-click="removeTask($index)" uk-icon="icon: minus-circle" class="uk-text-danger"></a></li>
+			  <li><a ng-click="completeTask($index)" uk-icon="icon: check" ng-disabled="task.completed" ng-class="task.completed ? 'uk-text-success' : ''"></a></li>
+			</ul>
+		  </div>
+	  </li>
+	</ul>
+  </div>
+</div>
