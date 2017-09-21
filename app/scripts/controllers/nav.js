@@ -40,7 +40,7 @@ angular.module('nimbusEmsApp')
 		
 		settingsBody += '<ul class="uk-list uk-list-divider">';
 		settingsBody += '	<li ng-repeat="(key , setting) in settings" class="uk-clearfix">';
-		settingsBody += '	<div class="uk-align-left">';
+		settingsBody += '	<div class="uk-align-left uk-margin-remove">';
 		settingsBody += '		{{ key | uppercase }}';
 		settingsBody += '	</div>';
 		settingsBody += '	<div class="uk-align-right">';

@@ -57,7 +57,7 @@ angular.module('nimbusEmsApp')
 				str += '<textarea ';
 				str += attrs.cls ? 'class="uk-textarea" '+attrs.cls+'"' : 'class="uk-textarea""';
 				str += attrs.placeholder ? 'placeholder="'+attrs.placeholder+'"' : '';
-				str += attrs.directive ? attrs.directive : '';
+				str += attrs.model ? 'ng-model="'+attrs.model+'"' : '';
 				str += '">';
 				str += '</textarea>';
 				
@@ -68,11 +68,11 @@ angular.module('nimbusEmsApp')
 				
 				str += attrs.placeholder ? '<label class="uk-form-label uk-text-capitalize" for="form-stacked-text">'+attrs.placeholder+'</label>' : '';
 				str += '<select ';
-				str += attrs.cls ? 'class="uk-textarea" '+attrs.cls+'"' : 'class="uk-textarea""';
+				str += attrs.cls ? 'class="uk-select '+attrs.cls+'"' : 'class="uk-select"';
 				str += attrs.placeholder ? 'placeholder="'+attrs.placeholder+'"' : '';
 				str += attrs.directive ? attrs.directive : '';
 				str += '">';
-				str += attrs.options ? '<option ng-repeat="option in '+attrs.options+'"></option>' : '';
+				str += attrs.options ? '<option value="">Task Status</option><option ng-repeat="option in '+attrs.options+'" ng-value="option">{{ option.name | uppercase }}</option>' : '';
 				str += '</select>';
 				
 				return str;

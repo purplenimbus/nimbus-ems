@@ -44,9 +44,7 @@ angular.module('nimbusEmsApp')
 	  };
 	  
 	  $scope.dashboardSettings = settings.getSettings('dashboard');
-	  
-	  console.log('Dashboard settings',$scope.dashboardSettings);
-	  
+	  	  
 	  $scope.requests = {
 		  title : 'Requests',
 		  data : [{
@@ -93,10 +91,7 @@ angular.module('nimbusEmsApp')
 		  },
 			approved : false
 		  }]
-	 };
-  
-	  $scope.activities = {
-		  title : 'Activities',
-		  data : []
-	 };
+		};
+		
+		
   });

@@ -11,12 +11,12 @@
 	<div class="uk-margin">
 		  <form class="uk-search uk-search-default uk-width-1-1">
 			  <span uk-search-icon></span>
-			  <input class="uk-search-input uk-width-1-1" type="search" placeholder="Search...">
+			  <input type="text" datasets="tasksDataset" options="{displayKey: 'num'}" ng-model="search" editable="editable" sf-typeahead class="uk-search-input uk-width-1-1" placeholder="Search..."/>
 		  </form>
 	  </div>
 	<ul class="uk-list uk-list-divider">
 		<li ng-repeat="task in tasks" class="uk-clearfix">
-		  <a class="uk-align-left uk-margin-remove">{{ task.name }}</a>
+		  <a class="uk-align-left uk-margin-remove" ng-click="showAddTask(task)">{{ task.name }}</a>
 		  <div class="uk-align-right">
 			<ul class="uk-iconnav">
 			  <li ng-if="!task.completed"><a ng-click="removeTask($index)" uk-icon="icon: minus-circle" class="uk-text-danger"></a></li>

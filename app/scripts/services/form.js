@@ -33,7 +33,7 @@ angular.module('nimbusEmsApp')
 		
 		str += '<form class="uk-form-stacked">';
 		str += '	<div class="uk-margin">';
-		str += 			uikit3.inputIcon({model:'title',icon:'user',type:'text',placeholder:'Title'});
+		str += 			uikit3.inputIcon({model:'Title',icon:'user',type:'text',placeholder:'Title'});
 		str += '	</div>';
 		str += '	<div class="uk-margin">';
 		str += 			uikit3.select({directive:'ng-model="type"' , options : ''});
@@ -51,21 +51,26 @@ angular.module('nimbusEmsApp')
 		return str;
 	};
 	
-	this.addTask = function(){
+	this.addTask = function(edit){
+		
 		var str = '';
+		
+		if(edit){
+			
+		}
 		
 		str += '<form class="uk-form-stacked">';
 		str += '	<div class="uk-margin">';
-		str += 			uikit3.inputIcon({model:'newAsset.name',icon:'user',type:'text',placeholder:'title',required:true});
+		str += 			uikit3.inputIcon({model:'newAsset.name',icon:'user',type:'text',placeholder:'Name',required:true});
 		str += '	</div>';
 		str += '	<div class="uk-margin">';
-		str += 			uikit3.textarea({directive:'ng-model="description"',placeholder:'description',model:'newAsset.description'});
+		str += 			uikit3.textarea({directive:'ng-model="description"',placeholder:'Description',model:'newAsset.description'});
 		str += '	</div>';
 		str += '	<div class="uk-margin">';
-		str += 			uikit3.input({model:'newAsset.deadline',type:'date',icon:'calendar',placeholder:'deadline'});
+		str += 			uikit3.input({model:'newAsset.deadline',type:'date',icon:'calendar',placeholder:'Deadline'});
 		str += '	</div>';
 		str += '	<div class="uk-margin">';
-		str += 			uikit3.button({cls:'uk-width-1-1 uk-margin-small-bottom uk-button-primary',icon:'sign-in',label:'Add',directive:'ng-click="addTask(newAsset)"'});
+		str += 			uikit3.select({options : 'statusTypes',directive:'ng-model="newAsset.status"'});
 		str += '	</div>';
 		str += '</form>';
 		return str;

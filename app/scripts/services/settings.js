@@ -23,6 +23,9 @@ angular.module('nimbusEmsApp')
 			},
 			employees : {
 				display:false
+			},
+			requests : {
+				display:false
 			}
 		}
 	};
