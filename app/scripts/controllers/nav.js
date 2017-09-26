@@ -41,10 +41,10 @@ angular.module('nimbusEmsApp')
 		settingsBody += '<ul class="uk-list uk-list-divider">';
 		settingsBody += '	<li ng-repeat="(key , setting) in settings" class="uk-clearfix">';
 		settingsBody += '	<div class="uk-align-left uk-margin-remove">';
-		settingsBody += '		{{ key | uppercase }}';
+		settingsBody += '		<p class="uk-margin-remove">{{ key | uppercase }}</p>';
 		settingsBody += '	</div>';
 		settingsBody += '	<div class="uk-align-right">';
-		settingsBody += '		<input class="uk-checkbox" type="checkbox" ng-model="setting.display">';
+		settingsBody += '		<input class="uk-checkbox" type="checkbox" ng-model="setting.display" ng-disabled="setting.disabled">';
 		settingsBody += '	</div>';
 		settingsBody += '	</li>';
 		settingsBody += '</ul>';

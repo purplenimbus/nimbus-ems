@@ -7,26 +7,53 @@
  * # tasks
  */
 angular.module('nimbusEmsApp')
-  .directive('tasks', function (modal,form,tasks,tasksConst,uikit3) {
+  .directive('tasks', function (modal,form,tasks,tasksConst,uikit3,$window) {
 	
     return {
 		templateUrl: 'views/templates/tasks.html',
 		restrict: 'EA',
 		scope: true,
-		controller: function($scope,$window){
+		controller: function($scope){
 			$scope.widgetTitle = 'Tasks';
 			$scope.tasks =  [];
-			$scope.newAsset = {};
-			$scope.search = false;
+			var moment = $window.moment;
+			var currentDateTime = moment();
+
+			$scope.search = '';
 			var taskList = false;
 			$scope.init = function(){
+				
+				tasks.getCompanyTasks({method:'GET',companyId:3}).then(function(result){
+					console.log('result',result);
+					$scope.tasks = result.data;
+				});
+				
+				$scope.tasks = [
+					{ name: 'one' },
+					{ name: 'two' },
+					{ name: 'three' },
+					{ name: 'four' }
+				 ];
+				
+				$scope.newAsset = {
+					deadline:{
+						date :	new Date(currentDateTime.format()),
+					}
+				};
+				
+				$scope.newAsset.time = $scope.newAsset.deadline.date;
+				
+				console.log('Scope newAsset',currentDateTime.get('time'));
+			
 				taskList = new $window.Bloodhound({
 					datumTokenizer: function(d) { console.log('bloodhound d',d); return $window.Bloodhound.tokenizers.whitespace(d.name); },
 					queryTokenizer: $window.Bloodhound.tokenizers.whitespace,
 					local:  $scope.tasks
 				});	
 				
-				console.log('init',taskList.ttAdapter);
+				taskList.initialize();
+				
+				console.log('init',taskList.ttAdapter());
 				
 				$scope.tasksDataset = {
 					displayKey: 'name',
@@ -39,18 +66,21 @@ angular.module('nimbusEmsApp')
 					  ].join('\n'),
 					}
 				};	
+				
+			};
 			
-				taskList.initialize();
-								
-				tasks.getCompanyTasks({method:'GET',companyId:3}).then(function(result){
-					console.log('result',result);
-					$scope.tasks = result.data;
-				});
+			$scope.tasksOptions = {
+				displayKey: 'num',
+				minLength: 1,
+				highlight: true
 			};
 			
 			$scope.showAddTask = function(task){
 				
-				$scope.newAsset = task;
+				if(task){
+					$scope.newAsset = task;
+				}
+				
 				
 				var obj,
 					title,
@@ -83,8 +113,10 @@ angular.module('nimbusEmsApp')
 				
 			};
 			
+			
 			$scope.addTask = function(task){
-				console.log('addTask',task);
+				console.log('addTask',moment(task.deadline.date,'YYYY-MM-DD'),moment(task.deadline.time,'hh:mm:ss'));
+				//parsed deadline
 				//show spinner
 				
 				//send to database
@@ -146,10 +178,14 @@ angular.module('nimbusEmsApp')
 			};
 			
 			$scope.statusTypes = tasksConst().statusTypes;
-			
-			console.log('Tasks Constant' , tasksConst());
-			
+						
 			console.log('Tasks $scope' , $scope);
+			
+			$scope.selectAll = function(tasks,event){
+				tasks.map(function(value){
+					value.selected = angular.element(event.target).get(0).checked;
+				});
+			};
 			
 			$scope.init();
 		},

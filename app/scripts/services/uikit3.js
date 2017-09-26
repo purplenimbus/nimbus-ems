@@ -122,6 +122,37 @@ angular.module('nimbusEmsApp')
 				str += '</div>';
 				
 				return str;
+			},
+			
+			table : function(){
+				var str = '';
+				
+				str += '<table class="uk-table uk-table-middle uk-table-divider uk-margin-remove">';
+				str += '  <thead>';
+				str += '	  <tr class="uk-text-small">';
+				str += '		  <th class="uk-table-shrink"><input class="uk-checkbox" type="checkbox" ng-click="selectRows(all)"></th>';
+				str += '		  <th class="uk-table-expand">Description</th>';
+				str += '		  <th class="uk-table-shrink">Quantity</th>';
+				str += '		  <th class="">Cost</th>';
+				str += '		  <th class="">#<a uk-icon="icon: plus" ng-click="addRow()"></a></th>';
+				str += '	  </tr>';
+				str += '  </thead>';
+				str += '  <tbody>';
+				str += '	  <tr ng-repeat="item in newAsset.items" class="uk-text-small">';
+				str += '		  <td><input class="uk-checkbox" type="checkbox" ng-model="item.selected"></td>';
+				str += '		  <td><input class="uk-input uk-form-blank" type="text" ng-model="item.description"></td>';
+				str += '		  <td><input class="uk-input uk-form-blank" type="number" ng-model="item.quantity"></td>';
+				str += '		  <td><input class="uk-input uk-form-blank" type="number" ng-model="item.cost" step="0.5"></td>';
+				str += '		  <td>';
+				str += '			 <ul class="uk-iconnav">';
+				str += '			   <li><a href="" uk-icon="icon: minus" class="uk-text-danger" ng-click="removeRow($index)"></a></li>';
+				str += '			</ul>';
+				str += '		  </td>';
+				str += '	  </tr>';
+				str += '  </tbody>';
+				str += '</table>';
+				
+				return str;
 			}
 		};
 	});

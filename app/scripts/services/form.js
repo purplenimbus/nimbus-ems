@@ -66,13 +66,26 @@ angular.module('nimbusEmsApp')
 		str += '	<div class="uk-margin">';
 		str += 			uikit3.textarea({directive:'ng-model="description"',placeholder:'Description',model:'newAsset.description'});
 		str += '	</div>';
-		str += '	<div class="uk-margin">';
-		str += 			uikit3.input({model:'newAsset.deadline',type:'date',icon:'calendar',placeholder:'Deadline'});
+		str += '	<div class="uk-margin uk-grid-small uk-child-width-1-2" uk-grid>';
+		str += '		<div class="">';
+		str += 				uikit3.input({model:'newAsset.deadline.date',type:'date',icon:'calendar',placeholder:'Deadline Date'});
+		str += '		</div>';
+		str += '		<div class="">';
+		str += 				uikit3.input({model:'newAsset.deadline.time',type:'time',icon:'clock',placeholder:'Deadline Time'});
+		str += '		</div>';
 		str += '	</div>';
 		str += '	<div class="uk-margin">';
 		str += 			uikit3.select({options : 'statusTypes',directive:'ng-model="newAsset.status"'});
 		str += '	</div>';
 		str += '</form>';
+		return str;
+	};
+  
+	this.addRequest = function(){
+		var str = '';
+		
+		str += uikit3.table();
+		
 		return str;
 	};
   });
