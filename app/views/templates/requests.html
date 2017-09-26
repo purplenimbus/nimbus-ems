@@ -30,7 +30,7 @@
 	  <tbody>
 		  <tr ng-repeat="req in requests" class="uk-text-small">
 			  <td><input class="uk-checkbox" type="checkbox" ng-model="req.selected" ng-click="req.selected ? selected.push($index) : selected.splice($index,1);">{{ selected }}</td>
-			  <td><a ng-click="showAddRequest(req)">{{ req.name }}</a></td>
+			  <td><a ng-click="showAddRequest(req)"></a></td>
 			  <td class="uk-clear-fix uk-text-right">
 				 <ul class="uk-iconnav">
 					<li ng-if="req.approved" ><a href="" uk-icon="icon: check" class="uk-text-success" ng-click="completeRequest($index)"></a></li>
