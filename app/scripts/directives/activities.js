@@ -13,7 +13,7 @@ angular.module('nimbusEmsApp')
       restrict: 'E',
 	  scope: true,
 	  controller : function($scope){
-		$scope.widgetTitle = 'Requests';
+		$scope.widgetTitle = 'Activities';
 	  },
       link: function postLink(scope, element) {
         element.on('$destroy', function () {

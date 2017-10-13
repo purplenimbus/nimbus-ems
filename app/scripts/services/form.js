@@ -81,10 +81,10 @@ angular.module('nimbusEmsApp')
 		return str;
 	};
   
-	this.addRequest = function(){
+	this.addRequest = function(data){
 		var str = '';
 		
-		str += uikit3.table();
+		str += uikit3.table(data,'request');
 		
 		return str;
 	};

@@ -8,7 +8,7 @@
  * Controller of the nimbusEmsApp
  */
 angular.module('nimbusEmsApp')
-  .controller('AccountCtrl', function ($scope,$window) {
+	.controller('AccountCtrl', function ($scope,$window) {
     $scope.$on('$routeChangeStart', function() { 
 	   //close any open menus or modals
 		$window.UIkit.offcanvas('#side-menu').hide();

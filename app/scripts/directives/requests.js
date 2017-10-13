@@ -73,7 +73,7 @@ angular.module('nimbusEmsApp')
 			
 			obj = {
 				title:title,
-				body:form.addRequest(true),
+				body: form.addRequest($scope.newAsset.items),
 				footer:footer,
 				wrapperCls : 'uk-modal-container'
 			};
@@ -87,10 +87,12 @@ angular.module('nimbusEmsApp')
 		
 		$scope.addRow = function(){
 			$scope.newAsset.items.push({ description:'',quantity:1 });
+			$scope.calculateRequestTotal();
 		};
 		
 		$scope.removeRow = function(index){
 			$scope.newAsset.items.splice(index, 1);
+			$scope.calculateRequestTotal();
 		};
 
 		$scope.addRequest = function(request){
@@ -177,6 +179,17 @@ angular.module('nimbusEmsApp')
 			
 		};
 		
+		$scope.calculateRequestTotal = function(){
+		  var total = 0;
+		  
+		  $scope.newAsset.items.map(function(value){
+			total += (value.cost * value.quantity);
+		  });
+		  
+		  $scope.requestTotal = total;
+		  
+		};
+	
 		$scope.init();
 		
 	  },

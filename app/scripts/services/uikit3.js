@@ -126,34 +126,43 @@ angular.module('nimbusEmsApp')
 				return str;
 			},
 			
-			table : function(){
-				var str = '';
+			table : function(data,type){
+								
+				var str = '',table = '';
+				
+				switch(type){
+					case 'request' : 
+					
+					table += '  <thead>';
+					table += '	  <tr class="uk-text-small">';
+					table += '		  <th class="uk-table-shrink"><input class="uk-checkbox" type="checkbox" ng-click="selectRows(all)"></th>';
+					table += '		  <th class="uk-table-expand">Description</th>';
+					table += '		  <th class="uk-table-shrink">Quantity</th>';
+					table += '		  <th class="uk-width-small">Cost</th>';
+					table += '		  <th class="uk-width-small">Total</th>';
+					table += '		  <th class="uk-width-small"><a href="" uk-icon="icon: plus-circle" ng-click="addRow()"></a></th>';
+					table += '	  </tr>';
+					table += '  </thead>';
+					table += '  <tbody>';
+					table += '	  <tr ng-repeat="item in newAsset.items" class="uk-text-small">';
+					table += '		  <td><input class="uk-checkbox" type="checkbox" ng-model="item.selected"></td>';
+					table += '		  <td><input class="uk-input uk-form-blank" type="text" ng-model="item.description"></td>';
+					table += '		  <td><input class="uk-input uk-form-blank" type="number" ng-model="item.quantity"></td>';
+					table += '		  <td><input class="uk-input uk-form-blank" type="number" ng-model="item.cost" step="0.5"></td>';
+					table += '		  <td><input class="uk-input uk-form-blank" type="number" ng-value="item.cost * item.quantity"></td>';
+					table += '		  <td>';
+					table += '			 <ul class="uk-iconnav">';
+					table += '			   <li><a href="" uk-icon="icon: minus-circle" class="uk-text-danger" ng-click="removeRow($index)"></a></li>';
+					table += '			</ul>';
+					table += '		  </td>';
+					table += '	  </tr>';
+					table += '  </tbody>';
+					
+					break;
+				}
 				
 				str += '<table class="uk-table uk-table-middle uk-table-divider uk-margin-remove">';
-				str += '  <thead>';
-				str += '	  <tr class="uk-text-small">';
-				str += '		  <th class="uk-table-shrink"><input class="uk-checkbox" type="checkbox" ng-click="selectRows(all)"></th>';
-				str += '		  <th class="uk-table-expand">Description</th>';
-				str += '		  <th class="uk-table-shrink">Quantity</th>';
-				str += '		  <th class="uk-width-small">Cost</th>';
-				str += '		  <th class="uk-width-small">Total</th>';
-				str += '		  <th class="uk-width-small"><a href="" uk-icon="icon: plus-circle" ng-click="addRow()"></a></th>';
-				str += '	  </tr>';
-				str += '  </thead>';
-				str += '  <tbody>';
-				str += '	  <tr ng-repeat="item in newAsset.items" class="uk-text-small">';
-				str += '		  <td><input class="uk-checkbox" type="checkbox" ng-model="item.selected"></td>';
-				str += '		  <td><input class="uk-input uk-form-blank" type="text" ng-model="item.description"></td>';
-				str += '		  <td><input class="uk-input uk-form-blank" type="number" ng-model="item.quantity"></td>';
-				str += '		  <td><input class="uk-input uk-form-blank" type="number" ng-model="item.cost" step="0.5"></td>';
-				str += '		  <td><input class="uk-input uk-form-blank" type="number" ng-value="item.cost * item.quantity"></td>';
-				str += '		  <td>';
-				str += '			 <ul class="uk-iconnav">';
-				str += '			   <li><a href="" uk-icon="icon: minus-circle" class="uk-text-danger" ng-click="removeRow($index)"></a></li>';
-				str += '			</ul>';
-				str += '		  </td>';
-				str += '	  </tr>';
-				str += '  </tbody>';
+				str += 	table;
 				str += '</table>';
 				
 				return str;

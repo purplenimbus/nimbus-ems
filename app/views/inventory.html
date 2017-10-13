@@ -17,13 +17,13 @@
 			  <td class="uk-text-capitalize">{{ item.sku }}</td>
 			  <td class="uk-text-capitalize">{{ item.description }}</td>
 			  <td>
-				<input class="uk-input" type="number" placeholder="quantity" ng-value="item.quantity">
+				<input class="uk-input uk-form-blank" type="number" placeholder="quantity" ng-model="item.quantity" ng-disabled="true">
 				</td>
 			<td>
-				<input class="uk-input" type="number" placeholder="price" ng-value="item.price">
+				<input class="uk-input uk-form-blank" type="number" placeholder="price" ng-model="item.price" ng-disabled="true">
 				</td>
 			<td>
-				<input class="uk-input" type="number" placeholder="price" ng-value="item.quantity * item.price">
+				<input class="uk-input uk-form-blank" type="number" placeholder="price" ng-value="item.quantity * item.price" ng-disabled="true">
 				</td>
 			  <td>
 				<ul class="uk-iconnav">
