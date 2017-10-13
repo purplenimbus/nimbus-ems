@@ -3,7 +3,7 @@
 	<div class="uk-navbar-right">
 		<div class="uk-navbar-item">
 			<ul class="uk-iconnav uk-clearfix">
-			  <li ng-if="true"><a uk-icon="icon:  settings" ng-click="showSettings('dashboard')"></a></li>
+			  <li ng-if="route.current.$$route.controllerAs === 'dashboard'"><a uk-icon="icon:  settings" ng-click="showSettings('dashboard')"></a></li>
 			  <li><a ng-click="offcanvas('nav').show()" uk-icon="icon:  more-vertical"></a></li>
 			</ul>
 		</div>
