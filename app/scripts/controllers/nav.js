@@ -8,7 +8,8 @@
  * Controller of the nimbusEmsApp
  */
 angular.module('nimbusEmsApp')
-  .controller('NavCtrl', function ($scope,offcanvas,modal,form,settings) {
+  .controller('NavCtrl', function ($scope,offcanvas,modal,form,settings,$route) {
+	$scope.route = $route;
 	$scope.loggedin = false;
     $scope.offcanvas = offcanvas.offcanvas;
 	$scope.showLogin = function(){
@@ -27,6 +28,7 @@ angular.module('nimbusEmsApp')
 		$scope.loggedin = true;
 		$scope.modal.hide();
 		$scope.user = {
+			id    : 1,
 			fname : 'anthony',
 			lname : 'akpan',
 			email : 'anthony.akpan@hotmail.com',
@@ -62,4 +64,6 @@ angular.module('nimbusEmsApp')
 			$scope.modal = result;
 		});
 	};	
+	
+	$scope.navSettings = settings.getSettings('nav');
   });

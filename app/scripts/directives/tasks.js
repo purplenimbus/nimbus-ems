@@ -11,7 +11,7 @@ angular.module('nimbusEmsApp')
 	
     return {
 		templateUrl: 'views/templates/tasks.html',
-		restrict: 'EA',
+		restrict: 'E',
 		scope: true,
 		controller: function($scope){
 			$scope.widgetTitle = 'Tasks';

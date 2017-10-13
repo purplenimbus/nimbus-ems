@@ -109,7 +109,9 @@ angular.module('nimbusEmsApp')
 					attrs.cls = 'uk-modal-full';
 				}
 								
-				str += '<div id="modal" uk-modal>';
+				str += '<div id="modal" ';
+				str += attrs.wrapperCls ? 'class="'+attrs.wrapperCls+'"' : '';
+				str += 'uk-modal>';
 				str += '	<div class="uk-modal-dialog ';
 				str += attrs.cls ? attrs.cls+'"' : '"';
 				str += attrs.directive ? attrs.directive : '';
@@ -133,8 +135,9 @@ angular.module('nimbusEmsApp')
 				str += '		  <th class="uk-table-shrink"><input class="uk-checkbox" type="checkbox" ng-click="selectRows(all)"></th>';
 				str += '		  <th class="uk-table-expand">Description</th>';
 				str += '		  <th class="uk-table-shrink">Quantity</th>';
-				str += '		  <th class="">Cost</th>';
-				str += '		  <th class="">#<a uk-icon="icon: plus" ng-click="addRow()"></a></th>';
+				str += '		  <th class="uk-width-small">Cost</th>';
+				str += '		  <th class="uk-width-small">Total</th>';
+				str += '		  <th class="uk-width-small"><a href="" uk-icon="icon: plus-circle" ng-click="addRow()"></a></th>';
 				str += '	  </tr>';
 				str += '  </thead>';
 				str += '  <tbody>';
@@ -143,9 +146,10 @@ angular.module('nimbusEmsApp')
 				str += '		  <td><input class="uk-input uk-form-blank" type="text" ng-model="item.description"></td>';
 				str += '		  <td><input class="uk-input uk-form-blank" type="number" ng-model="item.quantity"></td>';
 				str += '		  <td><input class="uk-input uk-form-blank" type="number" ng-model="item.cost" step="0.5"></td>';
+				str += '		  <td><input class="uk-input uk-form-blank" type="number" ng-value="item.cost * item.quantity"></td>';
 				str += '		  <td>';
 				str += '			 <ul class="uk-iconnav">';
-				str += '			   <li><a href="" uk-icon="icon: minus" class="uk-text-danger" ng-click="removeRow($index)"></a></li>';
+				str += '			   <li><a href="" uk-icon="icon: minus-circle" class="uk-text-danger" ng-click="removeRow($index)"></a></li>';
 				str += '			</ul>';
 				str += '		  </td>';
 				str += '	  </tr>';

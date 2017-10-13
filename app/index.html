@@ -29,12 +29,16 @@
 		<div ng-include="'views/partials/_toolbar.html'"></div>
 		<div id="#view" ng-view=""></div>
 		<!-- This is the off-canvas -->
-		<div id="side-menu" uk-offcanvas>
+		<div id="side-menu" uk-offcanvas ng-controller="NavCtrl">
 		  <div class="uk-offcanvas-bar uk-offcanvas-bar-animation uk-offcanvas-slide">
 
 			<button class="uk-offcanvas-close" type="button" uk-close></button>
 			<ul class="uk-nav-default uk-nav-parent-icon" uk-nav>
-			  <li><a href="#"><span class="uk-margin-small-right" uk-icon="icon: home"></span> Dashboard</a></li>
+				<li ng-repeat="(key , nav) in navSettings" ng-if="!nav.disabled"><a ng-href="#!/{{ nav.url }}"><span class="uk-margin-small-right" uk-icon="icon: {{ nav.icon }}"></span> {{ key | uppercase }}</a></li>
+				<li class="uk-nav-divider"></li>
+				<li ng-if="loggedin" class="uk-nav-header">Account</li>
+				<li ng-if="loggedin"><a ng-href="#"><span class="uk-margin-small-right" uk-icon="icon: user"></span> My Account</a></li>
+				<li ng-if="loggedin"><a ng-href="#"><span class="uk-margin-small-right" uk-icon="icon: sign out"></span> Sign Out</a></li>
 			</ul>
 		  </div>
 		</div>
@@ -85,6 +89,12 @@
         <script src="scripts/services/tasksconst.js"></script>
         <script src="scripts/services/moment.js"></script>
         <script src="scripts/directives/requests.js"></script>
+        <script src="scripts/controllers/users.js"></script>
+        <script src="scripts/controllers/account.js"></script>
+        <script src="scripts/controllers/inventory.js"></script>
+        <script src="scripts/directives/reports.js"></script>
+        <script src="scripts/directives/employees.js"></script>
+        <script src="scripts/directives/activities.js"></script>
         <!-- endbuild -->
 		
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-beta.30/js/uikit.min.js"></script>

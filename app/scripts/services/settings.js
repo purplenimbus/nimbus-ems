@@ -18,19 +18,39 @@ angular.module('nimbusEmsApp')
 			},
 			reports : {
 				display:false,
-				disabled:true
+				disabled:false
 			},
 			activities : {
 				display:false,
-				disabled:true
+				disabled:false
 			},
 			employees : {
 				display:false,
-				disabled:true
+				disabled:false
 			},
 			requests : {
 				display:true,
 				disabled:false
+			}
+		},
+		nav : {
+			dashboard : {
+				display:true,
+				disabled:false,
+				icon: 'home',
+				url:'',
+			},
+			users : {
+				display:true,
+				disabled:false,
+				icon: 'users',
+				url:'users',
+			},
+			inventory : {
+				display:true,
+				disabled:false,
+				icon: 'list',
+				url:'inventory',
 			}
 		}
 	};

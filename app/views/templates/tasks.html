@@ -1,5 +1,5 @@
 <div class="uk-card uk-card-default widget">
-  <div class="uk-card-header uk-clear-fix">
+  <div class="uk-card-header uk-clear-fix uk-padding-small">
 	<h3 class="uk-card-title uk-align-left title">{{ widgetTitle }}</h3>
 	<div class="uk-align-right">
 	  <ul class="uk-iconnav toolbar">
@@ -7,7 +7,7 @@
 		</ul>
 	  </div>
   </div>
-  <div class="uk-card-body">
+  <div class="uk-card-body uk-padding-remove">
 	<div class="uk-margin" ng-if="false">
 		  <form class="uk-search uk-search-default uk-width-1-1">
 			  <span uk-search-icon></span>
@@ -17,11 +17,11 @@
 	<table class="uk-table uk-table-middle uk-table-divider uk-margin-remove uk-table-small">
 	  <thead>
 		  <tr class="uk-text-small">
-			  <th class="uk-table-shrink"><input class="uk-checkbox" type="checkbox" ng-click="selectAll(tasks,$event)"></th>
-			  <th class="uk-width-small"></th>
+			  <th class="uk-table-shrink uk-hidden"><input class="uk-checkbox" type="checkbox" ng-click="selectAll(tasks,$event)"></th>
+			  <th class="uk-width-small">Description</th>
 			  <th class="uk-table-shrink">
-				<ul class="uk-iconnav">
-				  <li ng-if="!task.completed"><a ng-click="removeSelected($index)" uk-icon="icon: minus-circle" class="uk-text-danger"></a></li>
+				<ul class="uk-iconnav uk-hidden">
+				  <li ng-if="!task.completed"><a ng-click="removeSelected($index)" uk-icon="icon: trash" class="uk-text-danger"></a></li>
 				  <li><a ng-click="completeSelected($index)" uk-icon="icon: check" ng-disabled="task.completed" ng-class="task.completed ? 'uk-text-success' : ''"></a></li>
 				</ul>
 			  </th>
@@ -29,11 +29,11 @@
 	  </thead>
 	  <tbody>
 		  <tr ng-repeat="task in tasks" class="uk-text-small">
-			  <td><input class="uk-checkbox" type="checkbox" ng-model="task.selected"></td>
+			  <td class="uk-hidden"><input class="uk-checkbox" type="checkbox" ng-model="task.selected"></td>
 			  <td><a class="uk-align-left uk-margin-remove" ng-click="showAddTask(task)">{{ task.name }}</a></td>
 			  <td class="uk-clear-fix uk-text-right">
 				<ul class="uk-iconnav">
-				  <li ng-if="!task.completed"><a ng-click="removeTask($index)" uk-icon="icon: minus-circle" class="uk-text-danger"></a></li>
+				  <li ng-if="!task.completed"><a ng-click="removeTask($index)" uk-icon="icon: trash" class="uk-text-danger"></a></li>
 				  <li><a ng-click="completeTask($index)" uk-icon="icon: check" ng-disabled="task.completed" ng-class="task.completed ? 'uk-text-success' : ''"></a></li>
 				</ul>
 			</td>

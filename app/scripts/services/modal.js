@@ -28,6 +28,7 @@ angular.module('nimbusEmsApp')
 
 				'hide.uk.modal': function(){
 					angular.element(this).remove();
+					angular.element('html').removeClass('uk-modal-page');
 				}
 			});
 			

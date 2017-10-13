@@ -60,20 +60,22 @@ angular.module('nimbusEmsApp')
 			
 			title = request ? 'Edit Request' : 'Add Request';
 			
-			label = request ? 'Edit' : 'Add';
+			label = request ? 'Edit' : 'Submit';
 			
 			icon = request ? 'pencil' : 'plus';
 			
-			directive = request ? 'ng-click="saveRequest(newAsset)"' : 'ng-click="addRequest(newAsset)"';
+			directive = request ? 'ng-click="submitRequest(newAsset)"' : 'ng-click="addRequest(newAsset)"';
 			
 			footer = '	<div class="uk-margin">';
-			footer += 		uikit3.button({cls:'uk-width-1-1 uk-margin-small-bottom uk-button-primary',icon:icon,label:label,directive:directive});
+			footer += 		uikit3.button({cls:'uk-margin-small-bottom uk-button-primary',icon:icon,label:label,directive:directive});
+			footer += 		uikit3.button({cls:'uk-margin-small-bottom uk-button-default',icon:'cloud-upload',label:'save request',directive:'ng-click="saveRequest(newAsset)"'});
 			footer += '	</div>';
 			
 			obj = {
 				title:title,
 				body:form.addRequest(true),
-				footer:footer
+				footer:footer,
+				wrapperCls : 'uk-modal-container'
 			};
 			
 			
@@ -143,9 +145,15 @@ angular.module('nimbusEmsApp')
 		};
 
 		$scope.selectAll = function(requests,event){
-			requests.map(function(value){
+			var selected = [];
+			
+			requests.map(function(value,index){
 				value.selected = angular.element(event.target).get(0).checked;
+				selected.push(index);
 			});
+			
+			$scope.selected = selected;
+			
 		};
 		
 		$scope.completeSelected = function(selected){
@@ -156,8 +164,20 @@ angular.module('nimbusEmsApp')
 			console.log('removeSelected',selected);
 		};
 		
-		$scope.init();
+		$scope.selectRequest = function(index,event){
+			
+			console.log('selectRequest',angular.element(event.target).get(0).checked);
+			
+			var checked = angular.element(event.target).get(0).checked;
+			if(checked){
+				$scope.selected.push(index);
+			}else{
+				$scope.selected.splice(index,1);
+			}
+			
+		};
 		
+		$scope.init();
 		
 	  },
       link: function postLink(scope,element) {

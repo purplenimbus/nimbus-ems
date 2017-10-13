@@ -8,7 +8,9 @@
  * Controller of the nimbusEmsApp
  */
 angular.module('nimbusEmsApp')
-  .controller('DashboardCtrl', function ($scope,settings) {
+  .controller('DashboardCtrl', function ($scope,settings,$route,$window) {
+	  console.log('dashbaordCtrl route',$route);
+	  $scope.route = $route;
       $scope.loggedin = false;
 	  $scope.employees = {
 		  title : 'Employees',
@@ -93,5 +95,9 @@ angular.module('nimbusEmsApp')
 		  }]
 		};
 		
-		
+	
+	$scope.$on('$routeChangeStart', function() { 
+	   //close any open menus or modals
+		$window.UIkit.offcanvas('#side-menu').hide();
+	});
   });
