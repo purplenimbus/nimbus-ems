@@ -17,7 +17,7 @@ angular.module('nimbusEmsApp')
 		
 		$scope.search = null;
 		
-		$scope.defaultPagination = 3;
+		$scope.defaultPagination = 5;
 		
 		$scope.init = function(){
 			$scope.loading = true;
@@ -32,23 +32,9 @@ angular.module('nimbusEmsApp')
 			
 		};
 		
-		$scope.usersData = [
-		  { fname: 'one' },
-		  { fname: 'two' },
-		  { fname: 'three' },
-		  { fname: 'four' },
-		  { fname: 'five' },
-		  { fname: 'six' },
-		  { fname: 'seven' },
-		  { fname: 'eight' },
-		  { fname: 'nine' },
-		  { fname: 'ten' }
-		];
-		
 		var userList = new $window.Bloodhound({
 			datumTokenizer: function(d) { console.log('bloodhound d',d); return $window.Bloodhound.tokenizers.whitespace(d.fname); },
 			queryTokenizer: $window.Bloodhound.tokenizers.whitespace,
-			source:  $scope.usersData,
 			remote:	'http://ems.nimbus.com:8000/1/users'
 		});	
 		
@@ -58,21 +44,36 @@ angular.module('nimbusEmsApp')
 			name	: 'users',
 			display	: 'fname',
 			source	: userList.ttAdapter(),
-			limit	: 10,
+			//limit	: 10,
 			templates: {
-				//header: '<h3 class="league-name">NBA Teams</h3>',
-				//suggestion: '<div><strong>{{fname}}</strong> – {{lname}}</div>',
+				//header: '<h3 class="uk-text-muted uk-text-small">Users</h3>',
+				suggestion: function(data){ 
+					var str = '<article class="uk-comment uk-card">';
+						str += '		<header class="uk-comment-header uk-grid-medium uk-flex-middle uk-margin-remove-bottom uk-grid" uk-grid="">';
+						//str += '			<div class="uk-width-auto uk-first-column">';
+						//str += '				<img class="uk-comment-avatar" src="'+data.image_url+'" width="40" height="40" alt="">';
+						//str += '			</div>';
+						str += '			<div class="uk-width-expand">';
+						str += '				<h4 class="uk-comment-title uk-margin-remove"><a class="uk-link-reset ng-binding uk-text-small" href="#"> '+data.fname+' '+data.lname+'</a></h4>';
+						str += '				<ul class="uk-padding-remove uk-margin-remove uk-comment-meta uk-subnav uk-subnav-divider uk-margin-remove-top uk-text-mute">';
+						str += '				</ul>';
+						str += '			</div>';
+						str += '		</header>';
+						str += '		<div class="uk-comment-footer"></div>';
+						str += '	</article>';
+					return str;
+				},
 				empty: [
-					'<div class="uk-dropdown">',
+					'',
 					'No results were found ...',
-					'</div>'
+					''
 				].join('\n'),
 			},
 		};
 		
 		$scope.userOptions = {
 			displayKey: 'fname',
-			minLength: 0,
+			minLength: 2,
 			highlight: true,
 			classNames: {
 				dataset: 'uk-dropdown'
