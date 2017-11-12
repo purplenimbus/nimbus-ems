@@ -80,16 +80,20 @@ module.exports = function (grunt) {
           open: true,
           middleware: function (connect) {
             return [
-              connect.static('.tmp'),
-              connect().use(
-                '/bower_components',
-                connect.static('./bower_components')
-              ),
-              connect().use(
-                '/app/styles',
-                connect.static('./app/styles')
-              ),
-              connect.static(appConfig.app)
+				connect.static('.tmp'),
+				connect().use(
+					'/bower_components',
+					connect.static('./bower_components')
+				),
+				connect().use(
+					'/app/styles',
+					connect.static('./app/styles')
+				),
+				connect.static(appConfig.app),
+				connect().use(function (req, res, next) {
+					res.setHeader('Access-Control-Allow-Origin', '*');
+					next();
+				})
             ];
           }
         }

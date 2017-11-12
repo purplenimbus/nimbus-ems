@@ -13,8 +13,8 @@ angular.module('nimbusEmsApp')
 	this.settings = {
 		dashboard : {
 			tasks : {
-				display:true,
-				disabled:false
+				display:false,
+				disabled:true
 			},
 			reports : {
 				display:false,
@@ -25,12 +25,12 @@ angular.module('nimbusEmsApp')
 				disabled:false
 			},
 			employees : {
-				display:false,
+				display:true,
 				disabled:false
 			},
 			requests : {
-				display:true,
-				disabled:false
+				display:false,
+				disabled:true
 			}
 		},
 		nav : {

@@ -16,6 +16,7 @@ angular
 		'ngRoute',
 		'ngSanitize',
 		'ngTouch',
+		'siyfion.sfTypeahead'
 	])
 	.config(function ($routeProvider) {
 		$routeProvider

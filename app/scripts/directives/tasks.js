@@ -23,10 +23,10 @@ angular.module('nimbusEmsApp')
 			var taskList = false;
 			$scope.init = function(){
 				
-				tasks.getCompanyTasks({method:'GET',companyId:3}).then(function(result){
+				/*tasks.getCompanyTasks({method:'GET',companyId:3}).then(function(result){
 					console.log('result',result);
 					$scope.tasks = result.data;
-				});
+				});*/
 				
 				$scope.tasks = [
 					{ name: 'one' },
@@ -70,7 +70,7 @@ angular.module('nimbusEmsApp')
 			};
 			
 			$scope.tasksOptions = {
-				displayKey: 'num',
+				displayKey: 'name',
 				minLength: 1,
 				highlight: true
 			};

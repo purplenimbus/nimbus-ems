@@ -16,6 +16,32 @@ section {
         }
       }
     }
+	users{
+		form{
+			position:relative;
+			.twitter-typeahead{
+				width:100%;
+				input.typeahead{
+					padding-left: 40px !important;
+					width: inherit;
+				}
+				.tt-menu{
+					width: inherit;
+					.tt-dataset{
+						width: inherit;
+						.uk-dropdown{
+							width:inherit;
+							display:block;
+						}
+					}
+					.uk-dropdown{
+						width:inherit;
+						display:block;
+					}
+				}
+			}
+		}
+	}
   }
 }
 
