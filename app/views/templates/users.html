@@ -4,6 +4,7 @@
 		<div class="uk-align-right">
 			<ul class="uk-iconnav toolbar">
 				<li><a href="#" uk-icon="icon: plus"></a></li>
+				<li><a ng-click="init()" uk-icon="icon: refresh"></a></li>
 			</ul>
 		</div>
 	</div>
@@ -19,7 +20,7 @@
 
 		<ul class="uk-list" uk-grid ng-if="!loading">
 			<li class="uk-width-1-2@l uk-width-1-1@s" ng-repeat="user in data.data">
-				<article class="uk-comment uk-card uk-card-hover">
+				<article class="uk-comment uk-card">
 					<header class="uk-comment-header uk-grid-medium uk-flex-middle uk-margin-remove-bottom" uk-grid>
 						<div class="uk-width-auto">
 							<img class="uk-comment-avatar" src="{{ user.image_url || 'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png' }}" width="60" height="60" alt="">
@@ -37,7 +38,7 @@
 			</li>
 		</ul>
 	</div>
-	<div class="uk-card-footer">
+	<div class="uk-card-footer" ng-if="data.prev_page_url || data.next_page_url">
 	   <ul class="uk-pagination">
 		  <li ng-if="data.prev_page_url"><a ng-click="prev(data.current_page - 1)"><span class="uk-margin-small-right" uk-pagination-previous></span> Previous</a></li>
 		  <li ng-if="data.next_page_url" class="uk-margin-auto-left"><a ng-click="next(data.current_page + 1)">Next <span class="uk-margin-small-left" uk-pagination-next></span></a></li>

@@ -8,7 +8,7 @@
  * Controller of the nimbusEmsApp
  */
 angular.module('nimbusEmsApp')
-  .controller('NavCtrl', function ($scope,offcanvas,modal,form,settings,$route) {
+  .controller('NavCtrl', function ($scope,offcanvas,modal,form,settings,$route,$rootScope,validation,$auth,auth) {
 	$scope.route = $route;
 	$scope.loggedin = false;
     $scope.offcanvas = offcanvas.offcanvas;
@@ -23,7 +23,7 @@ angular.module('nimbusEmsApp')
 		});
 	};
 	
-	$scope.login = function(creds){
+	/*$scope.login = function(creds){
 		console.log('login credentials',creds);
 		$scope.loggedin = true;
 		$scope.modal.hide();
@@ -32,8 +32,131 @@ angular.module('nimbusEmsApp')
 			fname : 'anthony',
 			lname : 'akpan',
 			email : 'anthony.akpan@hotmail.com',
-			picture : 'https://media.licdn.com/mpr/mpr/shrinknp_200_200/p/4/005/02f/0b3/31ce301.jpg'
+			picture : 'https://media.licdn.com/mpr/mpr/shrinknp_200_200/p/4/005/02f/0b3/31ce301.jpg',
+			tenantId : 1
 		};
+	};*/
+	
+	$scope.login = function(creds,$event) {
+		
+		//console.log('Login Events',angular.element($event.currentTarget).parents());
+		//$event.preventDefault();
+		$scope.loginLoading = true;
+		
+		var form	=	angular.element($event.currentTarget).parents()[1];
+		
+		//console.log('Login Details',creds,form);
+			
+		validation.validate(form).then(function(result){
+			
+			console.log(result);
+			angular.element('#modal .uk-modal-spinner').removeClass('uk-hidden');
+			if(result.valid){											
+				//Use Satellizer's $auth service to login
+				$auth.login(creds).then(function(result) {
+					$scope.loginLoading = false;
+					console.log('Data',result);
+					
+					angular.element('#modal .uk-modal-dialog').removeClass('error')
+											.addClass('success');
+											
+					angular.element('#modal .uk-alert')
+							.removeClass('uk-hidden uk-alert-danger')
+							.addClass('uk-alert-success')
+							.children('p')
+							.html('Logged In Successfully'); //Show Success Alert
+							
+					$rootScope.user = {};
+					console.log('Logged in Rootscope',$rootScope);
+					console.log('Logged in Auth',$auth.isAuthenticated());
+					console.log('Logged in token',$auth.getToken());
+					console.log('Logged in payload',$auth.getPayload());
+					auth.setCookie('auth',JSON.stringify(result.data.user),9);
+					$rootScope.user.info = result.data.user;
+					angular.element('#modal .uk-modal-spinner').addClass('uk-hidden');//remove spinner
+					$scope.closeModal();
+					$route.reload();
+
+					
+				}).catch(function(error){
+					$scope.loginLoading = false;
+					console.log('Login Error',error);
+					//TO DO Add Error Message to login modal
+					angular.element('#modal .uk-modal-dialog').removeClass('success')
+											.addClass('error');
+											
+					angular.element('#modal .uk-modal-spinner').addClass('uk-hidden'); //remove spinner
+					angular.element('#modal .uk-alert')
+							.removeClass('uk-hidden uk-alert-success')
+							.addClass('uk-alert-danger')
+							.children('p')
+							.html('Invalid Login');//Add error message
+				});
+				
+			}else{
+				console.log(result);
+				//TO DO Add Validation Error Message to login modal
+			}	
+			
+		});
+		
+		
+	};
+	
+	$scope.authenticate = function(provider) {
+		$auth.authenticate(provider).then(function(result){
+			console.log('Auth Data',result);
+			$scope.authLoading = false;		
+			angular.element('#modal .uk-modal-dialog').removeClass('error')
+									.addClass('success');
+									
+		angular.element('#modal.login form input')
+				.removeClass('uk-form-danger')
+				.addClass('uk-form-success');
+									
+			angular.element('#modal .uk-alert')
+					.removeClass('uk-hidden uk-alert-danger')
+					.addClass('uk-alert-success')
+					.children('p')
+					.html('Logged In Successfully'); //Show Success Alert
+					
+					
+			$rootScope.user = {};
+			console.log('Logged in Rootscope',$rootScope);
+			console.log('Logged in Auth',$auth.isAuthenticated());
+			console.log('Logged in token',$auth.getToken());
+			console.log('Logged in payload',$auth.getPayload());
+			auth.setCookie('auth',JSON.stringify(result.data.user),9);
+			$rootScope.user.info = result.data.user;
+			angular.element('#modal .uk-modal-spinner').addClass('uk-hidden');//remove spinner
+			$scope.closeModal();
+			$route.reload();
+			
+		}).catch(function(error){
+			$scope.authLoading = false;	
+			//handle error
+			//console.log('Login Error',error);
+			//TO DO Add Error Message to login modal
+			angular.element('#modal .uk-modal-dialog').removeClass('success')
+									.addClass('error');
+									
+			angular.element('#modal.login form input')
+				.removeClass('uk-form-success')
+				.addClass('uk-form-danger');
+									
+			angular.element('#modal .uk-modal-spinner').addClass('uk-hidden'); //remove spinner
+			angular.element('#modal .uk-alert')
+					.removeClass('uk-hidden uk-alert-success')
+					.addClass('uk-alert-danger');
+					
+			if(error){  angular.element('#modal .uk-alert').children('p').html(error); }//Add error message
+		});
+	};
+	
+	$scope.logout = function() {
+		$auth.logout();
+		$route.reload();
+		//$location.path("/");
 	};
 	
 	$scope.showSettings = function(type){

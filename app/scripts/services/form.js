@@ -15,13 +15,13 @@ angular.module('nimbusEmsApp')
 		
 		str += '<form class="uk-form-stacked">';
 		str += '	<div class="uk-margin">';
-		str += 			uikit3.inputIcon({model:'username',icon:'user',type:'text',placeholder:'username'});
+		str += 			uikit3.inputIcon({model:'email',icon:'user',type:'text',placeholder:'email',required:true});
 		str += '	</div>';
 		str += '	<div class="uk-margin">';
-		str += 			uikit3.inputIcon({model:'password',icon:'lock',type:'password',placeholder:'password'});		
+		str += 			uikit3.inputIcon({model:'password',icon:'lock',type:'password',placeholder:'password',required:true});		
 		str += '	</div>';
 		str += '	<div class="uk-margin">';
-		str += 			uikit3.button({cls:'uk-width-1-1 uk-margin-small-bottom uk-button-primary',icon:'sign-in',label:'login',directive:'ng-click="login({ username:this.username , password: this.password })"'});
+		str += 			uikit3.button({cls:'uk-width-1-1 uk-margin-small-bottom uk-button-primary',icon:'sign-in',label:'login',directive:'ng-click="login({ email:this.email , password: this.password },$event)"'});
 		str += '	</div>';
 		str += '</form>';
 

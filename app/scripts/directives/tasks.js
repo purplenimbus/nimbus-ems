@@ -7,33 +7,40 @@
  * # tasks
  */
 angular.module('nimbusEmsApp')
-  .directive('tasks', function (modal,form,tasks,tasksConst,uikit3,$window) {
+  .directive('tasks', function (modal,form,tasks,tasksConst,uikit3,$window,emsApi) {
 	
     return {
 		templateUrl: 'views/templates/tasks.html',
 		restrict: 'E',
 		scope: true,
-		controller: function($scope){
+		controller: function($scope,apiConst){
 			$scope.widgetTitle = 'Tasks';
 			$scope.tasks =  [];
 			var moment = $window.moment;
 			var currentDateTime = moment();
 
 			$scope.search = '';
+						
 			var taskList = false;
 			$scope.init = function(){
-				
-				/*tasks.getCompanyTasks({method:'GET',companyId:3}).then(function(result){
+				$scope.loading = true;
+				emsApi.api('GET',apiConst.defaultTenantId+'/users/1/tasks?paginate='+apiConst.widgetPagination+'&page=1').then(function(result){
 					console.log('result',result);
-					$scope.tasks = result.data;
-				});*/
-				
-				$scope.tasks = [
-					{ name: 'one' },
-					{ name: 'two' },
-					{ name: 'three' },
-					{ name: 'four' }
-				 ];
+					$scope.data = result.data;
+					$scope.loading = false;
+					
+				}).catch(function(error){
+					console.log('error',error);
+					//TO DO Do Something
+					$window.UIkit.notification({
+						message: 'Couldnt get tasks',
+						status: 'danger',
+						pos: 'top-right',
+						timeout: 5000
+					});
+					
+					$scope.loading = false;
+				});
 				
 				$scope.newAsset = {
 					deadline:{
@@ -46,9 +53,9 @@ angular.module('nimbusEmsApp')
 				console.log('Scope newAsset',currentDateTime.get('time'));
 			
 				taskList = new $window.Bloodhound({
-					datumTokenizer: function(d) { console.log('bloodhound d',d); return $window.Bloodhound.tokenizers.whitespace(d.name); },
+					datumTokenizer: function(d) { return $window.Bloodhound.tokenizers.whitespace(d.name); },
 					queryTokenizer: $window.Bloodhound.tokenizers.whitespace,
-					local:  $scope.tasks
+					remote:	'http://ems.nimbus.com:8000/1/users/1/tasks'
 				});	
 				
 				taskList.initialize();
@@ -60,9 +67,9 @@ angular.module('nimbusEmsApp')
 					source: taskList.ttAdapter(),
 					templates: {
 					  empty: [
-						'<div uk-dropdown>',
+						'',
 						'No results were found ...',
-						'</div>'
+						''
 					  ].join('\n'),
 					}
 				};	
@@ -71,15 +78,18 @@ angular.module('nimbusEmsApp')
 			
 			$scope.tasksOptions = {
 				displayKey: 'name',
-				minLength: 1,
-				highlight: true
+				minLength: 2,
+				highlight: true,
+				classNames: {
+					dataset: 'uk-dropdown'
+				}
 			};
 			
 			$scope.showAddTask = function(task){
 				
-				if(task){
-					$scope.newAsset = task;
-				}
+				//if(task){
+					$scope.newAsset = task || {};
+				//}
 				
 				
 				var obj,
@@ -187,6 +197,30 @@ angular.module('nimbusEmsApp')
 				});
 			};
 			
+			$scope.next = function(page){
+				console.log('get page',page,$scope.data);
+				$scope.loading = true;
+				emsApi.api('GET',apiConst.defaultTenantId+'/users/1/tasks?paginate='+apiConst.widgetPagination+'&page='+page).then(function(result){
+					$scope.data = result.data;
+					taskList.initialize(true);
+					$scope.loading = false;
+				}).catch(function(error){
+					console.log('emsApi error',error);
+				});
+			};
+			
+			$scope.prev = function(page){
+				console.log('get page',page,$scope.data);
+				$scope.loading = true;
+				emsApi.api('GET',apiConst.defaultTenantId+'/users/1/tasks?paginate='+apiConst.widgetPagination+'&page='+page).then(function(result){
+					$scope.data = result.data;
+					taskList.initialize(true);
+					$scope.loading = false;
+				}).catch(function(error){
+					console.log('emsApi error',error);
+				});
+			};
+		
 			$scope.init();
 		},
 		link: function(scope, element) {

@@ -5,16 +5,16 @@
 				<tr>
 					<th class="uk-table-shrink"><input class="uk-checkbox" type="checkbox"></th>
 					<th class="uk-table-shrink"></th>
-					<th class="uk-table-expand">Expand + Link</th>
+					<th class="uk-table-expand"></th>
 					<th class="uk-width-small"></th>
 				</tr>
 			</thead>
 			<tbody>
-				<tr>
+				<tr ng-repeat="user in usersList">
 					<td><input class="uk-checkbox" type="checkbox"></td>
-					<td><img class="uk-preserve-width uk-border-circle" src="https://getuikit.com/docs/images/avatar.jpg" width="40" alt=""></td>
+					<td><img class="uk-preserve-width uk-border-circle" src="{{ user.image_url }}" width="40" alt=""></td>
 					<td class="uk-table-link">
-						<a class="uk-link-reset" href="">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.</a>
+						<a class="uk-link-reset" href="">{{ user.fname }}, {{ user.lname }}</a>
 					</td>
 					<td>
 						<ul class="uk-iconnav">
@@ -25,5 +25,6 @@
 				</tr>
 			</tbody>
 		</table>
+		<button ng-if="usersData.next_page_url" ng-click="next(usersData.current_page + 1)" class="uk-button uk-button-primary uk-width-1-1 uk-margin-small-bottom">Load More</button>
 	</div>
 </section>

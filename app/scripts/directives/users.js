@@ -12,39 +12,44 @@ angular.module('nimbusEmsApp')
       templateUrl: 'views/templates/users.html',
       restrict: 'E',
 	  scope: true,
-	  controller : function($scope,emsApi,$window){
+	  controller : function($scope,emsApi,$window,apiConst){
 		$scope.widgetTitle = 'Users';
 		
 		$scope.search = null;
-		
-		$scope.defaultPagination = 5;
-		
+				
 		$scope.init = function(){
 			$scope.loading = true;
 				
-			emsApi.api('GET','1/users?paginate='+$scope.defaultPagination+'&page=1').then(function(result){
+			emsApi.api('GET','1/users?paginate='+apiConst.widgetPagination+'&page=1').then(function(result){
 				$scope.data = result.data;
 				userList.initialize(true);
 				$scope.loading = false;
 			}).catch(function(error){
 				console.log('emsApi error',error);
+				$scope.loading = false;
+				$window.UIkit.notification({
+					message: 'Couldnt get users',
+					status: 'danger',
+					pos: 'top-right',
+					timeout: 5000
+				});
 			});
 			
 		};
 		
 		var userList = new $window.Bloodhound({
-			datumTokenizer: function(d) { console.log('bloodhound d',d); return $window.Bloodhound.tokenizers.whitespace(d.fname); },
+			datumTokenizer: function(d) { /*console.log('bloodhound d',d);*/ return $window.Bloodhound.tokenizers.whitespace(d.fname); },
 			queryTokenizer: $window.Bloodhound.tokenizers.whitespace,
-			remote:	'http://ems.nimbus.com:8000/1/users'
+			remote:	'http://graph.nimbus.com:8000/'+apiConst.defaultTenantId+'/users'
 		});	
 		
 		userList.initialize();
 				
 		$scope.userDataset = {
 			name	: 'users',
-			display	: 'fname',
+			//display	: 'fname',
 			source	: userList.ttAdapter(),
-			//limit	: 10,
+			limit	: 10,
 			templates: {
 				//header: '<h3 class="uk-text-muted uk-text-small">Users</h3>',
 				suggestion: function(data){ 
@@ -69,6 +74,7 @@ angular.module('nimbusEmsApp')
 					''
 				].join('\n'),
 			},
+			async	:	true
 		};
 		
 		$scope.userOptions = {
@@ -81,24 +87,36 @@ angular.module('nimbusEmsApp')
 		};
 		
 		$scope.next = function(page){
-			console.log('get page',page,$scope.data);
-			emsApi.api('GET','1/users?paginate='+$scope.defaultPagination+'&page='+page).then(function(result){
+			$scope.loading = true;
+			emsApi.api('GET',apiConst.defaultTenantId+'/users?paginate='+apiConst.widgetPagination+'&page='+page).then(function(result){
 				$scope.data = result.data;
 				userList.initialize(true);
 				$scope.loading = false;
 			}).catch(function(error){
 				console.log('emsApi error',error);
+				$window.UIkit.notification({
+					message: 'Couldnt get users',
+					status: 'danger',
+					pos: 'top-right',
+					timeout: 5000
+				});
 			});
 		};
 		
 		$scope.prev = function(page){
-			console.log('get page',page,$scope.data);
-			emsApi.api('GET','1/users?paginate='+$scope.defaultPagination+'&page='+page).then(function(result){
+			$scope.loading = true;
+			emsApi.api('GET',apiConst.defaultTenantId+'/users?paginate='+apiConst.widgetPagination+'&page='+page).then(function(result){
 				$scope.data = result.data;
 				userList.initialize(true);
 				$scope.loading = false;
 			}).catch(function(error){
 				console.log('emsApi error',error);
+				$window.UIkit.notification({
+					message: 'Couldnt get users',
+					status: 'danger',
+					pos: 'top-right',
+					timeout: 5000
+				});
 			});
 		};
 		

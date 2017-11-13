@@ -140,7 +140,7 @@ angular.module('nimbusEmsApp')
 					table += '		  <th class="uk-table-shrink">Quantity</th>';
 					table += '		  <th class="uk-width-small">Cost</th>';
 					table += '		  <th class="uk-width-small">Total</th>';
-					table += '		  <th class="uk-width-small"><a href="" uk-icon="icon: plus-circle" ng-click="addRow()"></a></th>';
+					table += '		  <th class="uk-width-small"><a uk-icon="icon: plus-circle" ng-click="addRow()">add</a></th>';
 					table += '	  </tr>';
 					table += '  </thead>';
 					table += '  <tbody>';
@@ -152,7 +152,7 @@ angular.module('nimbusEmsApp')
 					table += '		  <td><input class="uk-input uk-form-blank" type="number" ng-value="item.cost * item.quantity"></td>';
 					table += '		  <td>';
 					table += '			 <ul class="uk-iconnav">';
-					table += '			   <li><a href="" uk-icon="icon: minus-circle" class="uk-text-danger" ng-click="removeRow($index)"></a></li>';
+					table += '			   <li><a uk-icon="icon: minus-circle" class="uk-text-danger" ng-click="removeRow($index)"></a></li>';
 					table += '			</ul>';
 					table += '		  </td>';
 					table += '	  </tr>';

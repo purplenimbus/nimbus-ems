@@ -10,7 +10,7 @@
 angular.module('nimbusEmsApp')
   .factory('emsApi', function ($http) {
     // Service logic
-    var apiEndPoint = 'http://ems.nimbus.com:8000/';
+    var apiEndPoint = 'http://graph.nimbus.com:8000/';
 
     // Public API here
     return {
@@ -27,6 +27,22 @@ angular.module('nimbusEmsApp')
   .factory('fmsApi', function ($http) {
     // Service logic
     var apiEndPoint = 'http://fms-api-v1.herokuapp.com/';
+
+    // Public API here
+    return {
+		api : function(requestType,params,data){
+			var parameters = '?'+params || '?callback=foo';
+						
+			switch(requestType){
+				case 'GET' : return $http.get(apiEndPoint+parameters);
+				case 'POST' : return $http.post(apiEndPoint+parameters,data); 
+			}
+		}
+    };
+  })
+  .factory('eduApi', function ($http) {
+    // Service logic
+    var apiEndPoint = 'http://edu.nimbus.com:9000/';
 
     // Public API here
     return {
