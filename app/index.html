@@ -26,7 +26,7 @@
 
     <div class="uk-offcanvas-content">
 		<div ng-include="'views/partials/_navbar.html'"></div>
-		<div ng-include="'views/partials/_toolbar.html'"></div>
+		
 		<div id="#view" ng-view=""></div>
 		<!-- This is the off-canvas -->
 		<div id="side-menu" uk-offcanvas ng-controller="NavCtrl">
@@ -34,7 +34,7 @@
 
 			<button class="uk-offcanvas-close" type="button" uk-close></button>
 			<ul class="uk-nav-default uk-nav-parent-icon" uk-nav>
-				<li ng-repeat="(key , nav) in navSettings" ng-if="!nav.disabled"><a ng-href="#!/{{ nav.url }}"><span class="uk-margin-small-right" uk-icon="icon: {{ nav.icon }}"></span> {{ key | uppercase }}</a></li>
+				<li ng-repeat="(key , nav) in navSettings" ng-if="!nav.disabled"><a ng-href="#!/1/{{ nav.url }}"><span class="uk-margin-small-right" uk-icon="icon: {{ nav.icon }}"></span> {{ key | uppercase }}</a></li>
 				<li class="uk-nav-divider"></li>
 				<li ng-if="loggedin" class="uk-nav-header">Account</li>
 				<li ng-if="loggedin"><a ng-href="#"><span class="uk-margin-small-right" uk-icon="icon: user"></span> My Account</a></li>
@@ -69,6 +69,8 @@
     <script src="bower_components/angular-typeahead/dist/angular-typeahead.js"></script>
     <script src="bower_components/moment/moment.js"></script>
     <script src="bower_components/satellizer/dist/satellizer.js"></script>
+    <script src="bower_components/chart.js/dist/Chart.js"></script>
+    <script src="bower_components/angular-chart.js/dist/angular-chart.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -78,7 +80,7 @@
         <script src="scripts/controllers/about.js"></script>
         <script src="scripts/controllers/dashboard.js"></script>
         <script src="scripts/directives/tasks.js"></script>
-        <script src="scripts/services/emsapi.js"></script>
+        <script src="scripts/services/api.js"></script>
 		<script src="scripts/services/modal.js"></script>
 		<script src="scripts/services/form.js"></script>
 		<script src="scripts/services/offcanvas.js"></script>
@@ -97,9 +99,17 @@
         <script src="scripts/controllers/inventory.js"></script>
         <script src="scripts/directives/reports.js"></script>
         <script src="scripts/directives/users.js"></script>
-        <script src="scripts/directives/activities.js"></script>
         <script src="scripts/constants/api.js"></script>
         <script src="scripts/controllers/learning.js"></script>
+        <script src="scripts/controllers/course.js"></script>
+        <script src="scripts/controllers/login.js"></script>
+        <script src="scripts/controllers/profile.js"></script>
+        <script src="scripts/directives/mycourses.js"></script>
+        <script src="scripts/directives/activityfeed.js"></script>
+        <script src="scripts/services/grades.js"></script>
+        <script src="scripts/services/breadcrumbs.js"></script>
+        <script src="scripts/directives/courses.js"></script>
+        <script src="scripts/controllers/courses.js"></script>
         <!-- endbuild -->
 		
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-beta.30/js/uikit.min.js"></script>

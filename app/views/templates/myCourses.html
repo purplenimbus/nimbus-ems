@@ -1,0 +1,23 @@
+<div class="uk-card uk-card-default widget">
+	<div class="uk-card-header uk-clear-fix uk-padding-small">
+		<h3 class="uk-card-title uk-align-left title">{{ widgetTitle}}</h3>
+		<div class="uk-align-right">
+			<ul class="uk-iconnav toolbar">
+				<li><a ng-click="init()" uk-icon="icon: refresh"></a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="uk-card-body uk-text-center">
+		<div uk-spinner ng-if="loading"></div>
+		<div ng-if="!loading">
+			<img class="uk-comment-avatar uk-preserve-width uk-border-circle" src="https://getuikit.com/docs/images/avatar.jpg" width="100" height="100" alt="">
+			<h3 class="uk-card-title title">Anthony Akpan</h3>
+			<ul class="uk-list uk-list-divider">
+				<li class="uk-clear-fix" ng-repeat="course in courses" >
+					<span class="uk-align-left uk-margin-remove uk-text-capitalize"><a ng-href="#!1/learning/course/{{ course.course.id }}">{{ course.course.name }}</a></span>
+					<span class="uk-align-right uk-margin-remove uk-text-{{getGrade($index).className}}">{{ getTotal($index) }}</span>
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>

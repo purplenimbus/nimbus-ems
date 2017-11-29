@@ -47,11 +47,12 @@ angular.module('nimbusEmsApp')
 				
 		$scope.userDataset = {
 			name	: 'users',
-			//display	: 'fname',
+			display	: 'fname',
 			source	: userList.ttAdapter(),
 			limit	: 10,
 			templates: {
 				//header: '<h3 class="uk-text-muted uk-text-small">Users</h3>',
+				//TO DO Move strings below to its own function
 				suggestion: function(data){ 
 					var str = '<article class="uk-comment uk-card">';
 						str += '		<header class="uk-comment-header uk-grid-medium uk-flex-middle uk-margin-remove-bottom uk-grid" uk-grid="">';
@@ -59,7 +60,7 @@ angular.module('nimbusEmsApp')
 						//str += '				<img class="uk-comment-avatar" src="'+data.image_url+'" width="40" height="40" alt="">';
 						//str += '			</div>';
 						str += '			<div class="uk-width-expand">';
-						str += '				<h4 class="uk-comment-title uk-margin-remove"><a class="uk-link-reset ng-binding uk-text-small" href="#"> '+data.fname+' '+data.lname+'</a></h4>';
+						str += '				<h4 class="uk-comment-title uk-margin-remove"><a class="uk-link-reset ng-binding uk-text-small" ng-href="#!/'+data.tenant_id+'/profile/'+data.id+'"> '+data.fname+' '+data.lname+'</a></h4>';
 						str += '				<ul class="uk-padding-remove uk-margin-remove uk-comment-meta uk-subnav uk-subnav-divider uk-margin-remove-top uk-text-mute">';
 						str += '				</ul>';
 						str += '			</div>';

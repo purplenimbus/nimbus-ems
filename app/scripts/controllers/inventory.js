@@ -20,6 +20,7 @@ angular.module('nimbusEmsApp')
 			quantity : 5,
 			price : 1500.00
 		}];
+		
 		$scope.$on('$routeChangeStart', function() { 
 		   //close any open menus or modals
 			$window.UIkit.offcanvas('#side-menu').hide();

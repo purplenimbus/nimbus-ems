@@ -42,12 +42,12 @@ angular.module('nimbusEmsApp')
   })
   .factory('eduApi', function ($http) {
     // Service logic
-    var apiEndPoint = 'http://edu.nimbus.com:9000/';
+    var apiEndPoint = 'http://edu.nimbus.com:7070/';
 
     // Public API here
     return {
 		api : function(requestType,params,data){
-			var parameters = '?'+params || '?callback=foo';
+			var parameters = ( params  ? params+'&callback=foo' : '?callback=foo');
 						
 			switch(requestType){
 				case 'GET' : return $http.get(apiEndPoint+parameters);

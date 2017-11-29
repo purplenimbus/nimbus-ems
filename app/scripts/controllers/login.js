@@ -2,42 +2,14 @@
 
 /**
  * @ngdoc function
- * @name nimbusEmsApp.controller:NavCtrl
+ * @name nimbusEmsApp.controller:LoginCtrl
  * @description
- * # NavCtrl
+ * # LoginCtrl
  * Controller of the nimbusEmsApp
  */
 angular.module('nimbusEmsApp')
-  .controller('NavCtrl', function ($scope,offcanvas,modal,form,settings,$route,$rootScope,validation,$auth,auth,$location,breadcrumbs) {
-	$scope.route = $route;
-	$scope.loggedin = false;
-    $scope.offcanvas = offcanvas.offcanvas;
-	$scope.showLogin = function(){
-		var obj = {
-			title:'Login',
-			body:form.login(),
-			footer:false
-		};
-		modal.modal(obj,$scope).then(function(result){
-			$scope.modal = result;
-		});
-	};
-	
-	/*$scope.login = function(creds){
-		console.log('login credentials',creds);
-		$scope.loggedin = true;
-		$scope.modal.hide();
-		$scope.user = {
-			id    : 1,
-			fname : 'anthony',
-			lname : 'akpan',
-			email : 'anthony.akpan@hotmail.com',
-			picture : 'https://media.licdn.com/mpr/mpr/shrinknp_200_200/p/4/005/02f/0b3/31ce301.jpg',
-			tenantId : 1
-		};
-	};*/
-	
-	$scope.login = function(creds,$event) {
+	.controller('LoginCtrl', function ($scope,$route,$rootScope,validation,$auth,auth,$window) {
+    	$scope.login = function(creds,$event) {
 		
 		//console.log('Login Events',angular.element($event.currentTarget).parents());
 		//$event.preventDefault();
@@ -151,46 +123,13 @@ angular.module('nimbusEmsApp')
 					
 			if(error){  angular.element('#modal .uk-alert').children('p').html(error); }//Add error message
 		});
-	};
-	
-	$scope.logout = function() {
-		$auth.logout();
-		$route.reload();
-		//$location.path("/");
-	};
-	
-	$scope.showSettings = function(type){
-		var settingsBody = '',
-			obj;
 		
-		settingsBody += '<ul class="uk-list uk-list-divider">';
-		settingsBody += '	<li ng-repeat="(key , setting) in settings" class="uk-clearfix">';
-		settingsBody += '	<div class="uk-align-left uk-margin-remove">';
-		settingsBody += '		<p class="uk-margin-remove">{{ key | uppercase }}</p>';
-		settingsBody += '	</div>';
-		settingsBody += '	<div class="uk-align-right">';
-		settingsBody += '		<input class="uk-checkbox" type="checkbox" ng-model="setting.display" ng-disabled="setting.disabled">';
-		settingsBody += '	</div>';
-		settingsBody += '	</li>';
-		settingsBody += '</ul>';
-		
-		
-		obj = {
-			title:'Settings',
-			body:settingsBody,
-			footer:false
-		};
-		
-		$scope.settings = settings.getSettings(type);
-				
-		modal.modal(obj,$scope).then(function(result){
-			$scope.modal = result;
+		$scope.$on('$routeChangeStart', function() { 
+			//close any open menus or modals
+			$scope.$on('$routeChangeStart', function() { 
+			   //close any open menus or modals
+				$window.UIkit.offcanvas('#side-menu').hide();
+			});
 		});
-	};	
-	
-	$scope.navSettings = settings.getSettings('nav');
-	
-	$scope.breadcrumbs = breadcrumbs.parse($location.path());
-	
-	console.log('Nav breadcrumbs',$scope.breadcrumbs);
+	};
   });

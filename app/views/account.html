@@ -1,7 +1,8 @@
+<div ng-include="'views/partials/_toolbar.html'"></div>
 <section class="uk-padding-small">
 	<ul uk-tab>
-		<li><a href="#">Account Details</a></li>
-		<li><a href="#">API</a></li>
+		<li><a href="#" class="uk-text-small">Account Details</a></li>
+		<li><a href="#" class="uk-text-small">API</a></li>
 	</ul>
 
 	<ul class="uk-switcher uk-margin">
@@ -25,9 +26,11 @@
 				<div class="uk-margin">
 					<label class="uk-form-label" for="form-horizontal-text">Email</label>
 					<div class="uk-form-controls">
-						<input class="uk-input" id="form-horizontal-text" type="email" placeholder="Email Address (Primary)">
+						<input class="uk-input" id="form-horizontal-text" type="email" placeholder="Email Address (Primary)" disabled>
 					</div>
 				</div>
+				
+				<hr>
 				
 				<div class="uk-margin">
 					<label class="uk-form-label" for="form-horizontal-text">Phone Number</label>
@@ -36,25 +39,35 @@
 					</div>
 				</div>
 				
+				<div class="uk-margin">
+					<label class="uk-form-label" for="form-horizontal-text">Address</label>
+					<div class="uk-form-controls">
+						<input class="uk-input" id="form-horizontal-text" type="tel" placeholder="Phone Number (Primary)">
+					</div>
+				</div>
+				
+				<div class="uk-margin">
+					<button class="uk-button uk-button-primary">Save</button>
+				</div>
+				
 			</form>
 		</li>
 		<li>
-			<table class="uk-table uk-table-justify uk-table-divider">
-				<thead>
-					<tr>
-						<th>Client Key</th>
-						<th>Client Secret</th>
-						<th><button ng-click="generateKey()" class="uk-button uk-button-primary uk-button-small" type="button">Generate Key</button></th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td>59de267cec81f5589f7c0e76</td>
-						<td>59de26907d18f7e2cff0c303</td>
-						<td><button class="uk-button uk-button-danger uk-button-small" type="button" ng-click="deleteKey($index)">Delete Key</button></td>
-					</tr>
-				</tbody>
-			</table>
+			<div class="uk-margin">
+				<form class="uk-search uk-search-default uk-width-1-1">
+					<a href="" uk-search-icon></a>
+					<input class="uk-search-input" type="search" placeholder="Search">
+				</form>
+			</div>
+			<h2 class="uk-logo">Your Services</h2>
+			<ul uk-accordion>
+				<li ng-repeat="service in services">
+					<h3 class="uk-accordion-title">{{ service.name }}</h3>
+					<div class="uk-accordion-content">
+						<p class="uk-text-small uk-text-muted">{{ service.description }}</p>
+					</div>
+				</li>
+			</ul>
 		</li>
 	</ul>
 </section>

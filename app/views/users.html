@@ -1,3 +1,4 @@
+<div ng-include="'views/partials/_toolbar.html'"></div>
 <section class="uk-padding-small">
 	<div class="uk-overflow-auto">
 		<table class="uk-table uk-table-hover uk-table-middle uk-table-divider">
@@ -14,7 +15,7 @@
 					<td><input class="uk-checkbox" type="checkbox"></td>
 					<td><img class="uk-preserve-width uk-border-circle" src="{{ user.image_url }}" width="40" alt=""></td>
 					<td class="uk-table-link">
-						<a class="uk-link-reset" href="">{{ user.fname }}, {{ user.lname }}</a>
+						<a class="uk-link-reset" ng-href="#!/{{ user.tenant_id }}/profile/{{ user.id }}">{{ user.fname }}, {{ user.lname }}</a>
 					</td>
 					<td>
 						<ul class="uk-iconnav">

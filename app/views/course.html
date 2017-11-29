@@ -1,0 +1,86 @@
+<div ng-include="'views/partials/_toolbar.html'"></div>
+<section class="uk-padding-small">
+    <main class="uk-flex uk-flex-wrap uk-flex-wrap-around" uk-grid>
+		<article class="uk-article">
+			<ul uk-tab uk-switcher>
+				<li><a href="#">Overview</a></li>
+				<li><a href="#">Details</a></li>
+			</ul>
+			<ul class="uk-switcher uk-margin">
+				<li uk-grid data-tab="overview">
+					<div class="uk-width-1-1@xs">
+						<div class="uk-card uk-card-default widget">
+							<div class="uk-card-header uk-clear-fix uk-padding-small">
+								<h3 class="uk-card-title uk-align-left title">Student List</h3>
+								<div class="uk-align-right">
+									<ul class="uk-iconnav toolbar">
+										<li><a ng-click="init()" uk-icon="icon: refresh"></a></li>
+									</ul>
+								</div>
+							</div>
+							<div class="uk-card-body uk-overflow-auto">
+								<table class="uk-table uk-table-hover uk-table-middle uk-table-small">
+									<thead>
+										<tr>
+											<th class="uk-table-shrink"></th>
+											<th class="uk-table-small">Name</th>
+											<th ng-repeat="(key , grade) in students[0].course.meta.course_schema" class="uk-preserve-width uk-text-small">{{ key }}</th>
+											<th class="uk-table-small uk-text-small">Total</th>
+											<th class="uk-table-shrink uk-text-small">Grade</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr ng-repeat="student in students">
+											<td><img class="uk-preserve-width uk-border-circle" src="{{ student.user.image || 'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png' }}" width="40" alt=""></td>
+											<td class="uk-table-link">
+												<a class="uk-link-reset" ng-href="#!/1/profile/{{ student.id }}">{{ student.user.fname }}, {{ student.user.lname }}</a>
+											</td>
+											<td ng-repeat="(key , grade) in student.meta.grades"><input type="number" class="uk-input uk-form-blank" ng-model="grade" max="{{student.course.meta.course_schema[key]}}"/></td>
+											<td><input type="number" class="uk-input uk-form-blank" ng-value="student.meta.grades.quiz + student.meta.grades.assignment + student.meta.grades.midterm + student.meta.grades.lab + student.meta.grades.exam" disabled/></td>
+											<td><span class="uk-text-{{getGrade($index).className}}">{{getGrade($index).grade}}</span></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</li>
+				<li uk-grid data-tab="outline">
+					<div uk-spinner ng-if="loading"></div>
+					<div class="uk-width-1-3@m">
+						<div class="uk-card uk-card-default uk-visible@s" ng-if="outline && !loading">
+							<div class="uk-card-header uk-clear-fix uk-padding-small">
+								<h3 class="uk-card-title title">Topics</h3>
+							</div>
+							<div class="uk-card-body">
+								<ul class="uk-nav uk-nav-default uk-list uk-list-divider uk-nav-parent-icon" uk-nav>
+									<li class="uk-parent" ng-if="outline" ng-repeat="topic in outline">
+										<a href="#{{ $index }}" class="uk-nav-header">{{ topic.title }}</a>
+										<ul class="uk-nav-sub" ng-if="topic.sub_lessons">
+											<li ng-repeat="subTopic in topic.sub_lessons">
+												<a href="#{{ $index }}" uk-scroll>{{ subTopic.title }}</a>
+											</li>
+										</ul>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					<div class="uk-width-2-3@m">
+						<article class="uk-article" ng-repeat="topic in outline">
+
+							<h1 class="uk-article-title" id="#{{ $index }}"><a class="uk-link-reset" href="">{{ topic.title }}</a></h1>
+							
+							<p class="uk-article-meta">Written by <a href="#">Super User</a> on 12 April 2012. Posted in <a href="#">Blog</a></p>
+
+							<p class="uk-text-lead">{{ topic.description }}</p>
+
+							<p>{{ topic.content }}</p>
+
+						</article>
+					</div>
+				</li>
+			</ul>
+		</article>
+    </main>
+</section>
