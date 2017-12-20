@@ -1,19 +1,18 @@
 <nav class="uk-navbar-container uk-light" uk-navbar ng-controller="NavCtrl">
-  <a class="uk-navbar-item uk-logo" href="#">Logo</a>
+  <a class="uk-navbar-item uk-logo" href="#">Nimbus</a>
   <div class="uk-navbar-right">
 	<div class="uk-navbar-item">
 		<ul class="uk-iconnav uk-clearfix">
-			<li ng-if="!loggedin"><a ng-click="showLogin()" uk-icon="icon:  lock"></a></li>
-			<li ng-if="loggedin">
+			<li ng-if="!auth.isAuthenticated()"><a ng-click="showLogin()" uk-icon="icon:  lock"></a></li>
+			<li ng-if="auth.isAuthenticated()">
 				<article class="uk-comment user">
 					<header class="uk-comment-header uk-grid-medium uk-flex-middle" uk-grid>
 					  <div class="uk-width-auto">
-						<img class="uk-comment-avatar" src="{{ user.picture }}" width="40" height="40" alt="Logged in as {{ user.fname }}">
+						<img class="uk-comment-avatar" src="{{ user.picture || 'https://www.victoria147.com/wp-content/uploads/2014/10/user-avatar-placeholder.png' }}" width="40" height="40" alt="Logged in as {{ user.fname }}">
 						<div uk-dropdown mode: click>
-						  <ul class="uk-nav uk-dropdown-nav">
-							<li><a href="#!/account/{{ user.id }}"><span class="uk-margin-small-left" uk-icon="icon: users"></span> My Account</a></li>
-							<li class="uk-nav-divider"></li>
-							<li><a href="#"><span class="uk-margin-small-left" uk-icon="icon: sign-out"></span> Sign Out</a></li>
+						  <ul class="uk-nav uk-dropdown-nav uk-padding-remove uk-list uk-list-divider">
+							<li><a href="#!/profile/settings/">My Account</a></li>
+							<li><a ng-click="logout()">Sign Out</a></li>
 						  </ul>
 						</div>
 					  </div>

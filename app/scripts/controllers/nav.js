@@ -8,7 +8,7 @@
  * Controller of the nimbusEmsApp
  */
 angular.module('nimbusEmsApp')
-  .controller('NavCtrl', function ($scope,offcanvas,modal,form,settings,$route,$rootScope,validation,$auth,auth,$location,breadcrumbs) {
+  .controller('NavCtrl', function ($scope,offcanvas,modal,form,settings,$route,$rootScope,validation,$auth,auth,$location,breadcrumbs,subdomain,$window) {
 	$scope.route = $route;
 	$scope.loggedin = false;
     $scope.offcanvas = offcanvas.offcanvas;
@@ -23,19 +23,9 @@ angular.module('nimbusEmsApp')
 		});
 	};
 	
-	/*$scope.login = function(creds){
-		console.log('login credentials',creds);
-		$scope.loggedin = true;
-		$scope.modal.hide();
-		$scope.user = {
-			id    : 1,
-			fname : 'anthony',
-			lname : 'akpan',
-			email : 'anthony.akpan@hotmail.com',
-			picture : 'https://media.licdn.com/mpr/mpr/shrinknp_200_200/p/4/005/02f/0b3/31ce301.jpg',
-			tenantId : 1
-		};
-	};*/
+	$scope.closeModal = function(){
+		$window.UIkit.modal('#modal').hide();
+	};
 	
 	$scope.login = function(creds,$event) {
 		
@@ -45,7 +35,13 @@ angular.module('nimbusEmsApp')
 		
 		var form	=	angular.element($event.currentTarget).parents()[1];
 		
-		//console.log('Login Details',creds,form);
+		var credentials = {
+			email : creds.email,
+			password : creds.password,
+			//tenant : subdomain
+		};
+		
+		//console.log('Login Details',credentials,$location);
 			
 		validation.validate(form).then(function(result){
 			
@@ -53,7 +49,7 @@ angular.module('nimbusEmsApp')
 			angular.element('#modal .uk-modal-spinner').removeClass('uk-hidden');
 			if(result.valid){											
 				//Use Satellizer's $auth service to login
-				$auth.login(creds).then(function(result) {
+				$auth.login(credentials).then(function(result) {
 					$scope.loginLoading = false;
 					console.log('Data',result);
 					
@@ -75,8 +71,13 @@ angular.module('nimbusEmsApp')
 					$rootScope.user.info = result.data.user;
 					angular.element('#modal .uk-modal-spinner').addClass('uk-hidden');//remove spinner
 					$scope.closeModal();
-					$route.reload();
-
+					
+					/*if($location.path() !== '/' || $location.path() !== '/login'){ 
+						$route.reload(); 
+					}else{ 
+						$location.path('/'); 
+					}*/
+					$location.path('/');
 					
 				}).catch(function(error){
 					$scope.loginLoading = false;
@@ -155,8 +156,8 @@ angular.module('nimbusEmsApp')
 	
 	$scope.logout = function() {
 		$auth.logout();
-		$route.reload();
-		//$location.path("/");
+		//$route.reload();
+		$location.path('/login');
 	};
 	
 	$scope.showSettings = function(type){
@@ -192,5 +193,7 @@ angular.module('nimbusEmsApp')
 	
 	$scope.breadcrumbs = breadcrumbs.parse($location.path());
 	
-	console.log('Nav breadcrumbs',$scope.breadcrumbs);
+	$scope.auth = $auth;
+	
+	//console.log('Nav breadcrumbs',$scope.auth);
   });

@@ -14,7 +14,7 @@
     <!-- build:css(.tmp) styles/main.css -->
     <link rel="stylesheet" href="styles/main.css">
     <!-- endbuild -->
-	
+	<meta name="fragment" content="!" />
   </head>
   <body ng-app="nimbusEmsApp">
     <!--[if lte IE 8]>
@@ -27,14 +27,14 @@
     <div class="uk-offcanvas-content">
 		<div ng-include="'views/partials/_navbar.html'"></div>
 		
-		<div id="#view" ng-view=""></div>
+		<div id="view" ng-view=""></div>
 		<!-- This is the off-canvas -->
 		<div id="side-menu" uk-offcanvas ng-controller="NavCtrl">
 		  <div class="uk-offcanvas-bar uk-offcanvas-bar-animation uk-offcanvas-slide">
 
 			<button class="uk-offcanvas-close" type="button" uk-close></button>
 			<ul class="uk-nav-default uk-nav-parent-icon" uk-nav>
-				<li ng-repeat="(key , nav) in navSettings" ng-if="!nav.disabled"><a ng-href="#!/1/{{ nav.url }}"><span class="uk-margin-small-right" uk-icon="icon: {{ nav.icon }}"></span> {{ key | uppercase }}</a></li>
+				<li ng-repeat="(key , nav) in navSettings" ng-if="!nav.disabled"><a ng-href="#!/{{ nav.url }}"><span class="uk-margin-small-right" uk-icon="icon: {{ nav.icon }}"></span> {{ key | uppercase }}</a></li>
 				<li class="uk-nav-divider"></li>
 				<li ng-if="loggedin" class="uk-nav-header">Account</li>
 				<li ng-if="loggedin"><a ng-href="#"><span class="uk-margin-small-right" uk-icon="icon: user"></span> My Account</a></li>
@@ -110,6 +110,7 @@
         <script src="scripts/services/breadcrumbs.js"></script>
         <script src="scripts/directives/courses.js"></script>
         <script src="scripts/controllers/courses.js"></script>
+        <script src="scripts/controllers/register.js"></script>
         <!-- endbuild -->
 		
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-beta.30/js/uikit.min.js"></script>

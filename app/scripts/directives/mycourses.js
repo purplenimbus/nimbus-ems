@@ -12,7 +12,9 @@ angular.module('nimbusEmsApp')
 		templateUrl: 'views/templates/myCourses.html',
 		restrict: 'E',
 		scope:true,
-		controller : function($scope,eduApi,$route,apiConst,$window,grades){
+		controller : function($scope,eduApi,$route,apiConst,$window,grades,$auth,$cookies){
+			
+			console.log('auth',$auth);
 			
 			$scope.widgetTitle = 'My Courses';
 			
@@ -26,9 +28,9 @@ angular.module('nimbusEmsApp')
 			
 			$scope.init = function(){
 				$scope.loading  = true;
-				var userId = 1;
+				$scope.user = JSON.parse($cookies.get('auth'));
 				//check for logged in
-			 	eduApi.api('GET',$route.current.params.tenant_id+'/registrations?user_id='+userId+'&paginate='+apiConst.componentPagination+'&page=1').then(function(result){
+			 	eduApi.api('GET',$scope.user.tenant.id+'/registrations?user_id='+$scope.user.id+'&paginate='+apiConst.componentPagination+'&page=1').then(function(result){
 					console.log('eduApi course result',result);
 					$scope.courses = result.data.data;
 					$scope.loading  = false;

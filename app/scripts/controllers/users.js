@@ -8,7 +8,7 @@
  * Controller of the nimbusEmsApp
  */
 angular.module('nimbusEmsApp')
-	.controller('UsersCtrl', function ($scope,$window,usersData,emsApi) {
+	.controller('UsersCtrl', function ($scope,$window,usersData,graphApi,subdomain) {
 		$scope.defaultPagination = 5;
 		
 		$scope.usersData = usersData;
@@ -18,7 +18,7 @@ angular.module('nimbusEmsApp')
 		var list = new $window.Bloodhound({
 			datumTokenizer: function(d) { console.log('bloodhound d',d); return $window.Bloodhound.tokenizers.whitespace(d.fname); },
 			queryTokenizer: $window.Bloodhound.tokenizers.whitespace,
-			remote:	'http://ems.nimbus.com:8000/1/users'
+			remote:	'http://graph.nimbus.com:8000/'+subdomain+'/users'
 		});	
 		
 		list.initialize();
@@ -65,7 +65,7 @@ angular.module('nimbusEmsApp')
 		
 		$scope.next = function(page){
 			$scope.loading = true;
-			emsApi.api('GET','1/users?paginate='+$scope.defaultPagination+'&page='+page).then(function(result){
+			graphApi.api('GET',subdomain+'/users?paginate='+$scope.defaultPagination+'&page='+page).then(function(result){
 				
 				console.log('next page:'+page,result.data.data);
 				
@@ -78,7 +78,7 @@ angular.module('nimbusEmsApp')
 				list.initialize(true);
 				$scope.loading = false;
 			}).catch(function(error){
-				console.log('emsApi error',error);
+				console.log('graphApi error',error);
 				$window.UIkit.notification({
 					message: 'Couldnt get users',
 					status: 'danger',

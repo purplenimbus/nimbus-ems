@@ -9,7 +9,7 @@
  */
 angular.module('nimbusEmsApp')
 	.constant('apiConst', {
-			componentPagination : 10, 
-			widgetPagination : 5, 
-			defaultTenantId : 1, 
+		componentPagination : 10, 
+		widgetPagination : 5, 
+		defaultTenantId : 3220, 
 	});

@@ -8,9 +8,9 @@
  * Controller of the nimbusEmsApp
  */
 angular.module('nimbusEmsApp')
-	.controller('ProfileCtrl', function ($scope,profileData,$window,$route,emsApi) {
+	.controller('ProfileCtrl', function ($scope,profileData,$window,$route,graphApi) {
 		$scope.init = function(){
-			console.log('profileData',profileData,$route);
+			//console.log('profileData',profileData,$route);
 			$scope.profileData = profileData;
 			$scope.initiated = true;
 		};
@@ -24,7 +24,7 @@ angular.module('nimbusEmsApp')
 			
 			var params = $route.current.params;
 			
-			emsApi.api('GET',params.tenant_id+'/activities?user_id='+params.user_id+'&page='+page).then(function(result){
+			graphApi.api('GET',params.tenant_id+'/activities?user_id='+params.user_id+'&page='+page).then(function(result){
 				
 				console.log('next page:'+page,result.data.data);
 				
@@ -39,7 +39,7 @@ angular.module('nimbusEmsApp')
 				$scope.loading = false;
 				
 			}).catch(function(error){
-				console.log('emsApi error',error);
+				console.log('graphApi error',error);
 				$window.UIkit.notification({
 					message: 'Couldnt get users',
 					status: 'danger',

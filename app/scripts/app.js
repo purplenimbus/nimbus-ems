@@ -22,7 +22,7 @@ angular
 	])
 	.config(function ($routeProvider,$locationProvider,$authProvider,apiConst) {
 		$authProvider.baseUrl = 'http://graph.nimbus.com:8000';
-		$authProvider.loginUrl = '/'+apiConst.defaultTenantId+'/login';
+		$authProvider.loginUrl = '/login';
 		
 		$routeProvider
 			.when('/', {
@@ -35,8 +35,8 @@ angular
 				controller: 'UsersCtrl',
 				controllerAs: 'users',
 				resolve:	{
-					usersData : function(emsApi,$window,apiConst){
-						return emsApi.api('GET','1/users?paginate='+apiConst.componentPagination+'&page=1').then(function(result){
+					usersData : function(graphApi,$window,apiConst,subdomain){
+						return graphApi.api('GET',subdomain+'/users?paginate='+apiConst.componentPagination+'&page=1').then(function(result){
 							return result.data;
 						}).catch(function(){
 							$window.UIkit.notification({
@@ -53,30 +53,35 @@ angular
 			.when('/profile/settings', {
 				templateUrl: 'views/account.html',
 				controller: 'AccountCtrl',
-				controllerAs: 'account'
+				controllerAs: 'account',
+				resolve:	{
+					profileData : function($cookies){
+						return JSON.parse($cookies.get('auth'));//user.data[0];
+					}
+				}
 			})
-			.when('/:tenant_id/profile/:id', {
+			.when('/profile/:id', {
 			  templateUrl: 'views/profile.html',
 			  controller: 'ProfileCtrl',
 			  controllerAs: 'profile',
 			  resolve:	{
-					profileData : function(emsApi,$window,$route){
+					profileData : function(graphApi,$window,$route,subdomain){
 												
 						var params = $route.current.params;
-						
+			
 						//var profileData = {};
 						
-						return emsApi.api('GET',params.tenant_id+'/users/'+params.id).then(function(user){
+						return graphApi.api('GET',subdomain+'/users/'+params.id).then(function(user){
 							
 							//console.log('get user',user);
 							
-							var profileData = user.data.data[0];
+							var profileData = user.data[0];
 							
-							return emsApi.api('GET',params.tenant_id+'/activities?user_id='+params.id+'&paginate='+apiConst.componentPagination+'&page=1').then(function(activities){
+							return graphApi.api('GET',subdomain+'/activities?user_id='+params.id+'&paginate='+apiConst.componentPagination+'&page=1').then(function(activities){
 								
 								profileData.activities = activities.data;
 								
-								console.log('get user activities',profileData);
+								//console.log('get user activities',profileData);
 								
 								return profileData;
 							}).catch(function(){
@@ -101,25 +106,25 @@ angular
 					}
 				}
 			})
-			.when('/:tenant_id/inventory', {
+			.when('/inventory', {
 			  templateUrl: 'views/inventory.html',
 			  controller: 'InventoryCtrl',
 			  controllerAs: 'inventory'
 			})
-			.when('/:tenant_id/learning', {
+			.when('/learning', {
 			  templateUrl: 'views/learning.html',
 			  controller: 'LearningCtrl',
 			  controllerAs: 'learning'
 			})
-			.when('/:tenant_id/learning/course/:id', {
+			.when('/learning/course/:id', {
 			  templateUrl: 'views/course.html',
 			  controller: 'CourseCtrl',
 			  controllerAs: 'course',
 			  resolve:	{
-					courseData : function(eduApi,$window,apiConst,$route){
+					courseData : function(eduApi,$window,apiConst,$route/*,subdomain*/){
 						var params = $route.current.params;
 						
-						return eduApi.api('GET',params.tenant_id+'/registrations?course_id='+params.id+'&paginate='+apiConst.componentPagination+'&page=1').then(function(result){
+						return eduApi.api('GET',1+'/registrations?course_id='+params.id+'&paginate='+apiConst.componentPagination+'&page=1').then(function(result){
 							//console.log('eduApi course result',result);
 							return result.data;
 						}).catch(function(){
@@ -139,15 +144,14 @@ angular
 			  controller: 'LoginCtrl',
 			  controllerAs: 'login'
 			})
-			.when('/:tenant_id/learning/courses', {
+			.when('/learning/courses', {
 			  templateUrl: 'views/courses.html',
 			  controller: 'CoursesCtrl',
 			  controllerAs: 'courses',
 			  resolve:	{
-					coursesData : function(eduApi,$window,apiConst,$route){
-						var params = $route.current.params;
+					coursesData : function(eduApi,$window,apiConst/*,subdomain*/){
 						
-						return eduApi.api('GET',params.tenant_id+'/courses?paginate='+apiConst.componentPagination+'&page=1').then(function(result){
+						return eduApi.api('GET',1+'/courses?paginate='+apiConst.componentPagination+'&page=1').then(function(result){
 							//console.log('eduApi course result',result);
 							return result.data;
 						}).catch(function(){
@@ -162,8 +166,60 @@ angular
 					}
 				}
 			})
+			.when('/register', {
+			  templateUrl: 'views/register.html',
+			  controller: 'RegisterCtrl',
+			  controllerAs: 'register',
+			  resolve:	{
+					services : function(graphApi,$window,apiConst/*,subdomain*/){
+						
+						return graphApi.api('GET','services?paginate='+apiConst.componentPagination+'&page=1').then(function(result){
+							//console.log('eduApi course result',result);
+							return result.data;
+						}).catch(function(){
+							$window.UIkit.notification({
+								message: 'Couldnt get services',
+								status: 'danger',
+								pos: 'top-right',
+								timeout: 5000
+							});
+						});
+						
+					}
+				}
+			})
 			.otherwise({
 				redirectTo: '/'
 			});
-	});
-	
+			
+	})
+	.run(function($rootScope, $location, $cookies, $http,$auth) {
+		//console.log('$cookies',JSON.parse($cookies.get('auth')),$auth.getToken());
+		// keep user logged in after page refresh
+		
+		$rootScope.globals = $cookies.get('auth') || {};
+		
+		if ($rootScope.globals && $auth.isAuthenticated()) {
+			$http.defaults.headers.common['Authorization'] = 'Bearer ' + $auth.getToken(); // jshint ignore:line
+		}
+
+		$rootScope.$on('$locationChangeStart', function () {
+			//allowed pages
+			var allowed = ['login','register'];
+			
+			var restricted = false;
+			
+			//TODO User array of allowed pages instead
+			angular.forEach(allowed,function(value){
+				restricted = $location.path() === '/'+value ? false : true;
+			});
+
+						
+			// redirect to login page if not logged in and trying to access a restricted page
+			var loggedIn = $auth.isAuthenticated();//$rootScope.globals.currentUser;
+			
+			if (!loggedIn && restricted) {
+				$location.path('/login');
+			}
+		});
+	});	

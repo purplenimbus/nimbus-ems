@@ -8,9 +8,9 @@
  * Factory in the nimbusEmsApp.
  */
 angular.module('nimbusEmsApp')
-  .factory('emsApi', function ($http) {
+  .factory('graphApi', function ($http) {
     // Service logic
-    var apiEndPoint = 'http://graph.nimbus.com:8000/';
+    var apiEndPoint = 'http://graph.nimbus.com:8000/v1/';
 
     // Public API here
     return {
@@ -26,7 +26,7 @@ angular.module('nimbusEmsApp')
   })
   .factory('fmsApi', function ($http) {
     // Service logic
-    var apiEndPoint = 'http://fms-api-v1.herokuapp.com/';
+    var apiEndPoint = 'http://fms-api-v1.herokuapp.com/v1/';
 
     // Public API here
     return {
@@ -42,7 +42,7 @@ angular.module('nimbusEmsApp')
   })
   .factory('eduApi', function ($http) {
     // Service logic
-    var apiEndPoint = 'http://edu.nimbus.com:7070/';
+    var apiEndPoint = 'http://edu.nimbus.com:7070/v1/';
 
     // Public API here
     return {
@@ -55,4 +55,15 @@ angular.module('nimbusEmsApp')
 			}
 		}
     };
-  });
+  })
+  .factory('subdomain', function ($cookies) {
+		var auth = $cookies.get('auth');
+		
+		var domain = auth ? JSON.parse(auth) : false;
+		
+		if (domain){
+			return domain.tenant.username;
+		}else{
+			return false;
+		}	
+	});

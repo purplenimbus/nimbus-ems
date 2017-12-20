@@ -1,6 +1,6 @@
 <div class="uk-card uk-card-default widget">
 	<div class="uk-card-header uk-clear-fix uk-padding-small">
-		<h3 class="uk-card-title uk-align-left title">{{ widgetTitle }}</h3>
+		<p class="uk-text-capitalize uk-align-left title">{{ widgetTitle }}</p>
 		<div class="uk-align-right">
 			<ul class="uk-iconnav toolbar">
 				<li><a href="#" uk-icon="icon: plus"></a></li>
@@ -26,8 +26,14 @@
 							<img class="uk-comment-avatar uk-preserve-width uk-border-circle" src="{{ user.image_url || 'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png' }}" width="60" height="60" alt="">
 						</div>
 						<div class="uk-width-expand">
-							<p class="uk-comment-title uk-margin-remove"><a class="uk-link-reset" ng-href="#!/{{ user.tenant_id }}/profile/{{ user.id }}">{{ user.title }} {{ user.fname }} {{ user.lname }}</a></p>
+							<p class="uk-margin-remove">
+								<a class="uk-link-reset uk-text-capitalize" ng-href="#!/profile/{{ user.id }}">
+									{{ user.title }} {{ user.fname }} {{ user.lname }}
+								</a>
+							</p>
 							<ul class="uk-padding-remove uk-margin-remove uk-comment-meta uk-subnav uk-subnav-divider uk-margin-remove-top uk-text-mute">
+								<li class="uk-text-capitalize">{{ user.meta.user_type }}</li>
+								<li class="uk-text-capitalize">{{ user.meta.business_unit }}</li>
 							</ul>
 						</div>
 					</header>

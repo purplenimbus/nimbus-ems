@@ -8,12 +8,18 @@
  * Controller of the nimbusEmsApp
  */
 angular.module('nimbusEmsApp')
-	.controller('LoginCtrl', function ($scope,$route,$rootScope,validation,$auth,auth,$window) {
-    	$scope.login = function(creds,$event) {
+	.controller('LoginCtrl', function ($scope,$route,$rootScope,validation,$auth,auth,$window,subdomain,$location) {
+    	$scope.signin = function(creds,$event) {
 		
 		//console.log('Login Events',angular.element($event.currentTarget).parents());
 		//$event.preventDefault();
 		$scope.loginLoading = true;
+		
+		var credentials = {
+			email : creds.email,
+			password : creds.password,
+			tenant : subdomain
+		};
 		
 		var form	=	angular.element($event.currentTarget).parents()[1];
 		
@@ -25,7 +31,7 @@ angular.module('nimbusEmsApp')
 			angular.element('#modal .uk-modal-spinner').removeClass('uk-hidden');
 			if(result.valid){											
 				//Use Satellizer's $auth service to login
-				$auth.login(creds).then(function(result) {
+				$auth.login(credentials).then(function(result) {
 					$scope.loginLoading = false;
 					console.log('Data',result);
 					
@@ -46,8 +52,7 @@ angular.module('nimbusEmsApp')
 					auth.setCookie('auth',JSON.stringify(result.data.user),9);
 					$rootScope.user.info = result.data.user;
 					angular.element('#modal .uk-modal-spinner').addClass('uk-hidden');//remove spinner
-					$scope.closeModal();
-					$route.reload();
+					$location.path('/');
 
 					
 				}).catch(function(error){

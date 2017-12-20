@@ -7,7 +7,7 @@
  * # tasks
  */
 angular.module('nimbusEmsApp')
-  .directive('tasks', function (modal,form,tasks,tasksConst,uikit3,$window,emsApi) {
+  .directive('tasks', function (modal,form,tasks,tasksConst,uikit3,$window,graphApi) {
 	
     return {
 		templateUrl: 'views/templates/tasks.html',
@@ -24,7 +24,7 @@ angular.module('nimbusEmsApp')
 			var taskList = false;
 			$scope.init = function(){
 				$scope.loading = true;
-				emsApi.api('GET',apiConst.defaultTenantId+'/users/1/tasks?paginate='+apiConst.widgetPagination+'&page=1').then(function(result){
+				graphApi.api('GET',apiConst.defaultTenantId+'/users/1/tasks?paginate='+apiConst.widgetPagination+'&page=1').then(function(result){
 					console.log('result',result);
 					$scope.data = result.data;
 					$scope.loading = false;
@@ -200,24 +200,24 @@ angular.module('nimbusEmsApp')
 			$scope.next = function(page){
 				console.log('get page',page,$scope.data);
 				$scope.loading = true;
-				emsApi.api('GET',apiConst.defaultTenantId+'/users/1/tasks?paginate='+apiConst.widgetPagination+'&page='+page).then(function(result){
+				graphApi.api('GET',apiConst.defaultTenantId+'/users/1/tasks?paginate='+apiConst.widgetPagination+'&page='+page).then(function(result){
 					$scope.data = result.data;
 					taskList.initialize(true);
 					$scope.loading = false;
 				}).catch(function(error){
-					console.log('emsApi error',error);
+					console.log('graphApi error',error);
 				});
 			};
 			
 			$scope.prev = function(page){
 				console.log('get page',page,$scope.data);
 				$scope.loading = true;
-				emsApi.api('GET',apiConst.defaultTenantId+'/users/1/tasks?paginate='+apiConst.widgetPagination+'&page='+page).then(function(result){
+				graphApi.api('GET',apiConst.defaultTenantId+'/users/1/tasks?paginate='+apiConst.widgetPagination+'&page='+page).then(function(result){
 					$scope.data = result.data;
 					taskList.initialize(true);
 					$scope.loading = false;
 				}).catch(function(error){
-					console.log('emsApi error',error);
+					console.log('graphApi error',error);
 				});
 			};
 		
