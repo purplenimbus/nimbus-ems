@@ -31,10 +31,11 @@ angular.module('nimbusEmsApp')
 				$scope.user = JSON.parse($cookies.get('auth'));
 				//check for logged in
 			 	eduApi.api('GET',$scope.user.tenant.id+'/registrations?user_id='+$scope.user.id+'&paginate='+apiConst.componentPagination+'&page=1').then(function(result){
+			 	//fmsApi.api('GET','vehicles?paginate='+apiConst.componentPagination+'&page=1').then(function(result){
 					console.log('eduApi course result',result);
 					$scope.courses = result.data.data;
 					$scope.loading  = false;
-				}).catch(function(){
+				}).catch(function(error){
 					$scope.loading  = false;
 					$window.UIkit.notification({
 						message: 'Couldnt get courses',
@@ -42,6 +43,7 @@ angular.module('nimbusEmsApp')
 						pos: 'top-right',
 						timeout: 5000
 					});
+					console.log('eduApi course error',error);
 				});
 			};
 			

@@ -103,25 +103,49 @@ angular.module('nimbusEmsApp')
 			},
 			
 			modal : function(attrs){
-				var str = '';
+				var str = '',
+					btnClass = 'uk-modal-close-default';
 				
 				if(attrs.type && attrs.type === 'full'){
-					attrs.cls = 'uk-modal-full';
+					attrs.wrapperCls += ' uk-modal-full';
+					btnClass = 'uk-modal-close-full uk-close-large';
 				}
 								
 				str += '<div id="modal" ';
 				str += attrs.wrapperCls ? 'class="'+attrs.wrapperCls+'"' : '';
+				str += attrs.directive ? attrs.directive : '';				
 				str += 'uk-modal>';
 				str += '	<div class="uk-modal-dialog ';
 				str += attrs.cls ? attrs.cls+'"' : '"';
-				str += attrs.directive ? attrs.directive : '';
 				str += '>';
-				str += '		<button class="uk-modal-close-default" type="button" uk-close></button>';
-				str += attrs.title ?'<div class="uk-modal-header"><h2 class="uk-modal-title">'+attrs.title+'</h2></div>' : '';
-				str += attrs.body ? '		<div class="uk-modal-body">'+attrs.body+'</div>' : '';
-				str += attrs.footer ?'		<div class="uk-modal-footer">'+attrs.footer+'</div>' : '';
+				str += '		<button class="'+btnClass+'" type="button" uk-close></button>';
+				
+				if(attrs.type && attrs.type === 'full'){
+					str += attrs.body ? this.fullModalBody(attrs) : '';
+				}else{
+					str += attrs.title ?'<div class="uk-modal-header"><h2 class="uk-modal-title">'+attrs.title+'</h2></div>' : '';
+					str += attrs.body ? '		<div class="uk-modal-body">'+attrs.body+'</div>' : '';
+					str += attrs.footer ?'		<div class="uk-modal-footer">'+attrs.footer+'</div>' : '';
+				}
+				
 				str += '	</div>';
 				str += '</div>';
+				
+				return str;
+			},
+			
+			fullModalBody : function(attrs){
+				var str = '';
+				
+				str +=	'<div class="uk-grid-collapse uk-child-width-1-2@s uk-flex-middle" uk-grid>';
+				str +=		attrs.image ? '<div class="uk-background-cover" ': '';
+				str +=		attrs.image ? 'style="background-image: url('+attrs.image+');" ' : '';
+				str +=		attrs.image ? 'uk-height-viewport></div>': '';
+				str +=		'<div class="uk-padding-large">';
+				str +=			attrs.title ? '<h1>'+attrs.title+'</h1>' : '';
+				str +=			attrs.body ? '<p>'+attrs.body+'</p>' : '';
+				str +=		'</div>';
+				str +=	'</div>';
 				
 				return str;
 			},

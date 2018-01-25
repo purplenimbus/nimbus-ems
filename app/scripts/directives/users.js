@@ -42,7 +42,7 @@ angular.module('nimbusEmsApp')
 		var userList = new $window.Bloodhound({
 			datumTokenizer: function(d) { /*console.log('bloodhound d',d);*/ return $window.Bloodhound.tokenizers.whitespace(d.fname); },
 			queryTokenizer: $window.Bloodhound.tokenizers.whitespace,
-			remote:	'http://graph.nimbus.com:8000/'+apiConst.defaultTenantId+'/users'
+			remote:	graphApi.apiEndPoint+subdomain+'/users'
 		});	
 		
 		userList.initialize();
@@ -56,7 +56,7 @@ angular.module('nimbusEmsApp')
 				//header: '<h3 class="uk-text-muted uk-text-small">Users</h3>',
 				//TO DO Move strings below to its own function
 				suggestion: function(data){ 
-					var str = '<article class="uk-comment uk-card">';
+					var str = 		'<article class="uk-comment uk-card">';
 						str += '		<header class="uk-comment-header uk-grid-medium uk-flex-middle uk-margin-remove-bottom uk-grid" uk-grid="">';
 						//str += '			<div class="uk-width-auto uk-first-column">';
 						//str += '				<img class="uk-comment-avatar" src="'+data.image_url+'" width="40" height="40" alt="">';

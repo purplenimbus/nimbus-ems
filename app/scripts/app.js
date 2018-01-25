@@ -20,7 +20,14 @@ angular
 		'satellizer',
 		'chart.js'
 	])
-	.config(function ($routeProvider,$locationProvider,$authProvider,apiConst) {
+	.config(function ($routeProvider,$locationProvider,$authProvider,apiConst,$sceDelegateProvider) {
+		$sceDelegateProvider.resourceUrlWhitelist([
+			// Allow same origin resource loads.
+			'self',
+			// Allow loading from our assets domain. **.
+			'http://edu.nimbus.com:7070/**'
+		]);
+  
 		$authProvider.baseUrl = 'http://graph.nimbus.com:8000';
 		$authProvider.loginUrl = '/login';
 		
@@ -199,17 +206,23 @@ angular
 		
 		$rootScope.globals = $cookies.get('auth') || {};
 		
-		if ($rootScope.globals && $auth.isAuthenticated()) {
-			$http.defaults.headers.common['Authorization'] = 'Bearer ' + $auth.getToken(); // jshint ignore:line
+		if ($rootScope.globals && $auth.isAuthenticated()) {			
+			$http.defaults.headers.common.Authorization = 'Bearer ' + $auth.getToken(); // jshint ignore:line
 		}
+		
+		var history = [];
+
+		$rootScope.$on('$routeChangeSuccess', function() {
+			history.push($location.$$path);
+		});
 
 		$rootScope.$on('$locationChangeStart', function () {
+
 			//allowed pages
 			var allowed = ['login','register'];
 			
 			var restricted = false;
 			
-			//TODO User array of allowed pages instead
 			angular.forEach(allowed,function(value){
 				restricted = $location.path() === '/'+value ? false : true;
 			});
@@ -219,7 +232,14 @@ angular
 			var loggedIn = $auth.isAuthenticated();//$rootScope.globals.currentUser;
 			
 			if (!loggedIn && restricted) {
-				$location.path('/login');
+				console.log('logging you out',history);
+				
+				$location.path('/login');//.search({returnUrl: history[0]});
 			}
 		});
-	});	
+	})
+	.filter('trusted', ['$sce', function ($sce) {
+		return function(url) {
+			return $sce.trustAsResourceUrl(url);
+		};
+	}]);	

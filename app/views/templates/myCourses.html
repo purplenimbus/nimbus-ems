@@ -14,7 +14,7 @@
 			<p class="uk-heading-line uk-text-center uk-text-capitalize"><span>{{ user.fname }} {{ user.lname }}</span></p>
 			<ul class="uk-list uk-list-divider">
 				<li class="uk-clear-fix" ng-repeat="course in courses" >
-					<span class="uk-align-left uk-margin-remove uk-text-capitalize"><a ng-href="#!1/learning/course/{{ course.course.id }}">{{ course.course.name }}</a></span>
+					<span class="uk-align-left uk-margin-remove uk-text-capitalize"><a ng-href="#!/learning/course/{{ course.course.id }}">{{ course.course.name }}</a></span>
 					<span class="uk-align-right uk-margin-remove uk-text-{{getGrade($index).className}}">{{ getTotal($index) }}</span>
 				</li>
 			</ul>

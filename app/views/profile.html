@@ -23,7 +23,7 @@
 										<img class="uk-comment-avatar" src="{{	activity.user.image	|| 'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png' }}" width="50" height="50" alt="">
 									</div>
 									<div class="uk-width-expand">
-										<h4 class="uk-comment-title uk-margin-remove uk-text-small"><a class="uk-link-reset uk-text-capitalize" href="#">{{ profileData.fname}}</a> {{	activity.meta.action.verb	}} <a href="{{ activity.meta.subject.url }}">{{	activity.meta.subject.type	}}</a></h4>
+										<h4 class="uk-comment-title uk-margin-remove uk-text-small"><a class="uk-link-reset uk-text-capitalize" href="#">{{ profileData.fname}}</a> {{	activity.meta.action.verb	}} <a ng-click="modal.modal({ type : 'full' , title  : activity.meta.subject.name , body : activity.meta.subject.description , image : activity.meta.subject.featuredImage },this)">{{	activity.meta.subject.type	}}</a></h4>
 										<span class="uk-text-muted uk-text-small">12 days ago</span>
 									</div>
 								</header>

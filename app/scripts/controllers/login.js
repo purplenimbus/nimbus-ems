@@ -33,7 +33,7 @@ angular.module('nimbusEmsApp')
 				//Use Satellizer's $auth service to login
 				$auth.login(credentials).then(function(result) {
 					$scope.loginLoading = false;
-					console.log('Data',result);
+					console.log('Data',result,$location);
 					
 					angular.element('#modal .uk-modal-dialog').removeClass('error')
 											.addClass('success');

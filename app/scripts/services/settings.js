@@ -31,7 +31,11 @@ angular.module('nimbusEmsApp')
 			requests : {
 				display:false,
 				disabled:true
-			}
+			},
+			myCourses : {
+				display:true,
+				disabled:false
+			},
 		},
 		learningDashboard : {
 			myCourses : {

@@ -24,7 +24,7 @@ angular.module('nimbusEmsApp')
 					password	: 	$scope.password
 				};
 			
-			console.log('Login Details',credentials);
+			console.log('Login Details',credentials,$route);
 				
 			validation.validate(form).then(function(result){
 				

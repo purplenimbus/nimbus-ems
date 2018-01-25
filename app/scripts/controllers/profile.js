@@ -8,7 +8,8 @@
  * Controller of the nimbusEmsApp
  */
 angular.module('nimbusEmsApp')
-	.controller('ProfileCtrl', function ($scope,profileData,$window,$route,graphApi) {
+	.controller('ProfileCtrl', function ($scope,profileData,$window,$route,graphApi,modal) {
+		
 		$scope.init = function(){
 			//console.log('profileData',profileData,$route);
 			$scope.profileData = profileData;
@@ -48,6 +49,8 @@ angular.module('nimbusEmsApp')
 				});
 			});
 		};
+		
+		$scope.modal = modal;
 		
 		$scope.$on('$routeChangeStart', function() { 
 		   //close any open menus or modals
