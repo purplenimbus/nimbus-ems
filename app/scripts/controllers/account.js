@@ -34,7 +34,7 @@ angular.module('nimbusEmsApp')
 	};
 	
 	$scope.save = function(data){
-		console.log('save data',data);
+		console.log('save data',data,subdomain);
 		$scope.loading = true;
 		graphApi.api('POST',subdomain+'/users/'+data.id,data)
 		.then(function(result){

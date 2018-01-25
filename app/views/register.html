@@ -7,7 +7,6 @@
 			<form class="uk-form-horizontal uk-margin-remove">
 				<ul class="uk-child-width-expand" uk-tab uk-switcher>
 					<li><a href="#" uk-icon="icon: info" disabled></a></li>
-					<li><a href="#" uk-icon="icon: settings" disabled></a></li>
 					<li><a href="#" uk-icon="icon: check" disabled></a></li>
 				</ul>
 				<ul id="steps" class="uk-switcher uk-margin">
@@ -64,36 +63,6 @@
 						
 						<div class="uk-margin">
 							<button class="uk-button uk-button-primary uk-width-1-1" ng-click="registerUser(registration)">Plans <div ng-if="loading" uk-spinner></div></button>
-						</div>
-					</li>
-					<li>
-						<div class="uk-margin uk-text-center" ng-if="loading">
-							<div uk-spinner></div>
-						</div>
-						<div class="uk-margin">
-							<div class="uk-inline uk-width-1-1">
-								<ul class="uk-list">
-									<li ng-repeat="service in services" class="uk-clearfix ng-scope" style="">	
-										<div class="uk-align-left uk-margin-remove">		
-											<p class="uk-margin-remove ng-binding uk-text-capitalize">
-												<span class="uk-text-bold">{{ service.name }}</span>
-												<span class="uk-text-small uk-text-muted uk-text-uppercase">
-													{{ service.currency.symbol }} {{ service.meta.cost }} {{ service.meta.rate }}
-												</span>
-											</p>	
-										</div>	
-										<div class="uk-align-right">		
-											<input class="uk-checkbox ng-pristine ng-untouched ng-valid ng-not-empty" type="checkbox" ng-model="service.selected" ng-click="selectService()">	
-										</div>	
-									</li>
-								</ul>
-								<hr>
-								<p class="uk-text-large">{{ services[0].currency.symbol }} {{ total }}</p>
-							</div>
-						</div>
-						
-						<div class="uk-margin">
-							<button class="uk-button uk-button-primary uk-width-1-1" ng-click="completeOrder(registration)">Complete Order <div uk-spinner></div></button>
 						</div>
 					</li>
 					<li>

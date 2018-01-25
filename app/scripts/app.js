@@ -62,8 +62,25 @@ angular
 				controller: 'AccountCtrl',
 				controllerAs: 'account',
 				resolve:	{
-					profileData : function($cookies){
-						return JSON.parse($cookies.get('auth'));//user.data[0];
+					profileData : function($cookies,graphApi,subdomain,$window){
+						//console.log('profileData',JSON.parse($cookies.get('auth')));
+						var id = JSON.parse($cookies.get('auth')).id;
+						
+						return graphApi.api('GET',subdomain+'/users/'+id).then(function(user){
+							
+							console.log('get user',user);
+							
+							return user.data[0];
+						}).catch(function(){
+							$window.UIkit.notification({
+								message: 'Couldnt get profile data',
+								status: 'danger',
+								pos: 'top-right',
+								timeout: 5000
+							});
+						});
+						
+						//return JSON.parse($cookies.get('auth'));//user.data[0];
 					}
 				}
 			})
