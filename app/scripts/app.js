@@ -85,10 +85,10 @@ angular
 				}
 			})
 			.when('/profile/:id', {
-			  templateUrl: 'views/profile.html',
-			  controller: 'ProfileCtrl',
-			  controllerAs: 'profile',
-			  resolve:	{
+				templateUrl: 'views/profile.html',
+				controller: 'ProfileCtrl',
+				controllerAs: 'profile',
+				resolve:	{
 					profileData : function(graphApi,$window,$route,subdomain){
 												
 						var params = $route.current.params;
@@ -131,20 +131,20 @@ angular
 				}
 			})
 			.when('/inventory', {
-			  templateUrl: 'views/inventory.html',
-			  controller: 'InventoryCtrl',
-			  controllerAs: 'inventory'
+				templateUrl: 'views/inventory.html',
+				controller: 'InventoryCtrl',
+				controllerAs: 'inventory'
 			})
 			.when('/learning', {
-			  templateUrl: 'views/learning.html',
-			  controller: 'LearningCtrl',
-			  controllerAs: 'learning'
+				templateUrl: 'views/learning.html',
+				controller: 'LearningCtrl',
+				controllerAs: 'learning'
 			})
 			.when('/learning/course/:id', {
-			  templateUrl: 'views/course.html',
-			  controller: 'CourseCtrl',
-			  controllerAs: 'course',
-			  resolve:	{
+				templateUrl: 'views/course.html',
+				controller: 'CourseCtrl',
+				controllerAs: 'course',
+				resolve:	{
 					courseData : function(eduApi,$window,apiConst,$route/*,subdomain*/){
 						var params = $route.current.params;
 						
@@ -164,21 +164,22 @@ angular
 				}
 			})
 			.when('/login', {
-			  templateUrl: 'views/login.html',
-			  controller: 'LoginCtrl',
-			  controllerAs: 'login'
+				templateUrl: 'views/login.html',
+				controller: 'LoginCtrl',
+				controllerAs: 'login'
 			})
 			.when('/learning/courses', {
-			  templateUrl: 'views/courses.html',
-			  controller: 'CoursesCtrl',
-			  controllerAs: 'courses',
-			  resolve:	{
-					coursesData : function(eduApi,$window,apiConst/*,subdomain*/){
+				templateUrl: 'views/courses.html',
+				controller: 'CoursesCtrl',
+				controllerAs: 'courses',
+				resolve:	{
+					coursesData : function(eduApi,$window,apiConst,tenant){
 						
-						return eduApi.api('GET',1+'/courses?paginate='+apiConst.componentPagination+'&page=1').then(function(result){
-							//console.log('eduApi course result',result);
+						return eduApi.api('GET',tenant.id+'/courses?paginate='+apiConst.componentPagination+'&page=1').then(function(result){
+							console.log('eduApi course result',result);
 							return result.data;
-						}).catch(function(){
+						}).catch(function(error){
+							console.log('eduApi course error',error);
 							$window.UIkit.notification({
 								message: 'Couldnt get courseData',
 								status: 'danger',
@@ -191,10 +192,10 @@ angular
 				}
 			})
 			.when('/register', {
-			  templateUrl: 'views/register.html',
-			  controller: 'RegisterCtrl',
-			  controllerAs: 'register',
-			  resolve:	{
+				templateUrl: 'views/register.html',
+				controller: 'RegisterCtrl',
+				controllerAs: 'register',
+				resolve:	{
 					services : function(graphApi,$window,apiConst/*,subdomain*/){
 						
 						return graphApi.api('GET','services?paginate='+apiConst.componentPagination+'&page=1').then(function(result){

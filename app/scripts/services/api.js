@@ -15,6 +15,7 @@ angular.module('nimbusEmsApp')
 
 		// Public API here
 		return {
+			apiEndPoint : self.apiEndPoint,
 			api : function(requestType,parameters,data){
 							
 				switch(requestType){
@@ -40,16 +41,18 @@ angular.module('nimbusEmsApp')
 		};
 	})
 	.factory('eduApi', function ($http) {
+		var self = this;
 		// Service logic
-		var apiEndPoint = 'http://edu.nimbus.com:7070/v1/'; //http://nimbus-learning-api.herokuapp.com/v1/
+		self.apiEndPoint = 'http://edu.nimbus.com:7070/v1/'; //http://nimbus-learning-api.herokuapp.com/v1/
 
 		// Public API here
 		return {
+			apiEndPoint : self.apiEndPoint,
 			api : function(requestType,parameters,data){
 								
 				switch(requestType){
-					case 'GET' : return $http.jsonp(apiEndPoint+parameters,{method:requestType});//$http.get(apiEndPoint+parameters);
-					case 'POST' : return $http.jsonp(apiEndPoint+parameters,{method:requestType,data:data});//$http.post(apiEndPoint+parameters,data); 
+					case 'GET' : return $http.jsonp(self.apiEndPoint+parameters,{method:requestType});//$http.get(apiEndPoint+parameters);
+					case 'POST' : return $http.jsonp(self.apiEndPoint+parameters,{method:requestType,data:data});//$http.post(apiEndPoint+parameters,data); 
 				}
 				
 			}
@@ -65,4 +68,9 @@ angular.module('nimbusEmsApp')
 		}else{
 			return false;
 		}	
+	})
+	.factory('tenant', function ($cookies) {
+		var user = JSON.parse($cookies.get('auth'));
+			
+		return user.tenant;	
 	});

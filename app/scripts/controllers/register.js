@@ -8,7 +8,7 @@
  * Controller of the nimbusEmsApp
  */
 angular.module('nimbusEmsApp')
-  .controller('RegisterCtrl', function ($scope,$window,services,graphApi) {
+  .controller('RegisterCtrl', function ($scope,$window,services,graphApi,$location) {
     $scope.registration = {
 		meta : {}
 	};
@@ -59,13 +59,13 @@ angular.module('nimbusEmsApp')
 			$scope.loading = false;
 			$scope.errors = false;
 			$window.UIkit.notification({
-				message: result.statusText,
+				message: '<span uk-icon=\'icon: check\'></span> '+result.statusText,
 				status: 'primary',
 				pos: 'top-right',
 				timeout: 5000
 			});
 			
-			$window.UIkit.switcher('#steps').show(1);
+			$location.path( '/login' ).search('firstLogin', true);
 		
 		}).catch(function(error){
 			
@@ -87,8 +87,4 @@ angular.module('nimbusEmsApp')
 		console.log('registration data',data);
 	};
 		
-	$scope.next = function(index){
-		console.log('next',index,angular.element('#steps'));
-		$window.UIkit.switcher('#steps').show(index);
-	};
   });

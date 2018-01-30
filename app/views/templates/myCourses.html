@@ -12,7 +12,7 @@
 		<div ng-if="!loading">
 			<img class="uk-comment-avatar uk-preserve-width uk-border-circle" src="{{ user.image_url }}" width="100" height="100" alt="">
 			<p class="uk-heading-line uk-text-center uk-text-capitalize"><span>{{ user.fname }} {{ user.lname }}</span></p>
-			<ul class="uk-list uk-list-divider">
+			<ul class="uk-list">
 				<li class="uk-clear-fix" ng-repeat="course in courses" >
 					<span class="uk-align-left uk-margin-remove uk-text-capitalize"><a ng-href="#!/learning/course/{{ course.course.id }}">{{ course.course.name }}</a></span>
 					<span class="uk-align-right uk-margin-remove uk-text-{{getGrade($index).className}}">{{ getTotal($index) }}</span>

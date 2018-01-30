@@ -4,12 +4,12 @@
 		<div class="uk-width-1-3@m" ng-repeat="course in coursesList">
 			<div class="uk-card uk-card-default uk-card-hover">
 				<div class="uk-card-header uk-clear-fix uk-padding-small">
-					<p class="uk-align-left title uk-text-capitalize uk-text-bold uk-margin-remove">
+					<a ng-href="#!/learning/course/{{ course.id }}" class="uk-button uk-button-text uk-align-left title uk-text-capitalize uk-text-bold uk-margin-remove">
 						{{ course.name }}
-					</p>
+					</a>
 					<div class="uk-align-right">
 						<ul class="uk-iconnav" uk-switcher="connect: .details-{{$index}}">
-							<li><a href="#" class="uk-icon-link" uk-icon="icon: home"></a></li>
+							<!-- <li><a href="#" class="uk-icon-link" uk-icon="icon: home"></a></li> -->
 							<li><a href="#" class="uk-icon-link" uk-icon="icon: info"></a></li>
 						</ul>
 					</div>
@@ -18,8 +18,6 @@
 					<ul class="uk-switcher details-{{$index}} uk-margin">
 						<li>
 							<p class="uk-text-truncate">{{ course.description }}</p>
-						</li>
-						<li>
 							<ul class="uk-list uk-list-divider">
 								<li class="uk-clear-fix">
 									<span class="uk-align-left uk-margin-remove">
@@ -48,9 +46,6 @@
 							</ul>		
 						</li>
 					</ul>
-				</div>
-				<div class="uk-card-footer">
-					<a ng-href="#!/learning/course/{{ course.id }}" class="uk-button uk-button-text">View Course</a>
 				</div>
 			</div>
 		</div>

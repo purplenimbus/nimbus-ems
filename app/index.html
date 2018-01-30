@@ -34,7 +34,20 @@
 
 			<button class="uk-offcanvas-close" type="button" uk-close></button>
 			<ul class="uk-nav-default uk-nav-parent-icon" uk-nav>
-				<li ng-repeat="(key , nav) in navSettings" ng-if="!nav.disabled"><a ng-href="#!/{{ nav.url }}"><span class="uk-margin-small-right" uk-icon="icon: {{ nav.icon }}"></span> {{ key | uppercase }}</a></li>
+				<li ng-repeat="(key , nav) in navSettings" ng-if="!nav.disabled" ng-class="nav.children ? 'uk-parent' : ''">
+					<a ng-href="#!/{{ nav.url }}">
+						<span class="uk-margin-small-right" uk-icon="icon: {{ nav.icon }}"></span> 
+						{{ key | uppercase }}
+					</a>
+					<ul class="uk-nav-sub" ng-if="nav.children">
+						<li ng-repeat="(childKey,child) in nav.children">
+							<a ng-href="#!/{{ child.url }}">
+								<span class="uk-margin-small-right" uk-icon="icon: {{ child.icon }}"></span>
+								{{ childKey | uppercase }}
+							</a>
+						</li>
+					</ul>
+				</li>
 				<li class="uk-nav-divider"></li>
 				<li ng-if="loggedin" class="uk-nav-header">Account</li>
 				<li ng-if="loggedin"><a ng-href="#"><span class="uk-margin-small-right" uk-icon="icon: user"></span> My Account</a></li>
@@ -111,6 +124,7 @@
         <script src="scripts/directives/courses.js"></script>
         <script src="scripts/controllers/courses.js"></script>
         <script src="scripts/controllers/register.js"></script>
+        <script src="scripts/services/courseservice.js"></script>
         <!-- endbuild -->
 		
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-beta.30/js/uikit.min.js"></script>

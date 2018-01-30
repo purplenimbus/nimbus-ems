@@ -8,7 +8,7 @@
  * Controller of the nimbusEmsApp
  */
 angular.module('nimbusEmsApp')
-	.controller('AccountCtrl', function ($scope,$window,profileData,graphApi,subdomain,$route,apiConst) {
+	.controller('AccountCtrl', function ($scope,$window,profileData,graphApi,subdomain,$route,apiConst,auth) {
 	
 	$scope.init = function(){
 		
@@ -47,6 +47,8 @@ angular.module('nimbusEmsApp')
 								});
 			
 			$scope.loading = false;
+			
+			auth.setCookie('auth',JSON.stringify(result.data),9);
 			
 			$route.reload();
 		})

@@ -54,7 +54,7 @@ angular.module('nimbusEmsApp')
 				icon: 'home',
 				url:'',
 			},
-			users : {
+			/*users : {
 				display:true,
 				disabled:false,
 				icon: 'users',
@@ -65,12 +65,20 @@ angular.module('nimbusEmsApp')
 				disabled:false,
 				icon: 'list',
 				url:'inventory',
-			},
+			},*/
 			learning : {
 				display:true,
 				disabled:false,
 				icon: 'laptop',
 				url:'learning',
+				children:{
+					courses:{
+						display:true,
+						disabled:false,
+						icon: 'thumbnails',
+						url:'learning/courses'
+					}
+				}
 			}
 		}
 	};

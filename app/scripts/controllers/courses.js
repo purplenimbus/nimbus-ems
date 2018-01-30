@@ -8,10 +8,16 @@
  * Controller of the nimbusEmsApp
  */
 angular.module('nimbusEmsApp')
-	.controller('CoursesCtrl', function ($scope,coursesData,grades) {
-		$scope.coursesData = coursesData;
-				
+	.controller('CoursesCtrl', function ($scope,coursesData,grades,courseService) {
+		$scope.asset = { 
+			meta : {
+				class_id : 1,
+			} 
+		};
+		
 		$scope.coursesList = coursesData.data;
+				
+		//$scope.coursesList = coursesData.data ? coursesData.data : false;
 		
 		$scope.courseAverage = function(index){
 			return grades.getAverage($scope.coursesList[index]);
@@ -26,4 +32,8 @@ angular.module('nimbusEmsApp')
 		$scope.next = function(){
 			
 		};
+		
+		$scope.course = courseService;
+		
+		$scope.save = function(data){ courseService.save(data); };
 	});

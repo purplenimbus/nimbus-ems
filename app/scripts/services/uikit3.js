@@ -53,9 +53,9 @@ angular.module('nimbusEmsApp')
 			textarea : function(attrs){
 				var str = '';
 				
-				str += attrs.placeholder ? '<label class="uk-form-label uk-text-capitalize" for="form-stacked-text">'+attrs.placeholder+'</label>' : '';
+				str += attrs.label ? '<label class="uk-form-label uk-text-capitalize" for="form-stacked-text">'+attrs.label+'</label>' : '';
 				str += '<textarea ';
-				str += attrs.cls ? 'class="uk-textarea" '+attrs.cls+'"' : 'class="uk-textarea""';
+				str += attrs.cls ? 'class="uk-textarea '+attrs.cls+'"' : 'class="uk-textarea"';
 				str += attrs.placeholder ? 'placeholder="'+attrs.placeholder+'"' : '';
 				str += attrs.model ? 'ng-model="'+attrs.model+'"' : '';
 				str += '">';
@@ -123,8 +123,8 @@ angular.module('nimbusEmsApp')
 				if(attrs.type && attrs.type === 'full'){
 					str += attrs.body ? this.fullModalBody(attrs) : '';
 				}else{
-					str += attrs.title ?'<div class="uk-modal-header"><h2 class="uk-modal-title">'+attrs.title+'</h2></div>' : '';
-					str += attrs.body ? '		<div class="uk-modal-body">'+attrs.body+'</div>' : '';
+					str += attrs.title ?'<div class="uk-modal-header"><h2 class="uk-modal-title uk-text-capitalize">'+attrs.title+'</h2></div>' : '';
+					str += attrs.body ? '		<div class="uk-modal-body uk-padding-small">'+attrs.body+'</div>' : '';
 					str += attrs.footer ?'		<div class="uk-modal-footer">'+attrs.footer+'</div>' : '';
 				}
 				
@@ -142,7 +142,7 @@ angular.module('nimbusEmsApp')
 				str +=		attrs.image ? 'style="background-image: url('+attrs.image+');" ' : '';
 				str +=		attrs.image ? 'uk-height-viewport></div>': '';
 				str +=		'<div class="uk-padding-large">';
-				str +=			attrs.title ? '<h1>'+attrs.title+'</h1>' : '';
+				str +=			attrs.title ? '<h1 class="uk-text-capitalize">'+attrs.title+'</h1>' : '';
 				str +=			attrs.body ? '<p>'+attrs.body+'</p>' : '';
 				str +=		'</div>';
 				str +=	'</div>';
@@ -188,6 +188,35 @@ angular.module('nimbusEmsApp')
 				str += '<table class="uk-table uk-table-middle uk-table-divider uk-margin-remove">';
 				str += 	table;
 				str += '</table>';
+				
+				return str;
+			},
+			
+			typeaheadPreview : function(attrs){
+				
+				var str = '';
+				
+				str += '<article class="uk-comment uk-padding-small">';
+				str += '	<header class="uk-comment-header uk-grid-medium uk-flex-middle uk-margin-remove" uk-grid>';
+			if(attrs.image){
+				str += '		<div class="uk-width-auto uk-padding-remove image">';
+				str += '			<img class="uk-comment-avatar" src="'+attrs.image+'" width="30" height="30" alt="">';
+				str += '		</div>';
+			}
+			
+			if(attrs.title){
+				str += '		<div class="uk-width-expand title">';
+				str += 				'<h4 class="uk-comment-title uk-margin-remove uk-text-small"><a class="uk-link-reset" href="#">'+attrs.title+'</a></h4>';
+				str += '		</div>';
+			}
+				str += '	</header>';
+				
+			if(attrs.description){
+				str += '	<div class="uk-comment-body">';
+				str += '		<p>'+attrs.description+'</p>';
+				str += '	</div>';
+			}
+				str += '</article>';
 				
 				return str;
 			}
