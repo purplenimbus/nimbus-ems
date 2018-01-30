@@ -82,11 +82,11 @@
 					<div class="uk-width-2-3@m">
 						<article class="uk-article" ng-repeat="topic in outline">
 
-							<h1 class="uk-article-title" id="#{{ $index }}"><a class="uk-link-reset" href="">{{ topic.title }}</a></h1>
+							<p class="uk-text-lead" id="#{{ $index }}"><a class="uk-link-reset" href="">{{ topic.title }}</a></h1>
 							
-							<p class="uk-article-meta">Written by <a href="#">Super User</a> on 12 April 2012. Posted in <a href="#">Blog</a></p>
+							<p class="uk-article-meta">Written by <a href="#">Super User</a> on 12 April 2012.</p>
 
-							<p class="uk-text-lead">{{ topic.description }}</p>
+							<p class="uk-text-bold">{{ topic.description }}</p>
 
 							<p>{{ topic.content }}</p>
 

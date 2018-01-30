@@ -93,11 +93,11 @@ angular.module('nimbusEmsApp')
 			var str = '';
 			
 			str += '<form>';
-			str += '	<div class="uk-margin" uk-grid>';
-			str += '		<div class="uk-width-3-4@m uk-width-1-2@xs">';
+			str += '	<div class="uk-margin uk-grid-small" uk-grid>';
+			str += '		<div class="uk-width-1-2@m uk-width-1-2@xs">';
 			str += '			<input type="text" datasets="subjectDataset" options="subjectOptions" ng-model="asset.name" sf-typeahead class="uk-input uk-search-input uk-width-1-1 typeahead uk-text-capitalize" placeholder="Course Name"/>';//uikit3.inputIcon({model:'newAsset.name',icon:'user',type:'text',required:true,label:'Course Name'});
 			str += '		</div>';
-			str += '		<div class="uk-width-1-4@m uk-width-1-2@xs">';
+			str += '		<div class="uk-width-1-2@m uk-width-1-2@xs">';
 			str += '			<select class="uk-select" ng-model="asset.meta.class_id" ng-options="class.id as class.name for class in classes"></select>';
 			str += '		</div>';
 			str += '	</div>';
