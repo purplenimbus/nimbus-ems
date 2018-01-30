@@ -86,7 +86,7 @@
 					</li>
 					<li>
 						<div class="uk-grid-small" uk-grid>
-							<div class="uk-width-1-4@m">
+							<div class="uk-width-1-1@m">
 								<div class="uk-card uk-card-default">
 									<div class="uk-card-header uk-padding-small">
 										<div class="uk-clearfix">
@@ -105,36 +105,42 @@
 									</div>
 								</div>
 							</div>
-							<div class="uk-width-3-4@m">
+							
+							<div class="uk-width-1-1@m">
 								<div class="uk-margin services">
 									<form class="uk-search uk-search-default uk-width-1-1" ng-if="false">
 										<a href="" uk-search-icon></a>
 										<input type="text" datasets="serviceDataset" options="serviceOptions" ng-model="search" sf-typeahead class="uk-search-input uk-width-1-1 typeahead uk-width-1-1" placeholder="Search..."/>
 									</form>
 									<ul class="uk-grid-small" uk-grid>
-										<li ng-repeat="service in services" class="uk-width-1-2@m uk-width-1-2@xs">
+										<li ng-repeat="service in services" class="uk-width-1-1@m uk-width-1-1@xs">
 											<div class="uk-card uk-card-default">
 												<div class="uk-card-header uk-padding-small">
 													<div class="uk-clearfix">
 														<div class="uk-align-left uk-margin-remove">
-															<p class="uk-margin-remove uk-text-capitalize">{{ service.name }}</p>
+															<div class="uk-grid-small uk-flex-middle" uk-grid>
+																<div class="uk-width-auto">
+																	<img class="" width="40" height="40" src="{{ service.meta.icon }}">
+																</div>
+																<div class="uk-width-expand">
+																	<p class="uk-margin-remove uk-text-capitalize">{{ service.name }}</p>
+																</div>
+															</div>
 														</div>
-														<div class="uk-align-right uk-margin-remove">
-															<p class="uk-text-meta uk-margin-remove uk-text-mute">{{ service.currency.symbol }} {{ service.meta.cost }}</p>
-														</div>
+														<ul class="uk-iconnav uk-align-right uk-margin-remove">
+															<li><a href="#" uk-icon="icon: plus" ng-click="addService($index)" title="enable {{ service.name }} api"></a></li>
+														</ul>
 													</div>
 												</div>
-												<div class="uk-card-body uk-padding-small">
+												<div class="uk-card-body uk-padding-small" ng-if="service.description">
 													<p>{{ service.description }}</p>
-												</div>
-												<div class="uk-card-footer uk-padding-small">
-													<a class="uk-button uk-button-text" ng-click="addService($index)">Enable Api</a>
 												</div>
 											</div>
 										</li>
 									</ul>
 								</div>
 							</div>
+							
 						</div>
 					</li>
 				</ul>
