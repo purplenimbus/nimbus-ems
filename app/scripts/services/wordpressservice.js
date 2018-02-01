@@ -10,7 +10,7 @@
 angular.module('nimbusEmsApp')
 	.service('wordpressService', function ($http,elements,$rootScope,$auth) {
     // AngularJS will instantiate a singleton by calling "new" on this function
-				var wp_endpoint = 'http://purplenimbus.net/jp/wp-json/wp/v2/';
+				var wpEndpoint = 'http://purplenimbus.net/jp/wp-json/wp/v2/';
 		
 		return{
 			/**
@@ -20,9 +20,9 @@ angular.module('nimbusEmsApp')
 			 * @returns {Promise}
 			 */
 			getData	:	function($data,$id){	
-				var logged_in = $auth.isAuthenticated();
+				var loggedIn = $auth.isAuthenticated();
 								
-				return	$http.get(wp_endpoint+$data+($id ? '/'+$id : '')+(logged_in ? '?token='+$auth.getToken() : ''));
+				return	$http.get(wpEndpoint+$data+($id ? '/'+$id : '')+(loggedIn ? '?token='+$auth.getToken() : ''));
 			},
 			/**
 			 * Returns a $http.put or post promise to store a job based on job id and its data
@@ -33,7 +33,7 @@ angular.module('nimbusEmsApp')
 			 */
 			sendData	:	function($name,$id,$data){
 				console.log($name+' id',$id);
-				return	$http.post(wp_endpoint+'/'+$name+($id ? '/'+$id : ''),$data);
+				return	$http.post(wpEndpoint+'/'+$name+($id ? '/'+$id : ''),$data);
 			},
 			/**
 			 * Returns a $http.put or post promise to store a job based on job id and its data
@@ -42,44 +42,46 @@ angular.module('nimbusEmsApp')
 			 * @param {integer} $id - The id for the PUT/POST enpoint
 			 * @returns {Promise}
 			 */
-			findJobs : function(location_id,job_id){
-				return $http.get('api/locations/'+location_id+'/wordpress/'+job_id);
+			findJobs : function(locationId,jobId){
+				return $http.get('api/locations/'+locationId+'/wordpress/'+jobId);
 			},
 			/**
 			 * Parse Wordpress data and return it to match the frontend
 			 * @param {object} data - The data for the PUT/POST request
 			 * @returns {WPData}
 			 */
-			parseWPData : function(data){
+			parseWPData : function(data){// jshint ignore:line
 				
-				var wp_data = {};
-				
+				var wpData = {};
+				/* jshint ignore:start */
 				for(var k in data){
 					//console.log('wordpress key',k);
+					
 					switch(k){
-						case 'title' 	: 	wp_data.title = data[k].rendered;	break;
-						case 'content' 	: 	wp_data.description = data[k].rendered;	break;
-						case 'excerpt' 	: 	wp_data.excerpt = data[k].rendered;	break;
-						case 'modified' : 	wp_data.updated_at = data[k];	break;
-						case 'date' 	: 	wp_data.created_at = data[k];	break;
-						case 'meta' 	: 	wp_data.salary = Number(data[k].salary) || null;	
-											wp_data.min_experience = Number(data[k].min_experience);	
-											wp_data.job_ref_id = data[k].ref_url;	
-											wp_data[k] = data[k];
+						case 'title' 	: 	wpData.title = data[k].rendered;	break;
+						case 'content' 	: 	wpData.description = data[k].rendered;	break;
+						case 'excerpt' 	: 	wpData.excerpt = data[k].rendered;	break;
+						case 'modified' : 	wpData.updated_at = data[k];	break;
+						case 'date' 	: 	wpData.created_at = data[k];	break;
+						case 'meta' 	: 	wpData.salary = Number(data[k].salary) || null;	
+											wpData.min_experience = Number(data[k].min_experience);	
+											wpData.job_ref_id = data[k].ref_url;	
+											wpData[k] = data[k];
 											break;
 											
-						default 		: 	wp_data[k] = data[k];	break;
+						default 		: 	wpData[k] = data[k];	break;
 					}
+					
 				}
+				/* jshint ignore:end */
+				delete wpData.job_level;
+				delete wpData.job_type;
+				delete wpData.tags;
+				delete wpData.template;
+				delete wpData.comment_status;
+				delete wpData.author;
 				
-				delete wp_data.job_level;
-				delete wp_data.job_type;
-				delete wp_data.tags;
-				delete wp_data.template;
-				delete wp_data.comment_status;
-				delete wp_data.author;
-				
-				return wp_data;
+				return wpData;
 			}
 		};
 	});
