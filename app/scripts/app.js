@@ -63,9 +63,7 @@ angular
 				resolve:	{
 					jobData : function(wordpressApi,$window,apiConst,$rootScope,$route){
 						$rootScope.loading = true;		
-						return wordpressApi.getData('jobs/'+$route.current.params.jobID).then(function(result){
-							console.log('WordpressApi result',result);
-							
+						return wordpressApi.getData('jobs/'+$route.current.params.jobID).then(function(result){							
 							return result.data;
 						}).catch(function(error){
 							console.log('WordpressApi error',error);
