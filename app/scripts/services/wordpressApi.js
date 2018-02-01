@@ -8,9 +8,9 @@
  * Service in the nimbusEmsApp.
  */
 angular.module('nimbusEmsApp')
-	.service('wordpressService', function ($http,elements,$rootScope,$auth) {
+	.service('wordpressApi', function ($http) {
     // AngularJS will instantiate a singleton by calling "new" on this function
-				var wpEndpoint = 'http://purplenimbus.net/jp/wp-json/wp/v2/';
+		var wpEndpoint = 'http://purplenimbus.net/jp/wp-json/wp/v2/';
 		
 		return{
 			/**
@@ -19,10 +19,11 @@ angular.module('nimbusEmsApp')
 			 * @param {integer} $id - The id for the GET request
 			 * @returns {Promise}
 			 */
-			getData	:	function($data,$id){	
-				var loggedIn = $auth.isAuthenticated();
+			getData	:	function($params,$id){	
+				//var loggedIn = $auth.isAuthenticated();
 								
-				return	$http.get(wpEndpoint+$data+($id ? '/'+$id : '')+(loggedIn ? '?token='+$auth.getToken() : ''));
+				//return	$http.get(wpEndpoint+$params+($id ? '/'+$id : '')+(loggedIn ? '?token='+$auth.getToken() : ''));
+				return	$http.get(wpEndpoint+($id ? '/'+$id : '')+$params);
 			},
 			/**
 			 * Returns a $http.put or post promise to store a job based on job id and its data
@@ -80,7 +81,7 @@ angular.module('nimbusEmsApp')
 				delete wpData.template;
 				delete wpData.comment_status;
 				delete wpData.author;
-				
+								
 				return wpData;
 			}
 		};

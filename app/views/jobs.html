@@ -1,1 +1,53 @@
-<p>This is the jobs view.</p>
+<div ng-include="'views/partials/_toolbar.html'"></div>
+<section class="uk-padding-small">
+	<main class="uk-grid-small" uk-grid>
+		<div class="uk-width-1-3@m" ng-repeat="job in jobs.jobs">
+			<div class="uk-card uk-card-default uk-card-hover">
+				<div class="uk-card-header uk-clear-fix uk-padding-small">
+					<a ng-href="#!/job/{{ job.id }}" class="uk-button uk-button-text uk-align-left title uk-text-capitalize uk-text-bold uk-margin-remove">
+						{{ job.title }}
+					</a>
+					<div class="uk-align-right">
+						<ul class="uk-iconnav" uk-switcher="connect: .details-{{$index}}">
+							<!-- <li><a href="#" class="uk-icon-link" uk-icon="icon: home"></a></li> -->
+							<li><a href="#" class="uk-icon-link" uk-icon="icon: info"></a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="uk-card-body uk-padding-small">
+					<ul class="uk-switcher details-{{$index}} uk-margin">
+						<li>
+							<p class="uk-text-truncate" ng-if="false">{{ job.description }}</p>
+							<ul class="uk-list uk-list-divider">
+								<li class="uk-clear-fix" ng-if="job.meta.addressLocality">
+									<span class="uk-align-left uk-margin-remove uk-align-left uk-margin-remove uk-margin-small-right" uk-icon="icon: location"></span>
+									<span class="uk-align-right uk-margin-remove">
+									{{ job.meta.addressLocality[0] }}
+									</span>
+								</li>
+								<li class="uk-clear-fix" ng-if="job.meta.employmentType">
+									<span class="uk-align-left uk-margin-remove uk-align-left uk-margin-remove uk-margin-small-right" uk-icon="icon: info"></span>
+									<span class="uk-align-right uk-margin-remove">
+									{{ job.meta.employmentType[0] }}
+									</span>
+								</li>
+								<li class="uk-clear-fix" ng-if="job.company.name">
+									<span class="uk-align-left uk-margin-remove uk-align-left uk-margin-remove uk-margin-small-right" uk-icon="icon: world"></span>
+									<span class="uk-align-right uk-margin-remove">
+									{{ job.company.name }}
+									</span>
+								</li>
+								<li class="uk-clear-fix" ng-if="job.meta.industry">
+									<span class="uk-align-left uk-margin-remove uk-align-left uk-margin-remove uk-margin-small-right" uk-icon="icon: thumbnails"></span>
+									<span class="uk-align-right uk-margin-remove">
+									{{ job.meta.industry[0] }}
+									</span>
+								</li>
+							</ul>		
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</main>
+</section>

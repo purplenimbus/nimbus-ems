@@ -1,0 +1,16 @@
+<div class="uk-section-default">
+    <div class="uk-section uk-light uk-background-cover uk-background-blend-multiply uk-background-primary" style="background-image: url(https://images.pexels.com/photos/775998/pexels-photo-775998.jpeg?w=940&h=650&auto=compress&cs=tinysrgb)">
+        <div class="uk-container">
+			<div uk-grid>
+				<div class="uk-width-1-1 uk-flex-bottom">
+					<h1 class="uk-margin-remove uk-text-lead uk-text-uppercase">{{ jobData.title }}</h1>
+					<ul class="uk-subnav" uk-margin>
+						<li><a href="#"><span uk-icon="icon: world"></span> {{ jobData.company.name }}</a></li>
+						<li><a href="#"><span uk-icon="icon: location"></span> {{ jobData.meta.addressLocality[0] }}</a></li>
+						<li><a href="#"><span uk-icon="icon: thumbnails"></span> {{ jobData.meta.industry[0] }}</a></li>
+					</ul>
+				</div>
+			</div>
+        </div>
+    </div>
+</div>

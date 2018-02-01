@@ -33,21 +33,44 @@ angular
 		
 		$routeProvider
 			.when('/', {
-				templateUrl: 'views/dashboard.html',
-				controller: 'DashboardCtrl',
-				controllerAs: 'dashboard'
-			})
-			.when('/users', {
-				templateUrl: 'views/users.html',
-				controller: 'UsersCtrl',
-				controllerAs: 'users',
+				templateUrl: 'views/jobs.html',
+				controller: 'JobsCtrl',
+				controllerAs: 'jobs',
 				resolve:	{
-					usersData : function(graphApi,$window,apiConst,subdomain){
-						return graphApi.api('GET',subdomain+'/users?paginate='+apiConst.componentPagination+'&page=1').then(function(result){
+					jobsData : function(wordpressApi,$window,apiConst,$rootScope){
+						$rootScope.loading = true;		
+						return wordpressApi.getData('jobs?per_page='+apiConst.componentPagination).then(function(result){
+							console.log('WordpressApi result',result);
+							
 							return result.data;
-						}).catch(function(){
+						}).catch(function(error){
+							console.log('WordpressApi error',error);
 							$window.UIkit.notification({
-								message: 'Couldnt get usersData',
+								message: 'Couldnt get Jobs',
+								status: 'danger',
+								pos: 'top-right',
+								timeout: 5000
+							});
+						});
+						
+					}
+				}
+			})
+			.when('/job/:jobID', {
+				templateUrl: 'views/job.html',
+				controller: 'JobCtrl',
+				controllerAs: 'job',
+				resolve:	{
+					jobData : function(wordpressApi,$window,apiConst,$rootScope,$route){
+						$rootScope.loading = true;		
+						return wordpressApi.getData('jobs/'+$route.current.params.jobID).then(function(result){
+							console.log('WordpressApi result',result);
+							
+							return result.data;
+						}).catch(function(error){
+							console.log('WordpressApi error',error);
+							$window.UIkit.notification({
+								message: 'Couldnt get Jobs',
 								status: 'danger',
 								pos: 'top-right',
 								timeout: 5000
@@ -130,30 +153,24 @@ angular
 					}
 				}
 			})
-			.when('/inventory', {
-				templateUrl: 'views/inventory.html',
-				controller: 'InventoryCtrl',
-				controllerAs: 'inventory'
+			.when('/login', {
+				templateUrl: 'views/login.html',
+				controller: 'LoginCtrl',
+				controllerAs: 'login'
 			})
-			.when('/learning', {
-				templateUrl: 'views/learning.html',
-				controller: 'LearningCtrl',
-				controllerAs: 'learning'
-			})
-			.when('/learning/course/:id', {
-				templateUrl: 'views/course.html',
-				controller: 'CourseCtrl',
-				controllerAs: 'course',
+			.when('/register', {
+				templateUrl: 'views/register.html',
+				controller: 'RegisterCtrl',
+				controllerAs: 'register',
 				resolve:	{
-					courseData : function(eduApi,$window,apiConst,$route/*,subdomain*/){
-						var params = $route.current.params;
+					services : function(graphApi,$window,apiConst/*,subdomain*/){
 						
-						return eduApi.api('GET',1+'/registrations?course_id='+params.id+'&paginate='+apiConst.componentPagination+'&page=1').then(function(result){
+						return graphApi.api('GET','services?paginate='+apiConst.componentPagination+'&page=1').then(function(result){
 							//console.log('eduApi course result',result);
 							return result.data;
 						}).catch(function(){
 							$window.UIkit.notification({
-								message: 'Couldnt get courseData',
+								message: 'Couldnt get services',
 								status: 'danger',
 								pos: 'top-right',
 								timeout: 5000
@@ -163,10 +180,13 @@ angular
 					}
 				}
 			})
-			.when('/login', {
-				templateUrl: 'views/login.html',
-				controller: 'LoginCtrl',
-				controllerAs: 'login'
+			.otherwise({
+				redirectTo: '/'
+			});
+			/*.when('/dashboard', {
+				templateUrl: 'views/dashboard.html',
+				controller: 'DashboardCtrl',
+				controllerAs: 'dashboard'
 			})
 			.when('/learning/courses', {
 				templateUrl: 'views/courses.html',
@@ -191,19 +211,17 @@ angular
 					}
 				}
 			})
-			.when('/register', {
-				templateUrl: 'views/register.html',
-				controller: 'RegisterCtrl',
-				controllerAs: 'register',
+			.when('/users', {
+				templateUrl: 'views/users.html',
+				controller: 'UsersCtrl',
+				controllerAs: 'users',
 				resolve:	{
-					services : function(graphApi,$window,apiConst/*,subdomain*/){
-						
-						return graphApi.api('GET','services?paginate='+apiConst.componentPagination+'&page=1').then(function(result){
-							//console.log('eduApi course result',result);
+					usersData : function(graphApi,$window,apiConst,subdomain){
+						return graphApi.api('GET',subdomain+'/users?paginate='+apiConst.componentPagination+'&page=1').then(function(result){
 							return result.data;
 						}).catch(function(){
 							$window.UIkit.notification({
-								message: 'Couldnt get services',
+								message: 'Couldnt get usersData',
 								status: 'danger',
 								pos: 'top-right',
 								timeout: 5000
@@ -213,19 +231,44 @@ angular
 					}
 				}
 			})
-.when('/jobs', {
-  templateUrl: 'views/jobs.html',
-  controller: 'JobsCtrl',
-  controllerAs: 'jobs'
-})
-			.otherwise({
-				redirectTo: '/'
-			});
-			
+			.when('/inventory', {
+				templateUrl: 'views/inventory.html',
+				controller: 'InventoryCtrl',
+				controllerAs: 'inventory'
+			})
+			.when('/learning', {
+				templateUrl: 'views/learning.html',
+				controller: 'LearningCtrl',
+				controllerAs: 'learning'
+			})
+			.when('/learning/course/:id', {
+				templateUrl: 'views/course.html',
+				controller: 'CourseCtrl',
+				controllerAs: 'course',
+				resolve:	{
+					courseData : function(eduApi,$window,apiConst,$route){
+						var params = $route.current.params;
+						
+						return eduApi.api('GET',1+'/registrations?course_id='+params.id+'&paginate='+apiConst.componentPagination+'&page=1').then(function(result){
+							//console.log('eduApi course result',result);
+							return result.data;
+						}).catch(function(){
+							$window.UIkit.notification({
+								message: 'Couldnt get courseData',
+								status: 'danger',
+								pos: 'top-right',
+								timeout: 5000
+							});
+						});
+						
+					}
+				}
+			})*/
 	})
 	.run(function($rootScope, $location, $cookies, $http,$auth) {
 		//console.log('$cookies',JSON.parse($cookies.get('auth')),$auth.getToken());
 		// keep user logged in after page refresh
+		$rootScope.loading = true;
 		
 		$rootScope.globals = $cookies.get('auth') || {};
 		

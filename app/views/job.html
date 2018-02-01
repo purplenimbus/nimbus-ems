@@ -1,0 +1,14 @@
+<!-- <div ng-include="'views/partials/_toolbar.html'"></div> -->
+<div ng-include="'views/partials/_header.html'"></div>
+<section class="uk-section-small">
+	<div class="uk-container">
+		<div class="uk-grid-small" uk-grid>
+			<main class="uk-width-3-4@m">
+				<p class="uk-text-lead uk-text-uppercase">job description</p>
+				<span ng-bind-html="jobData.description">{{ jobData.description }}</span>
+			</main>
+			<aside class="uk-width-1-4@m">
+			</aside>
+		</div><!-- uk-grid -->
+	</div><!-- uk-container -->
+</section>
