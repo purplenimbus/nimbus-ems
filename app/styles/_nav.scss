@@ -1,8 +1,13 @@
 nav{
     background:$primary-color !important;
-  .user{
-    header{
-      margin:0px;
-    }
-  }
+	.user{
+		header{
+		  margin:0px;
+		}
+	}
+	form{
+		.uk-icon{
+			color:inherit;
+		}
+	}
 }

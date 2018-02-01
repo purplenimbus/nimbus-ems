@@ -1,5 +1,18 @@
 <section id="toolbar" class="uk-navbar-container uk-dark" uk-navbar ng-controller="NavCtrl">
-	<a class="uk-navbar-item uk-logo uk-text-capitalize">{{ pageTitle || route.current.$$route.controllerAs }}</a>
+	<!--<a class="uk-navbar-item uk-logo uk-text-capitalize">{{ pageTitle || route.current.$$route.controllerAs }}</a>-->
+	<div class="uk-navbar-left">
+		<form class="uk-navbar-item" action="javascript:void(0)">
+			<div class="uk-inline">
+				<span class="uk-form-icon" uk-icon="icon: tag"></span>
+				<input class="uk-input uk-form-blank" type="text" placeholder="Job Title">
+			</div>
+			<div class="uk-inline">
+				<span class="uk-form-icon" uk-icon="icon: location"></span>
+				<input class="uk-input uk-form-blank" type="text" placeholder="Location">
+			</div>
+			<button class="uk-button uk-button-default">Search</button>
+		</form>
+	</div>
 	<div class="uk-navbar-right">
 		<div class="uk-navbar-item">
 			<ul class="uk-iconnav uk-clearfix">
