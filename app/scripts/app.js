@@ -213,6 +213,11 @@ angular
 					}
 				}
 			})
+.when('/jobs', {
+  templateUrl: 'views/jobs.html',
+  controller: 'JobsCtrl',
+  controllerAs: 'jobs'
+})
 			.otherwise({
 				redirectTo: '/'
 			});
