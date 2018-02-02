@@ -83,14 +83,13 @@ angular
 				controller: 'AccountCtrl',
 				controllerAs: 'account',
 				resolve:	{
-					profileData : function($cookies,graphApi,subdomain,$window){
+					profileData : function($cookies,graphApi,subdomain,$window,$rootScope){
 						//console.log('profileData',JSON.parse($cookies.get('auth')));
 						var id = JSON.parse($cookies.get('auth')).id;
-						
 						return graphApi.api('GET',subdomain+'/users/'+id).then(function(user){
 							
 							console.log('get user',user);
-							
+							$rootScope.loading = false;	
 							return user.data[0];
 						}).catch(function(){
 							$window.UIkit.notification({
@@ -110,7 +109,7 @@ angular
 				controller: 'ProfileCtrl',
 				controllerAs: 'profile',
 				resolve:	{
-					profileData : function(graphApi,$window,$route,subdomain){
+					profileData : function(graphApi,$window,$route,subdomain,$rootScope){
 												
 						var params = $route.current.params;
 			
@@ -127,7 +126,7 @@ angular
 								profileData.activities = activities.data;
 								
 								//console.log('get user activities',profileData);
-								
+								$rootScope.loading = false;	
 								return profileData;
 							}).catch(function(){
 								$window.UIkit.notification({

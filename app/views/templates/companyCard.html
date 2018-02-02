@@ -1,0 +1,29 @@
+<div class="uk-card uk-card-default uk-card-hover">
+	<div class="uk-card-header uk-clear-fix uk-padding-small">
+		<a ng-href="#!/job/{{ job.id }}" class="uk-button uk-button-text uk-align-left title uk-text-capitalize uk-text-bold uk-margin-remove">
+			{{ company.title }}
+		</a>
+		<div class="uk-align-right">
+			<ul class="uk-iconnav" uk-switcher="connect: .details-{{$index}}">
+				<!-- <li><a href="#" class="uk-icon-link" uk-icon="icon: home"></a></li> -->
+				<li><a class="uk-icon-link" uk-icon="icon: info"></a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="uk-card-body uk-padding-small">
+		<div uk-spinner class="uk-width-1-1 uk-text-center uk-position-center" ng-if="loading"></div>
+		<ul class="uk-switcher details-{{$index}} uk-margin">
+			<li>
+				<ul class="uk-list uk-list-divider">
+					<li class="uk-clear-fix" ng-if="company.jobs" ng-repeat="job in company.jobs">
+						<a ng-href="#!/job/{{ job.id }}" class="uk-align-left uk-margin-remove uk-align-left uk-margin-small-right">
+							{{ job.title }}
+						</a>
+						<span class="uk-align-right uk-margin-remove">
+						</span>
+					</li>
+				</ul>		
+			</li>
+		</ul>
+	</div>
+</div>

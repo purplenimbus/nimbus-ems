@@ -7,12 +7,27 @@
 		</div>
 
 		<ul class="uk-flex-center" uk-tab uk-switcher>
-			<li ng-if="profileData.activities" class="uk-active"><a href="#"><span class="uk-margin-small-right" uk-icon="icon: commenting"></span> <span>Activity</span></a></li>
+			<li class="uk-active"><a href="#"><span class="uk-margin-small-right" uk-icon="icon: user"></span> <span>Bio</span></a></li>
+			<li ng-if="profileData.activities"><a href="#"><span class="uk-margin-small-right" uk-icon="icon: commenting"></span> <span>Activity</span></a></li>
 			<li ng-if="profileData.studentRecords"><a href="#"><span class="uk-margin-small-right" uk-icon="icon: list"></span> <span>Student Records</span></a></li>
-			<li ng-if="profileData.employmentRecords"><a href="#"><span class="uk-margin-small-right" uk-icon="icon: list"></span> <span>Employment Records</span></a></li>
 		</ul>
 
 		<ul class="uk-switcher uk-margin">
+			<li>
+				<div>
+					<p class="uk-text-lead">Summary</p>
+					<span ng-bind-html="profileData.meta.resume.summary" ng-if="profileData.meta.resume.summary"></span>
+					<a ng-if="!profileData.meta.resume.summary" ng-click="resume.addSummary()">Add Summary</a>
+					
+					<p class="uk-text-lead">Education</p>
+					<span ng-bind-html="profileData.meta.resume.education" ng-if="profileData.meta.resume.education"></span>
+					<a ng-if="!profileData.meta.resume.summary" ng-click="resume.addEducation()">Add Education</a>
+					
+					<p class="uk-text-lead">Experience</p>
+					<span ng-bind-html="profileData.meta.resume.experience" ng-if="profileData.meta.resume.experience"></span>
+					<a ng-if="!profileData.meta.resume.experience" ng-click="resume.addExperience()">Add Experience</a>
+				</div>
+			</li>
 			<li ng-if="profileData.activities">
 				<div class="">
 					<ul class="uk-list">
@@ -58,7 +73,6 @@
 				</div>
 			</li>
 			<li ng-if="profileData.studentRecords">Student Records</li>
-			<li ng-if="profileData.employmentRecords">Employment Records</li>
 		</ul>
 	</div>
 </div>
