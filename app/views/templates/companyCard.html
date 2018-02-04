@@ -1,12 +1,15 @@
 <div class="uk-card uk-card-default uk-card-hover">
 	<div class="uk-card-header uk-clear-fix uk-padding-small">
-		<a ng-href="#!/job/{{ job.id }}" class="uk-button uk-button-text uk-align-left title uk-text-capitalize uk-text-bold uk-margin-remove">
-			{{ company.title }}
-		</a>
+		<div>
+			<img src="{{ company.meta.logo_url}}" width="50" height="50" ng-if="ompany.meta.logo_url">
+			<a ng-href="#!/job/{{ job.id }}" class="uk-button uk-button-text uk-align-left title uk-text-capitalize uk-text-bold uk-margin-remove uk-text-middle">
+				{{ company.title }}
+			</a>
+		</div>
 		<div class="uk-align-right">
 			<ul class="uk-iconnav" uk-switcher="connect: .details-{{$index}}">
 				<!-- <li><a href="#" class="uk-icon-link" uk-icon="icon: home"></a></li> -->
-				<li><a class="uk-icon-link" uk-icon="icon: info"></a></li>
+				<li><a class="uk-icon-link" uk-icon="icon: info" ng-click="init(id)"></a></li>
 			</ul>
 		</div>
 	</div>

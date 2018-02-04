@@ -12,6 +12,9 @@ angular.module('nimbusEmsApp')
 		
 		$scope.init = function(){
 			console.log('profileData',profileData);
+			if(!profileData.meta.resume){
+				profileData.meta.resume = { summary:'' , education:[],experience:[],skills:[]};
+			}
 			$scope.profileData = profileData;
 			$scope.resume = resumeService;
 			$scope.initiated = true;

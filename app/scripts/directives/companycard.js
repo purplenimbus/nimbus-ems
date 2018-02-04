@@ -16,6 +16,7 @@ angular.module('nimbusEmsApp')
 			$scope.loading = true;
 			$scope.init = function(id){
 				
+				$scope.id = id;
 				wordpressApi.getData('companies/'+id).then(function(result){
 					$scope.company = wordpressApi.parseWPData(result.data);
 					$scope.loading = false;

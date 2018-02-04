@@ -282,7 +282,7 @@ angular
 		$rootScope.$on('$locationChangeStart', function () {
 
 			//allowed pages
-			var allowed = ['login','register'];
+			var allowed = ['login','register','/','job'];
 			
 			var restricted = false;
 			
@@ -297,7 +297,12 @@ angular
 			if (!loggedIn && restricted) {
 				console.log('logging you out',history);
 				
-				$location.path('/login');//.search({returnUrl: history[0]});
+				if(history.length){
+					$location.path('/login').search({returnUrl: history[0]});
+				}else{
+					$location.path('/login');
+				}
+				
 			}
 		});
 	})

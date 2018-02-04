@@ -8,17 +8,32 @@
  * Service in the nimbusEmsApp.
  */
 angular.module('nimbusEmsApp')
-	.service('resumeService', function (form) {
+	.service('resumeService', function () {
 		// AngularJS will instantiate a singleton by calling "new" on this function
 		return {
-			addSummary : function(){
-				console.log('resumeService addSummary');
+			addSummary : function($scope,summary){
+				console.log('resumeService addSummary',summary);
+				$scope.newSummary = '';
 			},
-			addEducation : function(){
-				console.log('resumeService addEducation');
+			addEducation : function($scope,data){
+				//console.log('resumeService addEducation data',data);
+				
+				$scope.profileData.meta.resume.education.push(data);
+				$scope.newEducation = {};
+								
+				console.log('resumeService addEducation education',$scope);
 			},
-			addExperience : function(){
-				console.log('resumeService addExperience');
+			addExperience : function($scope,experience){
+				console.log('resumeService addExperience',experience);
+				$scope.newExperience = {};
 			},
+			remove : function($scope,key,index){
+				console.log('remove',$scope.profileData.meta.resume[key],index);
+				$scope.profileData.meta.resume[key].splice(index,1);
+			},
+			edit : function($scope,key,index){
+				console.log('edit',$scope.profileData.meta.resume[key],index);
+				$scope['new'+key] = $scope.profileData.meta.resume[key][index];
+			}
 		};
 	});
