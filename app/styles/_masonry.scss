@@ -16,6 +16,7 @@
     display: inline-block;
     margin: 0 0 1.5em;
     width: 100%;
+	border-top: 4px solid $primary-color;
 }
 
 @media only screen and (min-width: 400px) {

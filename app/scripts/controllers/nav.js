@@ -8,7 +8,7 @@
  * Controller of the nimbusEmsApp
  */
 angular.module('nimbusEmsApp')
-  .controller('NavCtrl', function ($scope,offcanvas,modal,form,settings,$route,$rootScope,validation,$auth,auth,$location,breadcrumbs,subdomain,$window,$cookies) {
+  .controller('NavCtrl', function ($scope,offcanvas,modal,form,settings,$route,$rootScope,validation,$auth,auth,$location,breadcrumbs,subdomain,$window,$cookies,typeaheadService,wordpressApi) {
 	$scope.route = $route;
 	$scope.loggedin = false;
     $scope.offcanvas = offcanvas.offcanvas;
@@ -196,5 +196,6 @@ angular.module('nimbusEmsApp')
 	
 	$scope.auth = $auth;
 	
+	typeaheadService.init($scope,'jobs',wordpressApi.wpEndpoint+'jobs','title','jobs');
 	//console.log('Nav breadcrumbs',$scope.auth);
   });

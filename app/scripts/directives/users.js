@@ -58,13 +58,8 @@ angular.module('nimbusEmsApp')
 				suggestion: function(data){ 
 					var str = 		'<article class="uk-comment uk-card">';
 						str += '		<header class="uk-comment-header uk-grid-medium uk-flex-middle uk-margin-remove-bottom uk-grid" uk-grid="">';
-						//str += '			<div class="uk-width-auto uk-first-column">';
-						//str += '				<img class="uk-comment-avatar" src="'+data.image_url+'" width="40" height="40" alt="">';
-						//str += '			</div>';
 						str += '			<div class="uk-width-expand">';
-						str += '				<h4 class="uk-comment-title uk-margin-remove"><a class="uk-link-reset ng-binding uk-text-small uk-text-capitalize" ng-href="#!/'+data.tenant_id+'/profile/'+data.id+'"> '+data.fname+' '+data.lname+'</a></h4>';
-						str += '				<ul class="uk-padding-remove uk-margin-remove uk-comment-meta uk-subnav uk-subnav-divider uk-margin-remove-top uk-text-mute">';
-						str += '				</ul>';
+						str += '				<h4 class="uk-comment-title uk-margin-remove uk-link-reset ng-binding uk-text-small uk-text-capitaliz">'+data.name+'</h4>';
 						str += '			</div>';
 						str += '		</header>';
 						str += '		<div class="uk-comment-footer"></div>';

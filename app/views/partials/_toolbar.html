@@ -4,7 +4,7 @@
 		<form class="uk-navbar-item" action="javascript:void(0)">
 			<div class="uk-inline">
 				<span class="uk-form-icon" uk-icon="icon: tag"></span>
-				<input class="uk-input uk-form-blank" type="text" placeholder="Job Title">
+				<input style="padding-left: 40px;" class="uk-input uk-form-blank typeahead" type="text" placeholder="Job Title" typeahead" type="text" ng-model="search.job"  datasets="jobsDataset" options="jobsOptions" sf-typeahead>
 			</div>
 			<div class="uk-inline">
 				<span class="uk-form-icon" uk-icon="icon: location"></span>

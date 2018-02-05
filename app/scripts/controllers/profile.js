@@ -8,15 +8,23 @@
  * Controller of the nimbusEmsApp
  */
 angular.module('nimbusEmsApp')
-	.controller('ProfileCtrl', function ($scope,profileData,$window,$route,graphApi,modal,resumeService) {
+	.controller('ProfileCtrl', function ($scope,profileData,$window,$route,graphApi,modal,resumeService,wordpressApi,typeaheadService) {
 		
 		$scope.init = function(){
-			console.log('profileData',profileData);
+			console.log('profileData',profileData,$scope);
 			if(!profileData.meta.resume){
 				profileData.meta.resume = { summary:'' , education:[],experience:[],skills:[]};
 			}
 			$scope.profileData = profileData;
 			$scope.resume = resumeService;
+			
+			wordpressApi.getData('qualifications').then(function(result){
+				console.log('Worpress get qualifications result',result);
+				$scope.data = result.data;
+			})
+			.catch(function(error){
+				console.log('Worpress get qualifications error',error);
+			});
 			$scope.initiated = true;
 		};
 		
@@ -54,9 +62,10 @@ angular.module('nimbusEmsApp')
 			});
 		};
 		
-		
 		$scope.modal = modal;
 		
+		typeaheadService.init($scope,'qualification',wordpressApi.wpEndpoint+'qualifications','name','qualifications');
+
 		$scope.$on('$routeChangeStart', function() { 
 		   //close any open menus or modals
 			$window.UIkit.offcanvas('#side-menu').hide();
