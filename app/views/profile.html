@@ -40,7 +40,7 @@
 						<header class="uk-comment-header uk-position-relative">
 							<div class="uk-grid-medium uk-flex-middle" uk-grid>
 								<div class="uk-width-expand">
-									<h4 class="uk-comment-title uk-margin-remove">{{ education.school }}<p class="uk-text-small uk-margin-remove">{{ education.qualification }}</p></h4>
+									<h4 class="uk-comment-title uk-margin-remove">{{ education.school.name }}<p class="uk-text-small uk-margin-remove">{{ education.qualification.name }}</p></h4>
 									<p class="uk-comment-meta uk-margin-remove-top">{{ education.from }} - {{ education.to }}</p>
 								</div>
 							</div>
@@ -53,7 +53,7 @@
 					<form class="uk-grid-small uk-margin-bottom" uk-grid>
 						<div class="uk-width-1-1">
 							<div class="uk-inline uk-width-1-1">
-								<input class="uk-input uk-width-1-1" type="text" ng-model="newEducation.school" placeholder="School">
+								<input class="uk-input uk-width-1-1" type="text" ng-model="newEducation.school" placeholder="School" datasets="schoolsDataset" options="schoolsOptions" sf-typeahead>
 								<span class="uk-form-icon uk-form-icon-flip" uk-icon="icon: location"></span>
 							</div>
 						</div>

@@ -19,11 +19,11 @@ angular.module('nimbusEmsApp')
 			$scope.resume = resumeService;
 			
 			wordpressApi.getData('qualifications').then(function(result){
-				console.log('Worpress get qualifications result',result);
 				$scope.data = result.data;
 			})
 			.catch(function(error){
 				console.log('Worpress get qualifications error',error);
+				//TO DO Do something!
 			});
 			$scope.initiated = true;
 		};
@@ -63,6 +63,8 @@ angular.module('nimbusEmsApp')
 		};
 		
 		$scope.modal = modal;
+		
+		typeaheadService.init($scope,'schools','https://maps.googleapis.com/maps/api/place/textsearch/json?query=schools%20in%20lagos&key=AIzaSyBZt2nzYlBKm-H6X9bHRlLGu2_mrmzjRpY','name','schools');
 		
 		typeaheadService.init($scope,'qualification',wordpressApi.wpEndpoint+'qualifications','name','qualifications');
 

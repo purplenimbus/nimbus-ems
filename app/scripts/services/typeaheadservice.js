@@ -14,9 +14,14 @@ angular.module('nimbusEmsApp')
 			init : 	function($scope,name,endPoint,displayKey,label){
 							
 					this[name+'List'] = new $window.Bloodhound({
-						datumTokenizer: function(d) { return $window.Bloodhound.tokenizers.whitespace(d[displayKey]); },
+						datumTokenizer: function(d) { console.log(name+'list',d); return $window.Bloodhound.tokenizers.whitespace(d[displayKey]); },
 						queryTokenizer: $window.Bloodhound.tokenizers.whitespace,
-						remote:	endPoint
+						remote:	endPoint,
+						prepare: function(query, settings) {
+							console.log('prepare',query);
+							settings.url += '?q=' + query;
+							return settings;
+						},
 					});	
 					
 					this[name+'List'].initialize();
@@ -25,9 +30,9 @@ angular.module('nimbusEmsApp')
 						name	: label,
 						display	: 'name',
 						source	: this[name+'List'].ttAdapter(),
-						limit	: 10,
+						limit	: 5,
 						templates: {
-							//header: '<h3 class="uk-text-muted uk-text-small">Users</h3>',
+							//header: '<h3 class="uk-text-muted uk-text-small">'+name+'</h3>',
 							//TO DO Move strings below to its own function
 							
 							suggestion: function(data){ 

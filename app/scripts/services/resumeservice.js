@@ -8,7 +8,7 @@
  * Service in the nimbusEmsApp.
  */
 angular.module('nimbusEmsApp')
-	.service('resumeService', function () {
+	.service('resumeService', function (wordpressApi) {
 		// AngularJS will instantiate a singleton by calling "new" on this function
 		return {
 			addSummary : function($scope,summary){
@@ -18,7 +18,7 @@ angular.module('nimbusEmsApp')
 			addEducation : function($scope,data){
 				//console.log('resumeService addEducation data',data);
 				
-				$scope.profileData.meta.resume.education.push(data);
+				$scope.profileData.meta.resume.education.push(wordpressApi.parseWPData(data));
 				$scope.newEducation = {};
 								
 				console.log('resumeService addEducation education',$scope);
