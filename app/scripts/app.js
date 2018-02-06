@@ -264,6 +264,7 @@ angular
 	})
 	.run(function($rootScope, $location, $cookies, $http,$auth) {
 		//console.log('$cookies',JSON.parse($cookies.get('auth')),$auth.getToken());
+			
 		// keep user logged in after page refresh
 		$rootScope.loading = true;
 		
@@ -304,7 +305,9 @@ angular
 				}
 				
 			}
+			
 		});
+		
 	})
 	.filter('trusted', ['$sce', function ($sce) {
 		return function(url) {

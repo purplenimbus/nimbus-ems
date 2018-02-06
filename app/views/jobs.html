@@ -1,4 +1,4 @@
-<div ng-include="'views/partials/_toolbar.html'"></div>
+<div ng-include="'views/partials/_header.html'"></div>
 <section class="uk-padding-small">
 	<main class="masonry" >
 		<div class="item" ng-repeat="job in jobs.jobs">
@@ -10,7 +10,7 @@
 					<div class="uk-align-right">
 						<ul class="uk-iconnav" uk-switcher="connect: .details-{{$index}}">
 							<!-- <li><a href="#" class="uk-icon-link" uk-icon="icon: home"></a></li> -->
-							<li><a href="#" class="uk-icon-link" uk-icon="icon: info"></a></li>
+							<li><a href="#" class="uk-icon-link uk-hidden" uk-icon="icon: info"></a></li>
 						</ul>
 					</div>
 				</div>

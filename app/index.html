@@ -17,15 +17,7 @@
 	<meta name="fragment" content="!" />
   </head>
   <body ng-app="nimbusEmsApp">
-    <!--[if lte IE 8]>
-      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-    <![endif]-->
-
-    <!-- Add your site or application content here -->
-
-
     <div class="uk-offcanvas-content">
-		<div ng-include="'views/partials/_navbar.html'"></div>
 		<div uk-spinner class="uk-width-1-1 uk-text-center uk-position-center" ng-if="$root.loading"></div>
 		<div id="view" ng-view=""></div>
 		<!-- This is the off-canvas -->

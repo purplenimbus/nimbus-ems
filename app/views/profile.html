@@ -1,4 +1,4 @@
-<div ng-include="'views/partials/_toolbar.html'"></div>
+<div ng-include="'views/partials/_navbar.html'"></div>
 <div class="uk-section uk-section">
 	<div class="uk-container uk-width-1-2@l uk-width-2-3@m">
 		<div class="uk-text-center">
@@ -15,26 +15,28 @@
 		<ul class="uk-switcher uk-margin">
 			<li>
 				<div>
-					<p class="uk-text-lead">Summary</p>
+					<p class="uk-text-lead">Summary <a class="uk-text-muted" ng-click="profileData.meta.resume.summary.edit = profileData.meta.resume.summary.edit ? false : true" uk-icon="pencil"></a></p>
 					
-					<article class="uk-comment uk-visible-toggle" ng-if="profileData.meta.resume.summary">
+					<article class="uk-comment uk-visible-toggle" ng-if="profileData.meta.resume.summary.summary">
 						<header class="uk-comment-header uk-position-relative">
 							<div class="uk-position-top-right uk-position-small uk-hidden-hover"><a class="uk-link-muted" ng-click="">Edit</a></div>
 						</header>
-						<div class="uk-comment-body" ng-bind-html="profileData.meta.resume.summary"></div>
+						<div class="uk-comment-body" ng-bind-html="profileData.meta.resume.summary.summary">{{}}</div>
 					</article>
 					
-					<form class="uk-grid-small uk-margin-bottom" uk-grid>
-						<div class="uk-width-1-1">
-							<div class="uk-inline uk-width-1-1">
-								<textarea class="uk-textarea uk-width-1-1" rows="3" ng-model="newSummary" placeholder="Summary"></textarea>
+					<div ng-if="profileData.meta.resume.summary.edit">
+						<form class="uk-grid-small uk-margin-bottom" uk-grid>
+							<div class="uk-width-1-1">
+								<div class="uk-inline uk-width-1-1">
+									<textarea class="uk-textarea uk-width-1-1" rows="3" ng-model="profileData.meta.resume.summary.summary" placeholder="Summary"></textarea>
+								</div>
 							</div>
-						</div>
-					</form>
+						</form>
 					
-					<button class="uk-button uk-button-default uk-width-1-1 uk-margin-small-bottom" ng-click="resume.addSummary(this,newSummary)">Add Summary</button>
+						<button class="uk-button uk-button-default uk-width-1-1 uk-margin-small-bottom" ng-click="resume.addSummary(this,newSummary)">Add Summary</button>
+					</div>
 					
-					<p class="uk-text-lead">Education</p>
+					<p class="uk-text-lead">Education <a class="uk-text-muted" ng-click="profileData.meta.resume.education.edit = profileData.meta.resume.education.edit ? false : true" uk-icon="pencil"></a></p>
 										
 					<article class="uk-comment uk-visible-toggle" ng-repeat="(key,education) in profileData.meta.resume.education">
 						<header class="uk-comment-header uk-position-relative">
@@ -44,44 +46,65 @@
 									<p class="uk-comment-meta uk-margin-remove-top">{{ education.from }} - {{ education.to }}</p>
 								</div>
 							</div>
-							<div class="uk-position-top-right uk-position-small uk-hidden-hover"><a class="uk-link-muted" ng-click="resume.edit(this,'education',key)">Edit</a></div>
-							<div class="uk-position-top-right uk-position-small uk-hidden-hover"><a class="uk-link-danger" ng-click="resume.remove(this,'education',key)">Remove</a></div>
+							<div class="uk-position-top-right uk-position-small uk-hidden-hover">
+								<a class="uk-link-muted" ng-click="resume.edit(this,'education',key)">Edit</a>
+								<a class="uk-link-danger" ng-click="resume.remove(this,'education',key)">Remove</a>
+							</div>
 						</header>
 						<hr>
 					</article>
 					
-					<form class="uk-grid-small uk-margin-bottom" uk-grid>
-						<div class="uk-width-1-1">
-							<div class="uk-inline uk-width-1-1">
-								<input class="uk-input uk-width-1-1" type="text" ng-model="newEducation.school" placeholder="School" datasets="schoolsDataset" options="schoolsOptions" sf-typeahead>
-								<span class="uk-form-icon uk-form-icon-flip" uk-icon="icon: location"></span>
+					<div ng-if="profileData.meta.resume.education.edit">
+						<form class="uk-grid-small uk-margin-bottom" uk-grid>
+							<div class="uk-width-1-1">
+								<div class="uk-inline uk-width-1-1">
+									<input class="uk-input uk-width-1-1" type="text" ng-model="newEducation.school" placeholder="School" datasets="schoolsDataset" options="schoolsOptions" sf-typeahead>
+									<span class="uk-form-icon uk-form-icon-flip" uk-icon="icon: location"></span>
+								</div>
 							</div>
-						</div>
-						<div class="uk-width-1-2@s">
-							<div class="uk-inline uk-width-1-1">
-								<input class="uk-input uk-width-1-1" type="month" ng-model="newEducation.from" placeholder="Start Date">
-								<span class="uk-form-icon uk-form-icon-flip" uk-icon="icon: calendar"></span>
+							<div class="uk-width-1-2@s">
+								<div class="uk-inline uk-width-1-1">
+									<input class="uk-input uk-width-1-1" type="month" ng-model="newEducation.from" placeholder="Start Date">
+									<span class="uk-form-icon uk-form-icon-flip" uk-icon="icon: calendar"></span>
+								</div>
 							</div>
-						</div>
-						<div class="uk-width-1-2@s">
-							<div class="uk-inline uk-width-1-1">
-								<input class="uk-input uk-width-1-1" type="month" ng-model="newEducation.to" placeholder="Finish Date">
-								<span class="uk-form-icon uk-form-icon-flip" uk-icon="icon: calendar"></span>
+							<div class="uk-width-1-2@s">
+								<div class="uk-inline uk-width-1-1">
+									<input class="uk-input uk-width-1-1" type="month" ng-model="newEducation.to" placeholder="Finish Date">
+									<span class="uk-form-icon uk-form-icon-flip" uk-icon="icon: calendar"></span>
+								</div>
 							</div>
-						</div>
-						<div class="uk-width-1-1">
-							<div class="uk-inline uk-width-1-1">
-								<input class="uk-input uk-width-1-1 typeahead" type="text" ng-model="newEducation.qualification" placeholder="Qualification e.g Degree , Certificate" datasets="qualificationDataset" options="qualificationOptions" ng-model="search" sf-typeahead>
-								<span class="uk-form-icon uk-form-icon-flip" uk-icon="icon: pencil"></span>
+							<div class="uk-width-1-1">
+								<div class="uk-inline uk-width-1-1">
+									<input class="uk-input uk-width-1-1 typeahead" type="text" ng-model="newEducation.qualification" placeholder="Qualification e.g Degree , Certificate" datasets="qualificationDataset" options="qualificationOptions" ng-model="search" sf-typeahead>
+									<span class="uk-form-icon uk-form-icon-flip" uk-icon="icon: pencil"></span>
+								</div>
 							</div>
-						</div>
-					</form>
+						</form>
+						
+						<button class="uk-button uk-button-default uk-width-1-1 uk-margin-small-bottom" ng-click="resume.addEducation(this,newEducation)">Add Education</button>
+					</div>
 					
-					<button class="uk-button uk-button-default uk-width-1-1 uk-margin-small-bottom" ng-click="resume.addEducation(this,newEducation)">Add Education</button>
-					
-					<p class="uk-text-lead">Experience</p>
-					<span ng-bind-html="profileData.meta.resume.experience" ng-if="profileData.meta.resume.experience"></span>
-					<button class="uk-button uk-button-default uk-width-1-1 uk-margin-small-bottom" ng-click="resume.addExperience(this,newExperience)">Add Experience</button>
+					<p class="uk-text-lead">Experience <a class="uk-text-muted" ng-click="profileData.meta.resume.experience.edit = profileData.meta.resume.experience.edit ? false : true" uk-icon="pencil"></a></p></p>
+					<!-- <span ng-bind-html="profileData.meta.resume.experience"></span> -->
+					<div ng-if="profileData.meta.resume.experience.edit">
+						<article class="uk-comment uk-visible-toggle" ng-repeat="(key,experience) in profileData.meta.resume.experience">
+							<header class="uk-comment-header uk-position-relative">
+								<div class="uk-grid-medium uk-flex-middle" uk-grid>
+									<div class="uk-width-expand">
+										<h4 class="uk-comment-title uk-margin-remove">{{ experience.company.name }}<p class="uk-text-small uk-margin-remove">{{ education.experience.job.title }}</p></h4>
+										<p class="uk-comment-meta uk-margin-remove-top">{{ experience.from }} - {{ experience.to }}</p>
+									</div>
+								</div>
+								<div class="uk-position-top-right uk-position-small uk-hidden-hover">
+									<a class="uk-link-muted" ng-click="resume.edit(this,'experience',key)">Edit</a>
+									<a class="uk-link-danger" ng-click="resume.remove(this,'experience',key)">Remove</a>
+								</div>
+							</header>
+							<hr>
+						</article>
+						<button class="uk-button uk-button-default uk-width-1-1 uk-margin-small-bottom" ng-click="resume.addExperience(this,newExperience)">Add Experience</button>
+					</div>
 				</div>
 			</li>
 			<li ng-if="profileData.activities">

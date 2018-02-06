@@ -8,7 +8,7 @@
  * Service in the nimbusEmsApp.
  */
 angular.module('nimbusEmsApp')
-	.service('typeaheadService', function ($window) {
+	.service('typeaheadService', function ($window,wordpressApi) {
     // AngularJS will instantiate a singleton by calling "new" on this function
 		return {
 			init : 	function($scope,name,endPoint,displayKey,label){
@@ -36,9 +36,9 @@ angular.module('nimbusEmsApp')
 							//TO DO Move strings below to its own function
 							
 							suggestion: function(data){ 
-								var str = 		'<li class="uk-text-capitalize">'+data[displayKey]+'</li>';
+								var str = 		'<li class="uk-text-capitalize">'+wordpressApi.parseWPData(data)[displayKey]+'</li>';
 								
-								console.log('typeaheadService'+name+' templates',data);
+								//console.log('typeaheadService'+name+' templates',data);
 								
 								return str;
 							},

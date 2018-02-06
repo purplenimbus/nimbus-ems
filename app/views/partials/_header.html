@@ -1,16 +1,21 @@
-<div class="uk-section-default">
-    <div class="uk-section uk-light uk-background-cover uk-background-blend-multiply uk-background-secondary" style="background-image: url(https://images.pexels.com/photos/775998/pexels-photo-775998.jpeg?w=940&h=650&auto=compress&cs=tinysrgb)">
-        <div class="uk-container">
-			<div uk-grid>
-				<div class="uk-width-1-1 uk-flex-bottom">
-					<h1 class="uk-margin-remove uk-text-lead uk-text-uppercase">{{ jobData.title }}</h1>
-					<ul class="uk-subnav" uk-margin>
-						<li ng-if="jobData.company.name"><a href="#"><span uk-icon="icon: world"></span> {{ jobData.company.name }}</a></li>
-						<li ng-if="jobData.meta.addressLocality"><a href="#"><span uk-icon="icon: location"></span> {{ jobData.meta.addressLocality[0] }}</a></li>
-						<li ng-if="jobData.meta.industry"><a href="#"><span uk-icon="icon: thumbnails"></span> {{ jobData.meta.industry[0] }}</a></li>
-					</ul>
+<header class="uk-section-default" ng-controller="NavCtrl">
+	<div class="uk-inline uk-background-primary uk-light" id="home">
+		<img class="uk-blend-multiply" src="http://purplenimbus.net/jp/wp-content/uploads/2018/02/pexels-photo-255488.jpeg" alt="Blend Multiply">
+		<div ng-include="'views/partials/_navbar.html'"  class="uk-position-top"></div>
+		<div class="uk-position-center uk-text-center">
+			<h1>Nimbus Jobs</h1>
+				
+			<form class="uk-navbar-item" action="javascript:void(0)">
+				<div class="uk-inline">
+					<span class="uk-form-icon" uk-icon="icon: tag"></span>
+					<input class="uk-input uk-form-blank typeahead uk-form-large uk-width-1-1@s" type="text" placeholder="Job Title" typeahead" type="text" ng-model="search.job"  datasets="jobsDataset" options="jobsOptions" sf-typeahead>
 				</div>
-			</div>
-        </div>
-    </div>
-</div>
+				<div class="uk-inline">
+					<span class="uk-form-icon" uk-icon="icon: location"></span>
+					<input class="uk-input uk-form-blank uk-form-large" type="text" placeholder="Location">
+				</div>
+				<button class="uk-button uk-button-default uk-button-large">Search</button>
+			</form>
+		</div>
+	</div>
+</header>

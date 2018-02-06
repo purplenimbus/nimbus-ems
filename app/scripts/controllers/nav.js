@@ -196,6 +196,8 @@ angular.module('nimbusEmsApp')
 	
 	$scope.auth = $auth;
 	
+	$scope.search = {};
+	
 	typeaheadService.init($scope,'jobs',wordpressApi.wpEndpoint+'jobs','title','jobs');
-	//console.log('Nav breadcrumbs',$scope.auth);
+
   });
