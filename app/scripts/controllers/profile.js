@@ -8,7 +8,7 @@
  * Controller of the nimbusEmsApp
  */
 angular.module('nimbusEmsApp')
-	.controller('ProfileCtrl', function ($scope,profileData,$window,$route,graphApi,modal,resumeService,wordpressApi,typeaheadService) {
+	.controller('ProfileCtrl', function ($scope,profileData,$window,$route,graphApi,modal,resumeService,wordpressApi,typeaheadService,$auth,$location) {
 		
 		$scope.init = function(){
 			console.log('profileData',profileData,$scope);
@@ -64,12 +64,23 @@ angular.module('nimbusEmsApp')
 		
 		$scope.modal = modal;
 		
-		typeaheadService.init($scope,'schools','https://maps.googleapis.com/maps/api/place/textsearch/json?query=schools%20in%20lagos&key=AIzaSyBZt2nzYlBKm-H6X9bHRlLGu2_mrmzjRpY','name','schools');
+		typeaheadService.init($scope,'schools','http://purplenimbus.net/schools/wp-json/wp/v2/schools','title','schools','title');
 		
-		typeaheadService.init($scope,'qualification',wordpressApi.wpEndpoint+'qualifications','name','qualifications');
+		typeaheadService.init($scope,'qualification',wordpressApi.wpEndpoint+'qualifications','name','qualifications','name');
 
 		$scope.$on('$routeChangeStart', function() { 
 		   //close any open menus or modals
 			$window.UIkit.offcanvas('#side-menu').hide();
+			
+			if (!$auth.isAuthenticated()) {
+				console.log('logging you out',history);
+				
+				if(history.length){
+					$location.path('/login').search({returnUrl: history[0]});
+				}else{
+					$location.path('/login');
+				}
+				
+			}
 		});
 	});

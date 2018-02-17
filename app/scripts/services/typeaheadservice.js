@@ -11,16 +11,18 @@ angular.module('nimbusEmsApp')
 	.service('typeaheadService', function ($window,wordpressApi) {
     // AngularJS will instantiate a singleton by calling "new" on this function
 		return {
-			init : 	function($scope,name,endPoint,displayKey,label){
+			init : 	function($scope,name,endPoint,displayKey,label,display){
 							
 					this[name+'List'] = new $window.Bloodhound({
 						datumTokenizer: function(d) { console.log(name+'list',d); return $window.Bloodhound.tokenizers.whitespace(d[displayKey]); },
 						queryTokenizer: $window.Bloodhound.tokenizers.whitespace,
-						remote:	endPoint,
-						prepare: function(query, settings) {
-							console.log('prepare',query);
-							settings.url += '?q=' + query;
-							return settings;
+						remote:	{
+							url : endPoint,
+							prepare: function(query, settings) {
+								//console.log('prepare',query,settings);
+								settings.url += '?search=' + query;
+								return settings;
+							}
 						},
 					});	
 					
@@ -28,8 +30,8 @@ angular.module('nimbusEmsApp')
 							
 					$scope[name+'Dataset'] = {
 						name	: label,
-						display	: 'name',
-						source	: this[name+'List'].ttAdapter(),
+						display	: display,
+						source	: this[name+'List']/*.ttAdapter()*/,
 						limit	: 5,
 						templates: {
 							//header: '<h3 class="uk-text-muted uk-text-small">'+name+'</h3>',
@@ -38,7 +40,7 @@ angular.module('nimbusEmsApp')
 							suggestion: function(data){ 
 								var str = 		'<li class="uk-text-capitalize">'+wordpressApi.parseWPData(data)[displayKey]+'</li>';
 								
-								//console.log('typeaheadService'+name+' templates',data);
+								//console.log('typeaheadService '+name+' templates',wordpressApi.parseWPData(data),displayKey);
 								
 								return str;
 							},
@@ -53,14 +55,23 @@ angular.module('nimbusEmsApp')
 					
 					$scope[name+'Options'] = {
 						displayKey: displayKey,
-						minLength: 2,
+						minLength: 3,
 						highlight: true,
 						classNames: {
 							dataset: 'uk-list uk-list-divider uk-dropdown uk-padding-small'
 						}
 					};
 					
-					console.log('typeaheadService'+name ,$scope);
+					console.log('typeaheadService '+name ,$scope);
+			},
+			bloodhound	:	function(){
+				
+			},
+			dataset	:	function(){
+				
+			},
+			options :	function(){
+
 			}
 		};
 	});

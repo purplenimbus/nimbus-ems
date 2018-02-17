@@ -77,7 +77,7 @@ angular.module('nimbusEmsApp')
 					}else{ 
 						$location.path('/'); 
 					}*/
-					$location.path('/');
+					//$location.path('/');
 					
 				}).catch(function(error){
 					$scope.loginLoading = false;
@@ -158,7 +158,7 @@ angular.module('nimbusEmsApp')
 		$auth.logout();
 		$cookies.remove('auth');
 		//$route.reload();
-		$location.path('/login');
+		//$location.path('/');
 	};
 	
 	$scope.showSettings = function(type){

@@ -279,18 +279,20 @@ angular
 		$rootScope.$on('$routeChangeSuccess', function() {
 			history.push($location.$$path);
 		});
-
+		
+		/*
 		$rootScope.$on('$locationChangeStart', function () {
 
 			//allowed pages
-			var allowed = ['login','register','/','job'];
+			var allowed = ['login','register','','job'];
 			
 			var restricted = false;
 			
 			angular.forEach(allowed,function(value){
 				restricted = $location.path() === '/'+value ? false : true;
 			});
-
+			
+			console.log('Logged in state',restricted,$location.path());
 						
 			// redirect to login page if not logged in and trying to access a restricted page
 			var loggedIn = $auth.isAuthenticated();//$rootScope.globals.currentUser;
@@ -307,7 +309,7 @@ angular
 			}
 			
 		});
-		
+		*/
 	})
 	.filter('trusted', ['$sce', function ($sce) {
 		return function(url) {

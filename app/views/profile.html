@@ -58,6 +58,12 @@
 						<form class="uk-grid-small uk-margin-bottom" uk-grid>
 							<div class="uk-width-1-1">
 								<div class="uk-inline uk-width-1-1">
+									<input class="uk-input uk-width-1-1 typeahead" type="text" ng-model="newEducation.qualification" placeholder="Qualification e.g Degree , Certificate" datasets="qualificationDataset" options="qualificationOptions" sf-typeahead>
+									<span class="uk-form-icon uk-form-icon-flip" uk-icon="icon: pencil"></span>
+								</div>
+							</div>
+							<div class="uk-width-1-1">
+								<div class="uk-inline uk-width-1-1">
 									<input class="uk-input uk-width-1-1" type="text" ng-model="newEducation.school" placeholder="School" datasets="schoolsDataset" options="schoolsOptions" sf-typeahead>
 									<span class="uk-form-icon uk-form-icon-flip" uk-icon="icon: location"></span>
 								</div>
@@ -72,12 +78,6 @@
 								<div class="uk-inline uk-width-1-1">
 									<input class="uk-input uk-width-1-1" type="month" ng-model="newEducation.to" placeholder="Finish Date">
 									<span class="uk-form-icon uk-form-icon-flip" uk-icon="icon: calendar"></span>
-								</div>
-							</div>
-							<div class="uk-width-1-1">
-								<div class="uk-inline uk-width-1-1">
-									<input class="uk-input uk-width-1-1 typeahead" type="text" ng-model="newEducation.qualification" placeholder="Qualification e.g Degree , Certificate" datasets="qualificationDataset" options="qualificationOptions" ng-model="search" sf-typeahead>
-									<span class="uk-form-icon uk-form-icon-flip" uk-icon="icon: pencil"></span>
 								</div>
 							</div>
 						</form>
