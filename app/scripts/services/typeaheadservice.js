@@ -22,6 +22,15 @@ angular.module('nimbusEmsApp')
 								//console.log('prepare',query,settings);
 								settings.url += '?search=' + query;
 								return settings;
+							},
+							transform : function(o){
+								var data = o.map(function(v){
+									return wordpressApi.parseWPData(v);
+								});
+								
+								//console.log('transform data',data);
+								
+								return data;
 							}
 						},
 					});	
@@ -35,13 +44,11 @@ angular.module('nimbusEmsApp')
 						limit	: 5,
 						templates: {
 							//header: '<h3 class="uk-text-muted uk-text-small">'+name+'</h3>',
-							//TO DO Move strings below to its own function
 							
 							suggestion: function(data){ 
-								var str = 		'<li class="uk-text-capitalize">'+wordpressApi.parseWPData(data)[displayKey]+'</li>';
-								
-								//console.log('typeaheadService '+name+' templates',wordpressApi.parseWPData(data),displayKey);
-								
+								//console.log('suggestion',data);
+								var str = 		'<li class="uk-text-capitalize">'+data[displayKey]+'</li>';
+																
 								return str;
 							},
 							empty: [
@@ -57,12 +64,12 @@ angular.module('nimbusEmsApp')
 						displayKey: displayKey,
 						minLength: 3,
 						highlight: true,
+						hint:true,
 						classNames: {
 							dataset: 'uk-list uk-list-divider uk-dropdown uk-padding-small'
 						}
 					};
 					
-					console.log('typeaheadService '+name ,$scope);
 			},
 			bloodhound	:	function(){
 				

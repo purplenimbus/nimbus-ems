@@ -15,7 +15,7 @@
 		<ul class="uk-switcher uk-margin">
 			<li>
 				<div>
-					<p class="uk-text-lead">Summary <a class="uk-text-muted" ng-click="profileData.meta.resume.summary.edit = profileData.meta.resume.summary.edit ? false : true" uk-icon="pencil"></a></p>
+					<p class="uk-text-lead">Summary <a ng-if="auth.isAuthenticated()" class="uk-text-muted" ng-click="profileData.meta.resume.summary.edit = profileData.meta.resume.summary.edit ? false : true" uk-icon="pencil"></a></p>
 					
 					<article class="uk-comment uk-visible-toggle" ng-if="profileData.meta.resume.summary.summary">
 						<header class="uk-comment-header uk-position-relative">
@@ -36,7 +36,7 @@
 						<button class="uk-button uk-button-default uk-width-1-1 uk-margin-small-bottom" ng-click="resume.addSummary(this,newSummary)">Add Summary</button>
 					</div>
 					
-					<p class="uk-text-lead">Education <a class="uk-text-muted" ng-click="profileData.meta.resume.education.edit = profileData.meta.resume.education.edit ? false : true" uk-icon="pencil"></a></p>
+					<p class="uk-text-lead">Education <a ng-if="auth.isAuthenticated()" class="uk-text-muted" ng-click="profileData.meta.resume.education.edit = profileData.meta.resume.education.edit ? false : true" uk-icon="pencil"></a></p>
 										
 					<article class="uk-comment uk-visible-toggle" ng-repeat="(key,education) in profileData.meta.resume.education">
 						<header class="uk-comment-header uk-position-relative">
@@ -85,7 +85,7 @@
 						<button class="uk-button uk-button-default uk-width-1-1 uk-margin-small-bottom" ng-click="resume.addEducation(this,newEducation)">Add Education</button>
 					</div>
 					
-					<p class="uk-text-lead">Experience <a class="uk-text-muted" ng-click="profileData.meta.resume.experience.edit = profileData.meta.resume.experience.edit ? false : true" uk-icon="pencil"></a></p></p>
+					<p class="uk-text-lead">Experience <a ng-if="auth.isAuthenticated()" class="uk-text-muted" ng-click="profileData.meta.resume.experience.edit = profileData.meta.resume.experience.edit ? false : true" uk-icon="pencil"></a></p></p>
 					<!-- <span ng-bind-html="profileData.meta.resume.experience"></span> -->
 					<div ng-if="profileData.meta.resume.experience.edit">
 						<article class="uk-comment uk-visible-toggle" ng-repeat="(key,experience) in profileData.meta.resume.experience">

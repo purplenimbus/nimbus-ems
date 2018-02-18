@@ -64,6 +64,8 @@ angular.module('nimbusEmsApp')
 		
 		$scope.modal = modal;
 		
+		$scope.auth = $auth;
+		
 		typeaheadService.init($scope,'schools','http://purplenimbus.net/schools/wp-json/wp/v2/schools','title','schools','title');
 		
 		typeaheadService.init($scope,'qualification',wordpressApi.wpEndpoint+'qualifications','name','qualifications','name');

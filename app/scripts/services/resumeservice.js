@@ -21,7 +21,7 @@ angular.module('nimbusEmsApp')
 				$scope.profileData.meta.resume.education.push(wordpressApi.parseWPData(data));
 				$scope.newEducation = {};
 								
-				console.log('resumeService addEducation education',$scope);
+				console.log('resumeService addEducation education',data,$scope.profileData.meta.resume.education);
 			},
 			addExperience : function($scope,experience){
 				console.log('resumeService addExperience',experience);
