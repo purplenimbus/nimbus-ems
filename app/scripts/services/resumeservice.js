@@ -12,14 +12,15 @@ angular.module('nimbusEmsApp')
 		// AngularJS will instantiate a singleton by calling "new" on this function
 		return {
 			addSummary : function($scope,summary){
-				console.log('resumeService addSummary',summary);
+				$scope.profileData.meta.resume.summary.value = summary;
 				$scope.newSummary = '';
+				$scope.profileData.meta.resume.summary.edit = false;
+				console.log('resumeService addSummary',$scope.profileData.meta.resume);
 			},
 			add	: function($scope,key,data){
-				
 				$scope.profileData.meta.resume[key].push(wordpressApi.parseWPData(data));
-				$scope.newExperience = {};
-				console.log('resumeService add '+key,data,$scope.profileData.meta.resume[key]);
+				$scope['new'+key.charAt(0).toUpperCase() + key.slice(1)] = {};
+				console.log('resumeService add '+key,data,$scope.profileData.meta.resume);
 			},
 			remove : function($scope,key,index){
 				console.log('remove',$scope.profileData.meta.resume[key],index);

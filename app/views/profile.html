@@ -17,25 +17,26 @@
 				<div>
 					<p class="uk-text-lead">Summary <a ng-if="auth.isAuthenticated()" class="uk-text-muted" ng-click="profileData.meta.resume.summary.edit = profileData.meta.resume.summary.edit ? false : true" uk-icon="pencil"></a></p>
 					
-					<article class="uk-comment uk-visible-toggle" ng-if="profileData.meta.resume.summary.summary">
-						<header class="uk-comment-header uk-position-relative">
+					<article class="uk-comment uk-visible-toggle" ng-if="profileData.meta.resume.summary.value">
+						<header class="uk-comment-header uk-position-relative uk-margin-remove">
 							<div class="uk-position-top-right uk-position-small uk-hidden-hover"><a class="uk-link-muted" ng-click="">Edit</a></div>
 						</header>
-						<div class="uk-comment-body" ng-bind-html="profileData.meta.resume.summary.summary">{{}}</div>
+						<div class="uk-comment-body uk-margin-bottom" ng-bind-html="profileData.meta.resume.summary.value"></div>
 					</article>
 					
 					<div ng-if="profileData.meta.resume.summary.edit">
 						<form class="uk-grid-small uk-margin-bottom" uk-grid>
 							<div class="uk-width-1-1">
 								<div class="uk-inline uk-width-1-1">
-									<textarea class="uk-textarea uk-width-1-1" rows="3" ng-model="profileData.meta.resume.summary.summary" placeholder="Summary"></textarea>
+									<textarea class="uk-textarea uk-width-1-1" rows="3" ng-model="newSummary" placeholder="Summary"></textarea>
 								</div>
 							</div>
 						</form>
 					
 						<button class="uk-button uk-button-default uk-width-1-1 uk-margin-small-bottom" ng-click="resume.addSummary(this,newSummary)">Add Summary</button>
 					</div>
-					
+				</div>
+				<div>
 					<p class="uk-text-lead">Education <a ng-if="auth.isAuthenticated()" class="uk-text-muted" ng-click="profileData.meta.resume.education.edit = profileData.meta.resume.education.edit ? false : true" uk-icon="pencil"></a></p>
 										
 					<article class="uk-comment uk-visible-toggle" ng-repeat="(key,education) in profileData.meta.resume.education">
@@ -43,7 +44,7 @@
 							<div class="uk-grid-medium uk-flex-middle" uk-grid>
 								<div class="uk-width-expand">
 									<h4 class="uk-comment-title uk-margin-remove">{{ education.school }}<p class="uk-text-small uk-margin-remove">{{ education.qualification }}</p></h4>
-									<p class="uk-comment-meta uk-margin-remove-top">{{ education.from }} - {{ education.to }}</p>
+									<p class="uk-comment-meta uk-margin-remove-top">{{ education.from | date : 'MMMM yyyy' }} - {{ education.to | date : 'MMMM yyyy' }}</p>
 								</div>
 							</div>
 							<div class="uk-position-top-right uk-position-small uk-hidden-hover">
@@ -51,7 +52,7 @@
 								<a class="uk-link-danger" ng-click="resume.remove(this,'education',key)">Remove</a>
 							</div>
 						</header>
-						<hr>
+						<hr ng-if="profileData.meta.resume.education[key+1]">
 					</article>
 					
 					<div ng-if="profileData.meta.resume.education.edit">
@@ -84,14 +85,15 @@
 						
 						<button class="uk-button uk-button-default uk-width-1-1 uk-margin-small-bottom" ng-click="resume.add(this,'education',newEducation)">Add Education</button>
 					</div>
-					
-					<p class="uk-text-lead">Experience <a ng-if="auth.isAuthenticated()" class="uk-text-muted" ng-click="profileData.meta.resume.experience.edit = profileData.meta.resume.experience.edit ? false : true" uk-icon="pencil"></a></p></p>
+				</div>
+				<div>
+					<p class="uk-text-lead">Experience <a ng-if="auth.isAuthenticated()" class="uk-text-muted" ng-click="profileData.meta.resume.experience.edit = profileData.meta.resume.experience.edit ? false : true" uk-icon="pencil"></a></p>
 					<article class="uk-comment uk-visible-toggle" ng-repeat="(key,experience) in profileData.meta.resume.experience">
 						<header class="uk-comment-header uk-position-relative">
 							<div class="uk-grid-medium uk-flex-middle" uk-grid>
 								<div class="uk-width-expand">
 									<h4 class="uk-comment-title uk-margin-remove">{{ experience.company }}<p class="uk-text-small uk-margin-remove">{{ experience.job }}</p></h4>
-									<p class="uk-comment-meta uk-margin-remove-top">{{ experience.from }} - {{ experience.to }}</p>
+									<p class="uk-comment-meta uk-margin-remove-top">{{ experience.from | date : 'MMMM yyyy' }} - {{ experience.to | date : 'MMMM yyyy' }}</p>
 								</div>
 							</div>
 							<div class="uk-position-top-right uk-position-small uk-hidden-hover">
@@ -99,7 +101,7 @@
 								<a class="uk-link-danger" ng-click="resume.remove(this,'experience',key)">Remove</a>
 							</div>
 						</header>
-						<hr>
+						<hr ng-if="profileData.meta.resume.experience[key+1]">
 					</article>
 						
 					<div ng-if="profileData.meta.resume.experience.edit">
@@ -132,6 +134,9 @@
 						</form>
 						<button class="uk-button uk-button-default uk-width-1-1 uk-margin-small-bottom" ng-click="resume.add(this,'experience',newExperience)">Add Experience</button>
 					</div>
+				</div>
+				<div>
+					<p class="uk-text-lead">Skills <a ng-if="auth.isAuthenticated()" class="uk-text-muted" ng-click="profileData.meta.resume.skills.edit = profileData.meta.resume.skills.edit ? false : true" uk-icon="pencil"></a></p>
 				</div>
 			</li>
 			<li ng-if="profileData.activities">

@@ -28,7 +28,7 @@ angular.module('nimbusEmsApp')
 									return wordpressApi.parseWPData(v);
 								});
 								
-								//console.log('transform data',data);
+								console.log('transform data',data);
 								
 								return data;
 							}
@@ -47,7 +47,10 @@ angular.module('nimbusEmsApp')
 							
 							suggestion: function(data){ 
 								//console.log('suggestion',data);
-								var str = 		'<li class="uk-text-capitalize">'+data[displayKey]+'</li>';
+								var str = 		'<li class="uk-text-capitalize">';
+									str += 			data.meta.logo_url ? '<img src="'+data.meta.logo_url+'" width="50px" height="50px"/>' : '';
+									str += 			'<span class="uk-text-middle">'+data[displayKey]+'</span>';
+									str += 		'</li>';
 																
 								return str;
 							},

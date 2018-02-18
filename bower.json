@@ -12,7 +12,7 @@
     "jquery": "^3.2.1",
     "ngTagsInput": "https://github.com/mbenford/ngTagsInput.git#^3.2.0",
     "angular-typeahead": "^1.0.2",
-    "moment": "^2.18.1",
+    "moment": "^2.20.1",
     "satellizer": "^0.15.5",
     "angular-chart.js": "^1.1.1"
   },
