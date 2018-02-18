@@ -49,7 +49,7 @@ angular.module('nimbusEmsApp')
 								//console.log('suggestion',data);
 								var str = 		'<li class="uk-text-capitalize">';
 									str += 			data.meta.logo_url ? '<img src="'+data.meta.logo_url+'" width="50px" height="50px"/>' : '';
-									str += 			'<span class="uk-text-middle">'+data[displayKey]+'</span>';
+									str += 			'<span class="uk-text-middle '+(data.meta.logo_url ? 'uk-margin-left' : '')+'">'+data[displayKey]+'</span>';
 									str += 		'</li>';
 																
 								return str;

@@ -24,7 +24,7 @@
 						<div class="uk-comment-body uk-margin-bottom" ng-bind-html="profileData.meta.resume.summary.value"></div>
 					</article>
 					
-					<div ng-if="profileData.meta.resume.summary.edit">
+					<div ng-if="profileData.meta.resume.summary.edit && auth.isAuthenticated()">
 						<form class="uk-grid-small uk-margin-bottom" uk-grid>
 							<div class="uk-width-1-1">
 								<div class="uk-inline uk-width-1-1">
@@ -55,7 +55,7 @@
 						<hr ng-if="profileData.meta.resume.education[key+1]">
 					</article>
 					
-					<div ng-if="profileData.meta.resume.education.edit">
+					<div ng-if="profileData.meta.resume.education.edit && auth.isAuthenticated()">
 						<form class="uk-grid-small uk-margin-bottom" uk-grid>
 							<div class="uk-width-1-1">
 								<div class="uk-inline uk-width-1-1">
@@ -104,7 +104,7 @@
 						<hr ng-if="profileData.meta.resume.experience[key+1]">
 					</article>
 						
-					<div ng-if="profileData.meta.resume.experience.edit">
+					<div ng-if="profileData.meta.resume.experience.edit && auth.isAuthenticated()">
 				
 						<form class="uk-grid-small uk-margin-bottom" uk-grid>
 							<div class="uk-width-1-1">
@@ -139,7 +139,7 @@
 					<p class="uk-text-lead">Skills <a ng-if="auth.isAuthenticated()" class="uk-text-muted" ng-click="profileData.meta.resume.skills.edit = profileData.meta.resume.skills.edit ? false : true" uk-icon="pencil"></a></p>
 				</div>
 			</li>
-			<li ng-if="profileData.activities">
+			<li ng-if="profileData.activities && auth.isAuthenticated()">
 				<div class="">
 					<ul class="uk-list">
 						<li class="uk-clear-fix" ng-repeat="activity in profileData.activities.data" >
@@ -183,7 +183,7 @@
 					</ul>
 				</div>
 			</li>
-			<li ng-if="profileData.studentRecords">Student Records</li>
+			<li ng-if="profileData.studentRecords && auth.isAuthenticated()">Student Records</li>
 		</ul>
 	</div>
 </div>
