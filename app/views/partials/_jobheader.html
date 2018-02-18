@@ -1,0 +1,19 @@
+<div class="uk-section-default" id="job">
+    <div class="uk-light uk-background-cover uk-background-blend-multiply uk-background-secondary" style="background-image: url('http://purplenimbus.net/jp/wp-content/uploads/2018/02/pexels-photo-255488.jpeg')">
+        <div ng-include="'views/partials/_navbar.html'"></div>
+		<div class="uk-section">
+			<div class="uk-container">
+				<div uk-grid>
+					<div class="uk-width-1-1 uk-flex-bottom">
+						<h1 class="uk-margin-remove uk-text-lead uk-text-uppercase">{{ jobData.title }}</h1>
+						<ul class="uk-subnav" uk-margin>
+							<li ng-if="jobData.company.name"><a href="#"><span uk-icon="icon: world"></span> {{ jobData.company.name }}</a></li>
+							<li ng-if="jobData.meta.addressLocality"><a href="#"><span uk-icon="icon: location"></span> {{ jobData.meta.addressLocality[0] }}</a></li>
+							<li ng-if="jobData.meta.industry"><a href="#"><span uk-icon="icon: thumbnails"></span> {{ jobData.meta.industry[0] }}</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+        </div>
+    </div>
+</div>

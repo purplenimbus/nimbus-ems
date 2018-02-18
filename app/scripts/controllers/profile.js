@@ -69,6 +69,10 @@ angular.module('nimbusEmsApp')
 		typeaheadService.init($scope,'schools','http://purplenimbus.net/schools/wp-json/wp/v2/schools','title','schools','title');
 		
 		typeaheadService.init($scope,'qualification',wordpressApi.wpEndpoint+'qualifications','name','qualifications','name');
+		
+		typeaheadService.init($scope,'company',wordpressApi.wpEndpoint+'companies','title','companies','title');
+		
+		typeaheadService.init($scope,'job',wordpressApi.wpEndpoint+'jobs','title','jobs','title');
 
 		$scope.$on('$routeChangeStart', function() { 
 		   //close any open menus or modals

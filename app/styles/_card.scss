@@ -1,0 +1,17 @@
+.uk-card{
+	.uk-card-header{
+		/*font-family: 'Playfair Display', serif;*/
+	}
+}
+
+.masonry{
+	.item{
+		.uk-card{
+			.uk-card-header{
+				a{
+					font-size:20px;
+				}
+			}
+		}
+	}
+}

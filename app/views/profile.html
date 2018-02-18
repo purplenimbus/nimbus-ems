@@ -42,7 +42,7 @@
 						<header class="uk-comment-header uk-position-relative">
 							<div class="uk-grid-medium uk-flex-middle" uk-grid>
 								<div class="uk-width-expand">
-									<h4 class="uk-comment-title uk-margin-remove">{{ education.school.name }}<p class="uk-text-small uk-margin-remove">{{ education.qualification.name }}</p></h4>
+									<h4 class="uk-comment-title uk-margin-remove">{{ education.school }}<p class="uk-text-small uk-margin-remove">{{ education.qualification }}</p></h4>
 									<p class="uk-comment-meta uk-margin-remove-top">{{ education.from }} - {{ education.to }}</p>
 								</div>
 							</div>
@@ -82,28 +82,55 @@
 							</div>
 						</form>
 						
-						<button class="uk-button uk-button-default uk-width-1-1 uk-margin-small-bottom" ng-click="resume.addEducation(this,newEducation)">Add Education</button>
+						<button class="uk-button uk-button-default uk-width-1-1 uk-margin-small-bottom" ng-click="resume.add(this,'education',newEducation)">Add Education</button>
 					</div>
 					
 					<p class="uk-text-lead">Experience <a ng-if="auth.isAuthenticated()" class="uk-text-muted" ng-click="profileData.meta.resume.experience.edit = profileData.meta.resume.experience.edit ? false : true" uk-icon="pencil"></a></p></p>
-					<!-- <span ng-bind-html="profileData.meta.resume.experience"></span> -->
+					<article class="uk-comment uk-visible-toggle" ng-repeat="(key,experience) in profileData.meta.resume.experience">
+						<header class="uk-comment-header uk-position-relative">
+							<div class="uk-grid-medium uk-flex-middle" uk-grid>
+								<div class="uk-width-expand">
+									<h4 class="uk-comment-title uk-margin-remove">{{ experience.company }}<p class="uk-text-small uk-margin-remove">{{ experience.job }}</p></h4>
+									<p class="uk-comment-meta uk-margin-remove-top">{{ experience.from }} - {{ experience.to }}</p>
+								</div>
+							</div>
+							<div class="uk-position-top-right uk-position-small uk-hidden-hover">
+								<a class="uk-link-muted" ng-click="resume.edit(this,'experience',key)">Edit</a>
+								<a class="uk-link-danger" ng-click="resume.remove(this,'experience',key)">Remove</a>
+							</div>
+						</header>
+						<hr>
+					</article>
+						
 					<div ng-if="profileData.meta.resume.experience.edit">
-						<article class="uk-comment uk-visible-toggle" ng-repeat="(key,experience) in profileData.meta.resume.experience">
-							<header class="uk-comment-header uk-position-relative">
-								<div class="uk-grid-medium uk-flex-middle" uk-grid>
-									<div class="uk-width-expand">
-										<h4 class="uk-comment-title uk-margin-remove">{{ experience.company.name }}<p class="uk-text-small uk-margin-remove">{{ education.experience.job.title }}</p></h4>
-										<p class="uk-comment-meta uk-margin-remove-top">{{ experience.from }} - {{ experience.to }}</p>
-									</div>
+				
+						<form class="uk-grid-small uk-margin-bottom" uk-grid>
+							<div class="uk-width-1-1">
+								<div class="uk-inline uk-width-1-1">
+									<input class="uk-input uk-width-1-1 typeahead" type="text" ng-model="newExperience.job" placeholder="Job Title" datasets="jobDataset" options="jobOptions" sf-typeahead>
+									<span class="uk-form-icon uk-form-icon-flip" uk-icon="icon: pencil"></span>
 								</div>
-								<div class="uk-position-top-right uk-position-small uk-hidden-hover">
-									<a class="uk-link-muted" ng-click="resume.edit(this,'experience',key)">Edit</a>
-									<a class="uk-link-danger" ng-click="resume.remove(this,'experience',key)">Remove</a>
+							</div>
+							<div class="uk-width-1-1">
+								<div class="uk-inline uk-width-1-1">
+									<input class="uk-input uk-width-1-1" type="text" ng-model="newExperience.company" placeholder="Company" datasets="companyDataset" options="companyOptions" sf-typeahead>
+									<span class="uk-form-icon uk-form-icon-flip" uk-icon="icon: location"></span>
 								</div>
-							</header>
-							<hr>
-						</article>
-						<button class="uk-button uk-button-default uk-width-1-1 uk-margin-small-bottom" ng-click="resume.addExperience(this,newExperience)">Add Experience</button>
+							</div>
+							<div class="uk-width-1-2@s">
+								<div class="uk-inline uk-width-1-1">
+									<input class="uk-input uk-width-1-1" type="month" ng-model="newExperience.from" placeholder="Start Date">
+									<span class="uk-form-icon uk-form-icon-flip" uk-icon="icon: calendar"></span>
+								</div>
+							</div>
+							<div class="uk-width-1-2@s">
+								<div class="uk-inline uk-width-1-1">
+									<input class="uk-input uk-width-1-1" type="month" ng-model="newExperience.to" placeholder="Finish Date">
+									<span class="uk-form-icon uk-form-icon-flip" uk-icon="icon: calendar"></span>
+								</div>
+							</div>
+						</form>
+						<button class="uk-button uk-button-default uk-width-1-1 uk-margin-small-bottom" ng-click="resume.add(this,'experience',newExperience)">Add Experience</button>
 					</div>
 				</div>
 			</li>

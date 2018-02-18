@@ -15,17 +15,11 @@ angular.module('nimbusEmsApp')
 				console.log('resumeService addSummary',summary);
 				$scope.newSummary = '';
 			},
-			addEducation : function($scope,data){
-				//console.log('resumeService addEducation data',data);
+			add	: function($scope,key,data){
 				
-				$scope.profileData.meta.resume.education.push(wordpressApi.parseWPData(data));
-				$scope.newEducation = {};
-								
-				console.log('resumeService addEducation education',data,$scope.profileData.meta.resume.education);
-			},
-			addExperience : function($scope,experience){
-				console.log('resumeService addExperience',experience);
+				$scope.profileData.meta.resume[key].push(wordpressApi.parseWPData(data));
 				$scope.newExperience = {};
+				console.log('resumeService add '+key,data,$scope.profileData.meta.resume[key]);
 			},
 			remove : function($scope,key,index){
 				console.log('remove',$scope.profileData.meta.resume[key],index);
