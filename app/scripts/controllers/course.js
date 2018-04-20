@@ -26,12 +26,14 @@ angular.module('nimbusEmsApp')
 				
 				$scope.loadingHome = false;
 			}).catch(function(){
+				$scope.loadingHome = false;
 				$window.UIkit.notification({
 					message: 'Couldnt get courseData',
 					status: 'danger',
 					pos: 'top-right',
 					timeout: 5000
 				});
+				
 			});
 		
 		};
@@ -53,6 +55,7 @@ angular.module('nimbusEmsApp')
 			})
 			.catch(function(){
 				//TO DO do something
+				$scope.loadingOutline = true;
 			});
 		};
 		

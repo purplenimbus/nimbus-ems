@@ -63,11 +63,8 @@ angular.module('nimbusEmsApp')
 		
 		var domain = auth ? JSON.parse(auth) : false;
 		
-		if (domain){
-			return domain.tenant.username;
-		}else{
-			return false;
-		}	
+		return domain ? domain.tenant.username : false;
+
 	})
 	.factory('tenant', function ($cookies) {
 		var user = JSON.parse($cookies.get('auth'));

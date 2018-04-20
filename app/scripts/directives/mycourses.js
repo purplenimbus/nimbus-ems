@@ -16,7 +16,9 @@ angular.module('nimbusEmsApp')
 			
 			console.log('auth',$auth);
 			
-			$scope.widgetTitle = 'My Courses';
+			$scope.widgetTitle = function(fname){
+				return fname+'\'s Courses';
+			};
 			
 			$scope.getTotal = function(index){	
 				return 	grades.getTotal($scope.courses[index].meta.grades,$scope.courses[index].course.meta.course_schema);
