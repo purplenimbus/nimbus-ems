@@ -12,13 +12,11 @@ angular.module('nimbusEmsApp')
 		templateUrl: 'views/templates/myCourses.html',
 		restrict: 'E',
 		scope:true,
-		controller : function($scope,eduApi,$route,apiConst,$window,grades,$auth,$cookies){
+		controller : function($scope,eduApi,$route,apiConst,$window,grades,$auth,$cookies,format){
 			
 			console.log('auth',$auth);
 			
-			$scope.widgetTitle = function(fname){
-				return fname+'\'s Courses';
-			};
+			$scope.widgetTitle = function(fname){ return format.widgetTitle(fname); };
 			
 			$scope.getTotal = function(index){	
 				return 	grades.getTotal($scope.courses[index].meta.grades,$scope.courses[index].course.meta.course_schema);
