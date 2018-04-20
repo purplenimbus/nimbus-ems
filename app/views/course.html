@@ -32,13 +32,14 @@
 								</div>
 							</div>
 							<div class="uk-card-body uk-overflow-auto">
-								<table class="uk-table uk-table-hover uk-table-middle uk-table-small">
+								<div uk-spinner ng-if="loadingHome"></div>
+								<table class="uk-table uk-table-hover uk-table-middle uk-table-small" ng-if="!loadingHome">
 									<thead>
 										<tr>
 											<th class="uk-table-shrink"></th>
 											<th class="uk-table-small">Name</th>
-											<th ng-repeat="(key , grade) in students[0].course.meta.course_schema" class="uk-preserve-width uk-text-small">{{ key }}</th>
-											<th class="uk-table-small uk-text-small">Total</th>
+											<th ng-repeat="(key , grade) in students[0].course.meta.course_schema" class="uk-width-small uk-text-small uk-visible@s uk-visible@m">{{ key }}</th>
+											<th class="uk-table-small uk-text-small uk-visible@s">Total</th>
 											<th class="uk-table-shrink uk-text-small">Grade</th>
 										</tr>
 									</thead>
@@ -48,8 +49,8 @@
 											<td class="uk-table-link">
 												<a class="uk-link-reset" ng-href="#!/profile/{{ student.id }}">{{ student.user.fname }}, {{ student.user.lname }}</a>
 											</td>
-											<td ng-repeat="(key , grade) in student.meta.grades"><input type="number" class="uk-input uk-form-blank" ng-model="grade" max="{{student.course.meta.course_schema[key]}}"/></td>
-											<td><input type="number" class="uk-input uk-form-blank" ng-value="student.meta.grades.quiz + student.meta.grades.assignment + student.meta.grades.midterm + student.meta.grades.lab + student.meta.grades.exam" disabled/></td>
+											<td ng-repeat="(key , grade) in student.meta.grades" class="uk-visible@s uk-visible@m"><input type="number" class="uk-input uk-form-blank" ng-model="grade" max="{{student.course.meta.course_schema[key]}}"  ng-disabled="true"/></td>
+											<td><input type="number" class="uk-input uk-form-blank uk-visible@s" ng-value="student.meta.grades.quiz + student.meta.grades.assignment + student.meta.grades.midterm + student.meta.grades.lab + student.meta.grades.exam" ng-disabled="true"/></td>
 											<td><span class="uk-text-{{getGrade($index).className}}">{{getGrade($index).grade}}</span></td>
 										</tr>
 									</tbody>
@@ -58,10 +59,10 @@
 						</div>
 					</div>
 				</li>
-				<li uk-grid data-tab="outline">
-					<div uk-spinner ng-if="loading"></div>
+				<li uk-grid data-tab="outline" class="uk-grid-small">
+					<div uk-spinner ng-if="loadingOutline"></div>
 					<div class="uk-width-1-3@m">
-						<div class="uk-card uk-card-default uk-visible@s" ng-if="outline && !loading">
+						<div class="uk-card uk-card-default uk-visible@s" ng-if="outline && !loadingOutline">
 							<div class="uk-card-header uk-clear-fix uk-padding-small">
 								<h3 class="uk-card-title title">Topics</h3>
 							</div>

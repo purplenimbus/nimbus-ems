@@ -97,7 +97,7 @@ angular
 						
 						return graphApi.api('GET',subdomain+'/users/'+params.id).then(function(user){
 							
-							//console.log('get user',user);
+							console.log('get user',user);
 							
 							var profileData = user.data[0];
 							
@@ -145,11 +145,11 @@ angular
 				controller: 'CourseCtrl',
 				controllerAs: 'course',
 				resolve:	{
-					courseData : function(eduApi,$window,apiConst,$route/*,subdomain*/){
+					courseData : function(eduApi,$window,apiConst,$route,tenant){
 						var params = $route.current.params;
 						
-						return eduApi.api('GET',1+'/registrations?course_id='+params.id+'&paginate='+apiConst.componentPagination+'&page=1').then(function(result){
-							//console.log('eduApi course result',result);
+						return eduApi.api('GET',tenant.id+'/registrations?course_id='+params.id+'&paginate='+apiConst.componentPagination+'&page=1&user_list=true').then(function(result){
+							console.log('eduApi course result',result);
 							return result.data;
 						}).catch(function(){
 							$window.UIkit.notification({
@@ -244,6 +244,8 @@ angular
 			angular.forEach(allowed,function(value){
 				restricted = $location.path() === '/'+value ? false : true;
 			});
+			
+			console.log('logged in restrictions',restricted,$location.path());
 
 						
 			// redirect to login page if not logged in and trying to access a restricted page

@@ -19,8 +19,8 @@ angular.module('nimbusEmsApp')
 			api : function(requestType,parameters,data){
 							
 				switch(requestType){
-					case 'GET' : return $http.get(self.apiEndPoint+parameters);
-					case 'POST' : return $http.post(self.apiEndPoint+parameters,data); 
+					case 'GET' : return $http.jsonp(self.apiEndPoint+parameters,{method:requestType});
+					case 'POST' : return $http.jsonp(self.apiEndPoint+parameters,{method:requestType,data:data}); 
 				}
 			}
 		};
@@ -73,4 +73,7 @@ angular.module('nimbusEmsApp')
 		var user = JSON.parse($cookies.get('auth'));
 			
 		return user.tenant;	
+	})
+	.factory('user', function ($cookies) {		
+		return JSON.parse($cookies.get('auth'));	
 	});

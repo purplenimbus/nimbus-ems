@@ -8,11 +8,32 @@
  * Controller of the nimbusEmsApp
  */
 angular.module('nimbusEmsApp')
-	.controller('CourseCtrl', function ($scope,courseData,grades,eduApi,apiConst,modal,courseService) {
+	.controller('CourseCtrl', function ($scope,courseData,grades,eduApi,apiConst,modal,courseService,tenant,$route,$window) {
 		$scope.init = function(){
-			console.log('courseData',courseData);
-			$scope.students = courseData.data;
-			$scope.pageTitle = courseData.data[0].course.name;
+			
+			var params = $route.current.params;
+			var self = this;
+			
+			$scope.loadingHome = true;
+			
+			eduApi.api('GET',tenant.id+'/registrations?course_id='+params.id+'&paginate='+apiConst.componentPagination+'&page=1&user_list=true').then(function(result){
+				console.log('eduApi course result',result);
+				self.courseData = result.data;
+				console.log('courseData',self.courseData);
+			
+				$scope.students = self.courseData.data;
+				$scope.pageTitle = self.courseData.data[0].course.name;
+				
+				$scope.loadingHome = false;
+			}).catch(function(){
+				$window.UIkit.notification({
+					message: 'Couldnt get courseData',
+					status: 'danger',
+					pos: 'top-right',
+					timeout: 5000
+				});
+			});
+		
 		};
 		
 		$scope.getTotal = function(index){	
@@ -24,10 +45,10 @@ angular.module('nimbusEmsApp')
 		};
 		
 		$scope.loadOutline = function(){
-			$scope.loading = true;
-			eduApi.api('GET','1/lessons?course_id='+courseData.data[0].course.id+'&paginate='+apiConst.componentPagination+'&page=1').then(function(result){
+			$scope.loadingOutline = true;
+			eduApi.api('GET',tenant.id+'/lessons?course_id='+courseData.data[0].course.id+'&paginate='+apiConst.componentPagination+'&page=1').then(function(result){
 				console.log('outline loaded',result);
-				$scope.loading = false;
+				$scope.loadingOutline = false;
 				$scope.outline = result.data.data;
 			})
 			.catch(function(){
