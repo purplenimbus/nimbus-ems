@@ -8,33 +8,12 @@
  * Controller of the nimbusEmsApp
  */
 angular.module('nimbusEmsApp')
-	.controller('CourseCtrl', function ($scope,courseData,grades,eduApi,apiConst,modal,courseService,tenant,$route,$window) {
+	.controller('CourseCtrl', function ($scope,courseData,grades,eduApi,apiConst,modal,courseService,tenant,$route) {
 		$scope.init = function(){
 			
 			var params = $route.current.params;
-			var self = this;
 			
-			$scope.loadingHome = true;
-			
-			eduApi.api('GET',tenant.id+'/registrations?course_id='+params.id+'&paginate='+apiConst.componentPagination+'&page=1&user_list=true').then(function(result){
-				console.log('eduApi course result',result);
-				self.courseData = result.data;
-				console.log('courseData',self.courseData);
-			
-				$scope.students = self.courseData.data;
-				$scope.pageTitle = self.courseData.data[0].course.name;
-				
-				$scope.loadingHome = false;
-			}).catch(function(){
-				$scope.loadingHome = false;
-				$window.UIkit.notification({
-					message: 'Couldnt get courseData',
-					status: 'danger',
-					pos: 'top-right',
-					timeout: 5000
-				});
-				
-			});
+			return courseService.initCourse($scope,params);
 		
 		};
 		

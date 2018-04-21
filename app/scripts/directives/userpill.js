@@ -13,7 +13,6 @@ angular.module('nimbusEmsApp')
 		scope:true,
 		controller : function($scope,format){
 			$scope.widgetTitle = function(fname){ return format.widgetTitle(fname); };
-			console.log($scope);
 		},
 		template: function(){ 
 				return '<div class="uk-grid-small uk-flex-middle" uk-grid>'+

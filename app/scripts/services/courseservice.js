@@ -8,7 +8,7 @@
  * Service in the nimbusEmsApp.
  */
 angular.module('nimbusEmsApp')
-	.service('courseService', function (modal,form,uikit3,$window,eduApi,graphApi,tenant) {
+	.service('courseService', function (modal,form,uikit3,$window,eduApi,graphApi,tenant,apiConst) {
 		//this.newAsset = {};
 		
 		this.course = function($scope,type){			
@@ -122,5 +122,36 @@ angular.module('nimbusEmsApp')
 			}).catch(function(error){
 				console.log('save',error);
 			});
+		};
+		
+		this.initCourse = function($scope,params){
+			//var self = this;
+			
+			$scope.loadingHome = true;
+			
+			eduApi.api('GET',tenant.id+'/registrations?course_id='+params.id+'&paginate='+apiConst.componentPagination+'&page=1&user_list=true').then(function(result){
+				console.log('courseService result',result,$scope);
+				$scope.courseData = result.data;
+				console.log('courseData',$scope.courseData);
+			
+				$scope.students = result.data.data;
+				$scope.pageTitle = result.data.data[0].course.name;
+				
+				$scope.loadingHome = false;
+			}).catch(function(){
+				$scope.loadingHome = false;
+				$window.UIkit.notification({
+					message: 'Couldnt get courseData',
+					status: 'danger',
+					pos: 'top-right',
+					timeout: 5000
+				});
+				
+			});
+			
+			$scope.instuctor = {
+				fname : 'joey',
+				lname : 'badass'
+			};
 		};
 	});
