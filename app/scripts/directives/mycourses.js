@@ -12,36 +12,51 @@ angular.module('nimbusEmsApp')
 		templateUrl: 'views/templates/myCourses.html',
 		restrict: 'E',
 		scope:true,
-		controller : function($scope,eduApi,$route,apiConst,$window,grades,$auth,$cookies,format){
+		controller : function($scope,eduApi,$route,apiConst,$window,grades,$auth,$cookies,format,$rootScope,$localStorage){
 			
-			console.log('auth',$auth);
+			//console.log('auth',$auth.getPayload(),$rootScope);
 			
 			$scope.widgetTitle = function(fname){ return format.widgetTitle(fname); };
 			
-			$scope.getTotal = function(index){	
-				return 	grades.getTotal($scope.courses[index].meta.grades,$scope.courses[index].course.meta.course_schema);
+			$scope.getTotal = function(course){	
+				if(course.meta){
+					return 	grades.getTotal(course.meta.grades,course.course.meta.course_schema);
+				}else{
+					return false;
+				}
 			};
 			
-			$scope.getGrade = function(index){			
-				return grades.getGrade(grades.getTotal($scope.courses[index].meta.grades,$scope.courses[index].course.meta.course_schema));
+			$scope.getGrade = function(course){
+				if(course.meta){
+					return grades.getGrade(grades.getTotal(course.meta.grades,course.course.meta.course_schema));
+				}else{
+					return false;
+				}
 			};
 			
 			$scope.init = function(){
 				$scope.loading  = true;
-				$scope.user = JSON.parse($cookies.get('auth'));
+				//$scope.user = JSON.parse($cookies.get('auth'));
+				
+				var user = JSON.parse($localStorage.auth);
+				
+				//console.log('me!!',user);
+				//var user = user ? user : $rootScope.user.info;
+				
 				//check for logged in
-			 	eduApi.api('GET',$scope.user.tenant.id+'/registrations?user_id='+$scope.user.id+'&paginate='+apiConst.componentPagination+'&page=1').then(function(result){
+			 	eduApi.api('GET',user.tenant.id+'/registrations?user_id='+user.id+'&paginate='+apiConst.componentPagination+'&page=1').then(function(result){
 					console.log('eduApi course result',result);
 					$scope.courses = result.data.data;
 					$scope.loading  = false;
 				}).catch(function(error){
 					$scope.loading  = false;
 					$window.UIkit.notification({
-						message: 'Couldnt get courses',
+						message: 'Couldnt get your courses',
 						status: 'danger',
 						pos: 'top-right',
 						timeout: 5000
 					});
+					$scope.error = true;
 					console.log('eduApi course error',error);
 				});
 			};

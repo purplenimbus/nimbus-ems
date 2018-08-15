@@ -18,18 +18,20 @@ angular
 		'ngTouch',
 		'siyfion.sfTypeahead',
 		'satellizer',
-		'chart.js'
+		'chart.js',
+		'ngStorage'
 	])
 	.config(function ($routeProvider,$locationProvider,$authProvider,apiConst,$sceDelegateProvider) {
 		$sceDelegateProvider.resourceUrlWhitelist([
 			// Allow same origin resource loads.
 			'self',
 			// Allow loading from our assets domain. **.
-			'http://edu.nimbus.com:7070/**'
+			'http://edu.nimbus.com:7070/**',
+			'http://graph.nimbus.com:8000/**'
 		]);
   
-		$authProvider.baseUrl = 'http://graph.nimbus.com:8000';
-		$authProvider.loginUrl = '/login';
+		$authProvider.baseUrl = 'http://edu.nimbus.com:7070';
+		$authProvider.loginUrl = '/api/v1/login';
 		
 		$routeProvider
 			.when('/', {
@@ -46,12 +48,14 @@ angular
 						return graphApi.api('GET',subdomain+'/users?paginate='+apiConst.componentPagination+'&page=1').then(function(result){
 							return result.data;
 						}).catch(function(){
+							
 							$window.UIkit.notification({
 								message: 'Couldnt get usersData',
 								status: 'danger',
 								pos: 'top-right',
 								timeout: 5000
 							});
+							
 						});
 						
 					}
@@ -62,11 +66,11 @@ angular
 				controller: 'AccountCtrl',
 				controllerAs: 'account',
 				resolve:	{
-					profileData : function($cookies,graphApi,subdomain,$window){
+					profileData : function($cookies,eduApi,subdomain,$window){
 						//console.log('profileData',JSON.parse($cookies.get('auth')));
 						var id = JSON.parse($cookies.get('auth')).id;
 						
-						return graphApi.api('GET',subdomain+'/users/'+id).then(function(user){
+						return eduApi.api('GET',subdomain+'/users/'+id).then(function(user){
 							
 							console.log('get user',user);
 							
@@ -89,19 +93,21 @@ angular
 				controller: 'ProfileCtrl',
 				controllerAs: 'profile',
 				resolve:	{
-					profileData : function(graphApi,$window,$route,subdomain){
+					profileData : function(eduApi,$window,$route,user){
 												
 						var params = $route.current.params;
-			
-						//var profileData = {};
 						
-						return graphApi.api('GET',subdomain+'/users/'+params.id).then(function(user){
+						console.log('profileData preflight',user,params);
+						
+						//console.log('get user activities',subdomain+'/users/'+params.id,graphApi.api('GET',subdomain+'/users/'+params.id));
+						
+						return eduApi.api('GET',user.tenant.id+'/users/'+params.id).then(function(result){
 							
-							console.log('get user',user);
+							console.log('get user',result);
 							
-							var profileData = user.data[0];
+							//var profileData = user.data[0];
 							
-							return graphApi.api('GET',subdomain+'/activities?user_id='+params.id+'&paginate='+apiConst.componentPagination+'&page=1').then(function(activities){
+							/*return graphApi.api('GET',subdomain+'/activities?user_id='+params.id+'&paginate='+apiConst.componentPagination+'&page=1').then(function(activities){
 								
 								profileData.activities = activities.data;
 								
@@ -115,9 +121,11 @@ angular
 									pos: 'top-right',
 									timeout: 5000
 								});
-							});
-							//return result.data;
-						}).catch(function(){
+							});*/
+							
+							return result.data;
+						}).catch(function(error){
+							console.log('profileData error',error);
 							$window.UIkit.notification({
 								message: 'Couldnt get profile data',
 								status: 'danger',
@@ -145,7 +153,7 @@ angular
 				controller: 'CourseCtrl',
 				controllerAs: 'course',
 				resolve:	{
-					courseData : function(eduApi,$window,apiConst,$route,tenant){
+					/*courseData : function(eduApi,$window,apiConst,$route,tenant){
 						var params = $route.current.params;
 						
 						return eduApi.api('GET',tenant.id+'/registrations?course_id='+params.id+'&paginate='+apiConst.componentPagination+'&page=1&user_list=true').then(function(result){
@@ -160,7 +168,7 @@ angular
 							});
 						});
 						
-					}
+					}*/
 				}
 			})
 			.when('/login', {
@@ -218,7 +226,7 @@ angular
 			});
 			
 	})
-	.run(function($rootScope, $location, $cookies, $http,$auth) {
+	.run(function($rootScope, $location, $cookies, $http,$auth,auth) {
 		//console.log('$cookies',JSON.parse($cookies.get('auth')),$auth.getToken());
 		// keep user logged in after page refresh
 		
@@ -252,7 +260,9 @@ angular
 			var loggedIn = $auth.isAuthenticated();//$rootScope.globals.currentUser;
 			
 			if (!loggedIn && restricted) {
-				console.log('logging you out',history);
+				//auth.clearUser();
+				
+				console.log('logging you out',history,$rootScope);
 				
 				$location.path('/login');//.search({returnUrl: history[0]});
 			}

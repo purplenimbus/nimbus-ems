@@ -8,26 +8,43 @@
  * Controller of the nimbusEmsApp
  */
 angular.module('nimbusEmsApp')
-	.controller('CourseCtrl', function ($scope,courseData,grades,eduApi,apiConst,modal,courseService,tenant,$route) {
+	.controller('CourseCtrl', function ($scope/*,courseData*/,grades,eduApi,apiConst,modal,courseService,user,$route) {
 		$scope.init = function(){
 			
 			var params = $route.current.params;
+			
+			$scope.instuctor = {
+				fname : 'joey',
+				lname : 'badass'
+			};
 			
 			return courseService.initCourse($scope,params);
 		
 		};
 		
-		$scope.getTotal = function(index){	
-			return 	grades.getTotal($scope.students[index].meta.grades,$scope.students[index].course.meta.course_schema);
-		};
-		
-		$scope.getGrade = function(index){			
-			return grades.getGrade(grades.getTotal($scope.students[index].meta.grades,$scope.students[index].course.meta.course_schema));
+		$scope.getTotal = function(course){	
+					if(course.meta){
+						return 	grades.getTotal(course.meta.grades,course.course.meta.course_schema);
+					}else{
+						return false;
+					}
+				};
+				
+		$scope.getGrade = function(course){
+			if(course.meta){
+				return grades.getGrade(grades.getTotal(course.meta.grades,course.course.meta.course_schema));
+			}else{
+				return false;
+			}
 		};
 		
 		$scope.loadOutline = function(){
 			$scope.loadingOutline = true;
-			eduApi.api('GET',tenant.id+'/lessons?course_id='+courseData.data[0].course.id+'&paginate='+apiConst.componentPagination+'&page=1').then(function(result){
+			console.log('loadOutline',$scope,user);
+			
+			//TO DO do validation here
+			
+			eduApi.api('GET',user.tenant.id+'/lessons?course_id='+$scope.courseData.data[0].course.id+'&paginate='+apiConst.componentPagination+'&page=1').then(function(result){
 				console.log('outline loaded',result);
 				$scope.loadingOutline = false;
 				$scope.outline = result.data.data;

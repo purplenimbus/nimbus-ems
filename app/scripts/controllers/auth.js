@@ -8,7 +8,7 @@
  * Controller of the nimbusEmsApp
  */
 angular.module('nimbusEmsApp')
-	.controller('AuthCtrl', function ($auth,$state,$rootScope,$scope,validation,form,elements,modal,$route,auth) {
+	.controller('AuthCtrl', function ($auth,$state,$rootScope,$scope,validation,form,elements,modal,$route,auth,$cookies) {
 		
 		//$rootScope.loggedIn = false; //Initialize logged in flag
 		
@@ -148,6 +148,8 @@ angular.module('nimbusEmsApp')
 		$scope.logout = function() {
 			$auth.logout();
 			$route.reload();
+			
+			auth.clearUser();
 			//$location.path("/");
 		};
 		

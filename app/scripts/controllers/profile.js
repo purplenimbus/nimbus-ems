@@ -11,7 +11,7 @@ angular.module('nimbusEmsApp')
 	.controller('ProfileCtrl', function ($scope,profileData,$window,$route,graphApi,modal) {
 		
 		$scope.init = function(){
-			//console.log('profileData',profileData,$route);
+			console.log('profileData',profileData,$route);
 			$scope.profileData = profileData;
 			$scope.initiated = true;
 		};

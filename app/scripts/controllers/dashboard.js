@@ -9,9 +9,10 @@
  */
 angular.module('nimbusEmsApp')
   .controller('DashboardCtrl', function ($scope,settings,$route,$window) {
-	  console.log('dashbaordCtrl route',$route);
+	  //console.log('dashboardCtrl route',$route);
 	  $scope.route = $route;
       $scope.loggedin = false;
+	  $scope.courseId = 2;
 	  $scope.employees = {
 		  title : 'Employees',
 		  data : [{

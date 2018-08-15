@@ -8,7 +8,7 @@
  * Service in the nimbusEmsApp.
  */
 angular.module('nimbusEmsApp')
-	.service('courseService', function (modal,form,uikit3,$window,eduApi,graphApi,tenant,apiConst) {
+	.service('courseService', function (modal,form,uikit3,$window,eduApi,graphApi,user,apiConst) {
 		//this.newAsset = {};
 		
 		this.course = function($scope,type){			
@@ -129,16 +129,21 @@ angular.module('nimbusEmsApp')
 			
 			$scope.loadingHome = true;
 			
-			eduApi.api('GET',tenant.id+'/registrations?course_id='+params.id+'&paginate='+apiConst.componentPagination+'&page=1&user_list=true').then(function(result){
-				console.log('courseService result',result,$scope);
+			$scope.students = [];
+			
+			console.log('courseService params',params);
+			
+			eduApi.api('GET',user.tenant.id+'/registrations?course_id='+params.id+'&paginate='+apiConst.componentPagination+'&page=1&user_list=true').then(function(result){
+				//console.log('courseService result',result,$scope,params);
 				$scope.courseData = result.data;
-				console.log('courseData',$scope.courseData);
+				//console.log('courseData',$scope.courseData);
 			
 				$scope.students = result.data.data;
 				$scope.pageTitle = result.data.data[0].course.name;
 				
 				$scope.loadingHome = false;
-			}).catch(function(){
+			}).catch(function(error){
+				console.log('courseService error',error);
 				$scope.loadingHome = false;
 				$window.UIkit.notification({
 					message: 'Couldnt get courseData',
@@ -148,10 +153,5 @@ angular.module('nimbusEmsApp')
 				});
 				
 			});
-			
-			$scope.instuctor = {
-				fname : 'joey',
-				lname : 'badass'
-			};
 		};
 	});

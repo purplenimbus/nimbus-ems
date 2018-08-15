@@ -43,7 +43,7 @@ angular.module('nimbusEmsApp')
 	.factory('eduApi', function ($http) {
 		var self = this;
 		// Service logic
-		self.apiEndPoint = 'http://edu.nimbus.com:7070/v1/'; //http://nimbus-learning-api.herokuapp.com/v1/
+		self.apiEndPoint = 'http://edu.nimbus.com:7070/api/v1/'; //http://nimbus-learning-api.herokuapp.com/v1/
 
 		// Public API here
 		return {
@@ -58,19 +58,8 @@ angular.module('nimbusEmsApp')
 			}
 		};
 	})
-	.factory('subdomain', function ($cookies) {
-		var auth = $cookies.get('auth');
+	.factory('user', function ($localStorage) {
+		var user = $localStorage.auth ? JSON.parse($localStorage.auth) : false;
 		
-		var domain = auth ? JSON.parse(auth) : false;
-		
-		return domain ? domain.tenant.username : false;
-
-	})
-	.factory('tenant', function ($cookies) {
-		var user = JSON.parse($cookies.get('auth'));
-			
-		return user.tenant;	
-	})
-	.factory('user', function ($cookies) {		
-		return JSON.parse($cookies.get('auth'));	
+		return user;
 	});

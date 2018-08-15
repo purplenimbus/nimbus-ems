@@ -8,10 +8,12 @@
  */
 angular.module('nimbusEmsApp')
   .directive('userPill', function () {
-	var user = {};
+	var user = {fname:'tony'};
     return {
 		scope:true,
-		controller : function($scope,format){
+		controller : function($scope,format,$localStorage){
+			//console.log('$auth',$localStorage.auth);
+			$scope.user = JSON.parse($localStorage.auth);
 			$scope.widgetTitle = function(fname){ return format.widgetTitle(fname); };
 		},
 		template: function(){ 
@@ -20,7 +22,7 @@ angular.module('nimbusEmsApp')
 								'<img class="uk-comment-avatar uk-preserve-width uk-border-circle" src="https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png" width="40" alt="" />'+
 							'</div>'+
 							'<div class="uk-width-expand">'+
-								'<p class="uk-text-capitalize title">{{ widgetTitle(user.fname) }}</p>'+
+								'<p class="uk-text-capitalize title">{{ widgetTitle(user.firstname) }}</p>'+
 								'<p class="uk-text-meta uk-margin-remove-top uk-hidden"><time datetime="2016-04-01T19:00">April 01, 2016</time></p>'+
 							'</div>'+
 						'</div>';

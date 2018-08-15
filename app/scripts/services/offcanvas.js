@@ -18,9 +18,9 @@ angular.module('nimbusEmsApp')
 		};
 				
 		angular.element('#side-menu').on('hidden',function(e){
-			console.log('offcanvas hidden',e);
+			//console.log('offcanvas hidden',e);
 		}).on('shown',function(e){
-			console.log('offcanvas shown',e);
+			//console.log('offcanvas shown',e);
 		});	
 		
 	});

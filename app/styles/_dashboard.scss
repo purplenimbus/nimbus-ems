@@ -1,24 +1,24 @@
 #view{
 	section{
 	  #toolbar{
-		background:#e6e6e6;
+			background:#e6e6e6;
 	  }
 	  main{
 		.widget{
-		  .title{
-			margin:0px;
-		  }
-		  .uk-card-body {
-			padding: 15px;
-		  }
-		  .toolbar{
-			li{
-			  a{
-				  /*line-height: 1.7;
-				  vertical-align: middle;*/
-			  }
+			.title{
+				margin:0px;
 			}
-		  }
+			.uk-card-body {
+				padding: 15px;
+			}
+			.toolbar{
+				li{
+					a{
+					  /*line-height: 1.7;
+					  vertical-align: middle;*/
+					}
+				}
+			}
 		}
 		users{
 			form{
@@ -54,6 +54,12 @@
 			}
 		}
 	  }
+	}
+}
+
+.uk-card{
+	.uk-card-header {
+		border-bottom: 0px;
 	}
 }
 

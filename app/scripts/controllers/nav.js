@@ -8,7 +8,7 @@
  * Controller of the nimbusEmsApp
  */
 angular.module('nimbusEmsApp')
-  .controller('NavCtrl', function ($scope,offcanvas,modal,form,settings,$route,$rootScope,validation,$auth,auth,$location,breadcrumbs,subdomain,$window,$cookies) {
+  .controller('NavCtrl', function ($scope,offcanvas,modal,form,settings,$route,$rootScope,validation,$auth,auth,$location,breadcrumbs,user,$window,$cookies) {
 	$scope.route = $route;
 	$scope.loggedin = false;
     $scope.offcanvas = offcanvas.offcanvas;
@@ -38,7 +38,7 @@ angular.module('nimbusEmsApp')
 		var credentials = {
 			email : creds.email,
 			password : creds.password,
-			//tenant : subdomain
+			//tenant : user.tenant.username
 		};
 		
 		//console.log('Login Details',credentials,$location);
@@ -156,7 +156,7 @@ angular.module('nimbusEmsApp')
 	
 	$scope.logout = function() {
 		$auth.logout();
-		$cookies.remove('auth');
+		auth.clearUser($scope);
 		//$route.reload();
 		$location.path('/login');
 	};
