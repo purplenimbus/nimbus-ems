@@ -14,7 +14,7 @@ angular.module('nimbusEmsApp')
 		auth.clearUser();
 	}
 		
-	console.log('http headers',	$http.defaults.headers.common);
+	//console.log('http headers',	$http.defaults.headers.common);
 		
     $scope.signin = function(creds,$event) {
 		

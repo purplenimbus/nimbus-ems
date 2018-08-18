@@ -270,7 +270,9 @@ angular.module('nimbusEmsApp')
 					str += '<a uk-icon="icon: ';
 					str += v.icon ? v.icon : '';
 					str +=	'"';
+					str += v.cls ? ' class="'+v.cls+'"' : '';
 					str += v.action ? ' ng-click="'+v.action+'"' : '';
+					str += v.tooltip ? '': ''; //'uk-tooltip="'+v.tooltip+'"' : ''; TO DO : See whats going on here
 					str += '></a>';
 					str += '</li>';
 				});
