@@ -221,11 +221,11 @@ angular.module('nimbusEmsApp')
 				
 				return str;
 			},
-			card : function(attrs){
+			card : function(attrs={}){
 				let str = '';
 
 				str += '<div class="uk-card ';
-				str += attrs.cls;
+				str += attrs.classes.card ? attrs.classes.card : '';
 				str += '">';
 
 				if(attrs.image){
@@ -237,12 +237,16 @@ angular.module('nimbusEmsApp')
 				}
 
 				if(attrs.header){
-				    str += '<div class="uk-card-header">';
+				    str += '<div class="uk-card-header ';
+				    str += attrs.classes.header ? attrs.classes.header : '';
+				    str += '">';
 				    str += '<h3 class="uk-card-title uk-text-capitalize">'+attrs.header+'</h3>';
 				    str += '</div>';
 				}
 
-			    str += '<div class="uk-card-body">';
+			    str += '<div class="uk-card-body ';
+			    str += attrs.classes.body ? attrs.classes.body : '';
+			    str += '">';
 			    str += attrs.body;
 			    str += '</div>';
 
@@ -252,6 +256,26 @@ angular.module('nimbusEmsApp')
 				    str += '</div>';
 				}
 				str += '</div>';
+
+				return str;
+			},
+			icons : function(list = []){
+				var str = '';
+
+				str = '<ul class="uk-iconnav">';
+
+				list.forEach(function(v){
+					//console.log('Icons',v);
+					str += '<li>';
+					str += '<a uk-icon="icon: ';
+					str += v.icon ? v.icon : '';
+					str +=	'"';
+					str += v.action ? ' ng-click="'+v.action+'"' : '';
+					str += '></a>';
+					str += '</li>';
+				});
+
+				str += '</ul>';
 
 				return str;
 			}

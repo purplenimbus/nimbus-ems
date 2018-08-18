@@ -18,13 +18,17 @@ angular.module('nimbusEmsApp')
     		}
 
     		for (var k = 0; k < files.length; k++) {
-    			$window.Papa.parse(files.item(k),{
+    			/*ignore jshint:start*/
+                $window.Papa.parse(files.item(k),{
+
     				complete : function(result){
     					var header = result.data.splice(0,1)[0];
 
     					workbook.push({header:header,data:result.data});
     				}
+
     			});
+                /*ignore jshint:end*/
     		}
 
     		deferred.resolve(workbook);

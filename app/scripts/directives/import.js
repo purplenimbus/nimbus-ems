@@ -11,18 +11,39 @@ angular.module('nimbusEmsApp')
     return {
       template: importService.render(),
       restrict: 'E',
-      controller : function($scope){
-      		$scope.workbooks = [{name:'tony'}];
+      controller : function($scope,$timeout){
+      		$scope.workbooks = [];
+      		
   			$scope.$on('upload',function(e,files){
+  				$scope.loading = true;
     			csvParser.parse(files).then(function(result){
     				console.log('parser result',result);
-	            	$scope.workbooks = result;
-	            	console.log('workbooks scope',$scope);
+	            	$timeout(function(){
+	            		$scope.workbooks = result;
+	            		$scope.loading = false;
+	            	},1000);
 	            });
         	});
+
+  			$scope.add = function(workbookIndex){
+  				$scope.workbooks[workbookIndex].data.unshift({});
+  			};
+
+        	$scope.remove = function(workbookIndex,row){
+        		console.log('remove',$scope.workbooks[workbookIndex]);
+        		$scope.workbooks[workbookIndex].data.splice(row,1);
+        	};
+
+        	$scope.reset = function(){
+        		console.log('reset');
+        		$scope.$broadcast('reset');
+        		$scope.workbooks = [];
+        	};
       },
-      link: function postLink(scope, element, attrs) {
-        //element.text('this is the import directive');
+      link: function postLink(scope,element) {
+        element.on('$destroy', function () {
+			scope.$destroy();
+		});
       }
     };
   });
