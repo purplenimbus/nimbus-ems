@@ -17,9 +17,9 @@ angular.module('nimbusEmsApp')
 			return $window.UIkit.offcanvas('#side-menu');
 		};
 				
-		angular.element('#side-menu').on('hidden',function(e){
+		angular.element('#side-menu').on('hidden',function(){
 			//console.log('offcanvas hidden',e);
-		}).on('shown',function(e){
+		}).on('shown',function(){
 			//console.log('offcanvas shown',e);
 		});	
 		

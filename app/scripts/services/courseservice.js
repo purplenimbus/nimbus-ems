@@ -56,7 +56,7 @@ angular.module('nimbusEmsApp')
 			var instructorList = new $window.Bloodhound({
 				datumTokenizer: function(d) { /*console.log('bloodhound d',d);*/ return $window.Bloodhound.tokenizers.whitespace(d.fname); },
 				queryTokenizer: $window.Bloodhound.tokenizers.whitespace,
-				remote:	graphApi.apiEndPoint+tenant.username+'/users?user_type=teacher'
+				remote:	eduApi.apiEndPoint+user.tenant.username+'/users?user_type=teacher'
 			});	
 			
 			instructorList.initialize(true);

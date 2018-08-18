@@ -16,7 +16,7 @@ angular.module('nimbusEmsApp')
 				$scope.init = function(){
 					console.log('studentList directive courseId',$scope);
 					//To Do , if no courseId , throw exception?
-					courseId = $scope.$parent.courseId;
+					courseId = $scope.$parent.courseId; //hack?
 					return courseService.initCourse($scope,{id:courseId});	
 				};
 				

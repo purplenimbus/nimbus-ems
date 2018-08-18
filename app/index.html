@@ -35,13 +35,13 @@
 			<button class="uk-offcanvas-close" type="button" uk-close></button>
 			<ul class="uk-nav-default uk-nav-parent-icon" uk-nav>
 				<li ng-repeat="(key , nav) in navSettings" ng-if="!nav.disabled" ng-class="nav.children ? 'uk-parent' : ''">
-					<a ng-href="#!/{{ nav.url }}">
+					<a ng-href="#!/{{ nav.url }}" data-target="#nav">
 						<span class="uk-margin-small-right" uk-icon="icon: {{ nav.icon }}"></span> 
 						{{ key | uppercase }}
 					</a>
 					<ul class="uk-nav-sub" ng-if="nav.children">
 						<li ng-repeat="(childKey,child) in nav.children">
-							<a ng-href="#!/{{ child.url }}">
+							<a ng-href="#!/{{ child.url }}" data-target="#nav">
 								<span class="uk-margin-small-right" uk-icon="icon: {{ child.icon }}"></span>
 								{{ childKey | uppercase }}
 							</a>
@@ -85,6 +85,7 @@
     <script src="bower_components/chart.js/dist/Chart.js"></script>
     <script src="bower_components/angular-chart.js/dist/angular-chart.js"></script>
     <script src="bower_components/ngstorage/ngStorage.js"></script>
+    <script src="bower_components/papaparse/papaparse.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -129,6 +130,11 @@
         <script src="scripts/directives/userpill.js"></script>
         <script src="scripts/services/format.js"></script>
         <script src="scripts/directives/studentlist.js"></script>
+        <script src="scripts/directives/upload.js"></script>
+        <script src="scripts/services/upload.js"></script>
+        <script src="scripts/services/csvparser.js"></script>
+        <script src="scripts/directives/import.js"></script>
+        <script src="scripts/services/import.js"></script>
         <!-- endbuild -->
 		
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-beta.30/js/uikit.min.js"></script>

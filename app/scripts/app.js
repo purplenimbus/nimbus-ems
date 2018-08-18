@@ -66,16 +66,16 @@ angular
 				controller: 'AccountCtrl',
 				controllerAs: 'account',
 				resolve:	{
-					profileData : function($cookies,eduApi,subdomain,$window){
+					profileData : function($cookies,eduApi,$window,user){
 						//console.log('profileData',JSON.parse($cookies.get('auth')));
-						var id = JSON.parse($cookies.get('auth')).id;
 						
-						return eduApi.api('GET',subdomain+'/users/'+id).then(function(user){
+						return eduApi.api('GET',user.tenant.id+'/users/'+user.id).then(function(result){
 							
-							console.log('get user',user);
+							console.log('get user',result);
 							
-							return user.data[0];
-						}).catch(function(){
+							return result.data[0];
+						}).catch(function(error){
+							console.log('get user error',error);
 							$window.UIkit.notification({
 								message: 'Couldnt get profile data',
 								status: 'danger',
@@ -85,56 +85,6 @@ angular
 						});
 						
 						//return JSON.parse($cookies.get('auth'));//user.data[0];
-					}
-				}
-			})
-			.when('/profile/:id', {
-				templateUrl: 'views/profile.html',
-				controller: 'ProfileCtrl',
-				controllerAs: 'profile',
-				resolve:	{
-					profileData : function(eduApi,$window,$route,user){
-												
-						var params = $route.current.params;
-						
-						console.log('profileData preflight',user,params);
-						
-						//console.log('get user activities',subdomain+'/users/'+params.id,graphApi.api('GET',subdomain+'/users/'+params.id));
-						
-						return eduApi.api('GET',user.tenant.id+'/users/'+params.id).then(function(result){
-							
-							console.log('get user',result);
-							
-							//var profileData = user.data[0];
-							
-							/*return graphApi.api('GET',subdomain+'/activities?user_id='+params.id+'&paginate='+apiConst.componentPagination+'&page=1').then(function(activities){
-								
-								profileData.activities = activities.data;
-								
-								//console.log('get user activities',profileData);
-								
-								return profileData;
-							}).catch(function(){
-								$window.UIkit.notification({
-									message: 'Couldnt get profile data',
-									status: 'danger',
-									pos: 'top-right',
-									timeout: 5000
-								});
-							});*/
-							
-							return result.data;
-						}).catch(function(error){
-							console.log('profileData error',error);
-							$window.UIkit.notification({
-								message: 'Couldnt get profile data',
-								status: 'danger',
-								pos: 'top-right',
-								timeout: 5000
-							});
-						});
-
-						
 					}
 				}
 			})
@@ -226,8 +176,7 @@ angular
 			});
 			
 	})
-	.run(function($rootScope, $location, $cookies, $http,$auth,auth) {
-		//console.log('$cookies',JSON.parse($cookies.get('auth')),$auth.getToken());
+	.run(function($rootScope, $location, $cookies, $http,$auth) {
 		// keep user logged in after page refresh
 		
 		$rootScope.globals = $cookies.get('auth') || {};
@@ -253,7 +202,7 @@ angular
 				restricted = $location.path() === '/'+value ? false : true;
 			});
 			
-			console.log('logged in restrictions',restricted,$location.path());
+			//console.log('logged in restrictions',restricted,$location.path());
 
 						
 			// redirect to login page if not logged in and trying to access a restricted page
@@ -262,7 +211,7 @@ angular
 			if (!loggedIn && restricted) {
 				//auth.clearUser();
 				
-				console.log('logging you out',history,$rootScope);
+				//console.log('logging you out',history,$rootScope);
 				
 				$location.path('/login');//.search({returnUrl: history[0]});
 			}

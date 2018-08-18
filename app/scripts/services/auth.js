@@ -28,20 +28,14 @@ angular.module('nimbusEmsApp')
 				
 				return encodeURI(str);
 			},
-			clearUser : function($scope){
-				
-				console.log('Clear User Prior',$localStorage.auth);
-				
+			clearUser : function(){
+								
 				delete $localStorage.auth;
 				
 				delete $rootScope.user;
 				
 				delete $http.defaults.headers.common.Authorization;
-				
-				//$scope.$apply();
-				
-				console.log('Clear User',$localStorage.auth);
-				
+												
 			}
 		};
 	});

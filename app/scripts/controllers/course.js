@@ -23,12 +23,12 @@ angular.module('nimbusEmsApp')
 		};
 		
 		$scope.getTotal = function(course){	
-					if(course.meta){
-						return 	grades.getTotal(course.meta.grades,course.course.meta.course_schema);
-					}else{
-						return false;
-					}
-				};
+			if(course.meta){
+				return 	grades.getTotal(course.meta.grades,course.course.meta.course_schema);
+			}else{
+				return false;
+			}
+		};
 				
 		$scope.getGrade = function(course){
 			if(course.meta){

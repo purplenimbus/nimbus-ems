@@ -35,9 +35,9 @@
 									</thead>
 									<tbody>
 										<tr ng-repeat="student in students">
-											<td><img class="uk-preserve-width uk-border-circle" src="{{ student.user.image || 'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png' }}" width="40" alt=""></td>
+											<td><img class="uk-preserve-width uk-border-circle" src="{{ student.user.image || 'http://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png' }}" width="40" alt=""></td>
 											<td class="uk-table-link">
-												<a class="uk-link-reset uk-text-capitalize" ng-href="#!/profile/{{ student.user.id }}">{{ student.user.firstname }}, {{ student.user.lastname }}</a>
+												<span class="uk-link-reset uk-text-capitalize">{{ student.user.firstname }}, {{ student.user.lastname }}</span>
 											</td>
 											<td ng-repeat="(key , grade) in student.meta.grades" class="uk-visible@s uk-visible@m uk-width-small"><input type="number" class="uk-input uk-form-blank" ng-model="grade" max="{{student.course.meta.course_schema[key]}}"  ng-disabled="true"/></td>
 											<td class="uk-width-small uk-visible@s"><input type="number" class="uk-input uk-form-blank" ng-value="student.meta.grades.quiz + student.meta.grades.assignment + student.meta.grades.midterm + student.meta.grades.lab + student.meta.grades.exam" ng-disabled="true"/></td>

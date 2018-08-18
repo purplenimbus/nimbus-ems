@@ -77,10 +77,11 @@ angular.module('nimbusEmsApp')
 				
 				return str;
 			},
-			upload : function(attrs){
+			upload : function(attrs={}){
+
 				var str = '';
 				str += attrs.placeholder ? '<label class="uk-form-label uk-text-capitalize" for="form-stacked-text">'+attrs.placeholder+'</label>' : '';
-				str += '<div class="test-upload uk-placeholder uk-text-center">';
+				str += '<div class="js-upload uk-placeholder uk-text-center">';
 				str += '	<span uk-icon="icon: cloud-upload"></span>';
 				str += '	<span class="uk-text-middle">Attach binaries by dropping them here or</span>';
 				str += '	<div uk-form-custom>';
@@ -198,26 +199,60 @@ angular.module('nimbusEmsApp')
 				
 				str += '<article class="uk-comment uk-padding-small">';
 				str += '	<header class="uk-comment-header uk-grid-medium uk-flex-middle uk-margin-remove" uk-grid>';
-			if(attrs.image){
-				str += '		<div class="uk-width-auto uk-padding-remove image">';
-				str += '			<img class="uk-comment-avatar" src="'+attrs.image+'" width="30" height="30" alt="">';
-				str += '		</div>';
-			}
-			
-			if(attrs.title){
-				str += '		<div class="uk-width-expand title">';
-				str += 				'<h4 class="uk-comment-title uk-margin-remove uk-text-small"><a class="uk-link-reset" href="#">'+attrs.title+'</a></h4>';
-				str += '		</div>';
-			}
-				str += '	</header>';
+				if(attrs.image){
+					str += '		<div class="uk-width-auto uk-padding-remove image">';
+					str += '			<img class="uk-comment-avatar" src="'+attrs.image+'" width="30" height="30" alt="">';
+					str += '		</div>';
+				}
 				
-			if(attrs.description){
-				str += '	<div class="uk-comment-body">';
-				str += '		<p>'+attrs.description+'</p>';
-				str += '	</div>';
-			}
+				if(attrs.title){
+					str += '		<div class="uk-width-expand title">';
+					str += 				'<h4 class="uk-comment-title uk-margin-remove uk-text-small"><a class="uk-link-reset" href="#">'+attrs.title+'</a></h4>';
+					str += '		</div>';
+				}
+					str += '	</header>';
+					
+				if(attrs.description){
+					str += '	<div class="uk-comment-body">';
+					str += '		<p>'+attrs.description+'</p>';
+					str += '	</div>';
+				}
 				str += '</article>';
 				
+				return str;
+			},
+			card : function(attrs){
+				let str = '';
+
+				str += '<div class="uk-card ';
+				str += attrs.cls;
+				str += '">';
+
+				if(attrs.image){
+					str += '<div class="uk-card-media-top">';
+					str += 	'<img src="'+attrs.image.url+'"';
+					str += 'alt="'+attrs.image.title ? attrs.image.title : ''+'"';
+					str += '>';
+					str += '</div>';
+				}
+
+				if(attrs.header){
+				    str += '<div class="uk-card-header">';
+				    str += '<h3 class="uk-card-title uk-text-capitalize">'+attrs.header+'</h3>';
+				    str += '</div>';
+				}
+
+			    str += '<div class="uk-card-body">';
+			    str += attrs.body;
+			    str += '</div>';
+
+			    if(attrs.footer){
+				    str += '<div class="uk-card-footer">';
+				    str += attrs.footer;
+				    str += '</div>';
+				}
+				str += '</div>';
+
 				return str;
 			}
 		};

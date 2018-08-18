@@ -60,7 +60,7 @@ angular.module('nimbusEmsApp')
 				icon: 'users',
 				url:'users',
 			},
-			inventory : {
+			/*inventory : {
 				display:true,
 				disabled:false,
 				icon: 'list',
@@ -77,6 +77,12 @@ angular.module('nimbusEmsApp')
 						disabled:false,
 						icon: 'thumbnails',
 						url:'learning/courses'
+					},
+					users : {
+						display:true,
+						disabled:false,
+						icon: 'users',
+						url:'users',
 					}
 				}
 			}
