@@ -195,6 +195,5 @@ angular.module('nimbusEmsApp')
 	$scope.breadcrumbs = breadcrumbs.parse($location.path());
 	
 	$scope.auth = $auth;
-	
 	//console.log('Nav breadcrumbs',$scope.auth);
   });

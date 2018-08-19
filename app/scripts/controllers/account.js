@@ -8,17 +8,17 @@
  * Controller of the nimbusEmsApp
  */
 angular.module('nimbusEmsApp')
-	.controller('AccountCtrl', function ($scope,$window,profileData,graphApi,subdomain,$route,apiConst,auth) {
+	.controller('AccountCtrl', function ($scope,$window,profileData,eduApi,$route,apiConst,user) {
 	
 	$scope.init = function(){
 		
 		$scope.profileData = profileData;
 	
-		console.log('profileData result',profileData);
+		//console.log('profileData result',profileData);
 		
-		$scope.loading = true;
+		//$scope.loading = true;
 		
-		graphApi.api('GET','services?paginate='+apiConst.componentPagination+'&page=1').then(function(result){
+		/*graphApi.api('GET','services?paginate='+apiConst.componentPagination+'&page=1').then(function(result){
 			console.log('init result',result);
 			$scope.services = result.data.data;
 			$scope.loading = false;
@@ -30,14 +30,13 @@ angular.module('nimbusEmsApp')
 				timeout: 5000
 			});
 			$scope.loading = false;
-		});
+		});*/
 	};
 	
 	$scope.save = function(data){
-		console.log('save data',data,subdomain);
 		$scope.loading = true;
-		graphApi.api('POST',subdomain+'/users/'+data.id,data)
-		.then(function(result){
+		console.log('sending data',data);
+		eduApi.api('POST',user.tenant.id+'/users/'+data.id,data).then(function(result){
 			console.log('profile save result',result);
 			$window.UIkit.notification({
 									message: 'Profile Saved',
@@ -47,10 +46,8 @@ angular.module('nimbusEmsApp')
 								});
 			
 			$scope.loading = false;
-			
-			auth.setCookie('auth',JSON.stringify(result.data),9);
-			
-			$route.reload();
+						
+			//$route.reload();
 		})
 		.catch(function(){
 			//do something

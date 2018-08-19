@@ -8,17 +8,19 @@
  * Controller of the nimbusEmsApp
  */
 angular.module('nimbusEmsApp')
-	.controller('UsersCtrl', function ($scope,$window,usersData,graphApi,subdomain) {
+	.controller('UsersCtrl', function ($scope,$window,usersData,eduApi,user) {
 		$scope.defaultPagination = 5;
 		
 		$scope.usersData = usersData;
+
+		console.log('data',usersData);
 		
-		$scope.usersList = usersData.data;
+		///$scope.usersList = usersData.data;
 				
 		var list = new $window.Bloodhound({
 			datumTokenizer: function(d) { console.log('bloodhound d',d); return $window.Bloodhound.tokenizers.whitespace(d.fname); },
 			queryTokenizer: $window.Bloodhound.tokenizers.whitespace,
-			remote:	'http://graph.nimbus.com:8000/'+subdomain+'/users'
+			remote:	'http://edu.nimbus.com:7070/'+user.tenant.id+'/users'
 		});	
 		
 		list.initialize();
@@ -65,7 +67,7 @@ angular.module('nimbusEmsApp')
 		
 		$scope.next = function(page){
 			$scope.loading = true;
-			graphApi.api('GET',subdomain+'/users?paginate='+$scope.defaultPagination+'&page='+page).then(function(result){
+			eduApi.api('GET',user.tenant.id+'/users?paginate='+$scope.defaultPagination+'&page='+page).then(function(result){
 				
 				console.log('next page:'+page,result.data.data);
 				
@@ -78,7 +80,7 @@ angular.module('nimbusEmsApp')
 				list.initialize(true);
 				$scope.loading = false;
 			}).catch(function(error){
-				console.log('graphApi error',error);
+				console.log('eduApi error',error);
 				$window.UIkit.notification({
 					message: 'Couldnt get users',
 					status: 'danger',
@@ -94,4 +96,5 @@ angular.module('nimbusEmsApp')
 			//close any open menus or modals
 			$window.UIkit.offcanvas('#side-menu').hide();
 		});
+
   });

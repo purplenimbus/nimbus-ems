@@ -44,11 +44,13 @@ angular
 				controller: 'UsersCtrl',
 				controllerAs: 'users',
 				resolve:	{
-					usersData : function(graphApi,$window,apiConst,subdomain){
-						return graphApi.api('GET',subdomain+'/users?paginate='+apiConst.componentPagination+'&page=1').then(function(result){
+					usersData : function(eduApi,$window,apiConst,user){
+						//console.log('usersData before resolve',user);
+						return eduApi.api('GET',user.tenant.id+'/users?paginate='+apiConst.componentPagination+'&page=1').then(function(result){
+							console.log('usersData result',result);
 							return result.data;
-						}).catch(function(){
-							
+						}).catch(function(error){
+							console.log('usersData error',error);
 							$window.UIkit.notification({
 								message: 'Couldnt get usersData',
 								status: 'danger',
@@ -66,12 +68,12 @@ angular
 				controller: 'AccountCtrl',
 				controllerAs: 'account',
 				resolve:	{
-					profileData : function($cookies,eduApi,$window,user){
-						//console.log('profileData',JSON.parse($cookies.get('auth')));
+					profileData : function(eduApi,$window,user){
+						//console.log('before profileData');
 						
 						return eduApi.api('GET',user.tenant.id+'/users/'+user.id).then(function(result){
 							
-							console.log('get user',result);
+							//console.log('get user',result);
 							
 							return result.data[0];
 						}).catch(function(error){
@@ -171,6 +173,16 @@ angular
 					}
 				}
 			})
+			.when('/settings', {
+			  templateUrl: 'views/settings.html',
+			  controller: 'SettingsCtrl',
+			  controllerAs: 'settings'
+			})
+.when('/tools', {
+  templateUrl: 'views/tools.html',
+  controller: 'ToolsCtrl',
+  controllerAs: 'tools'
+})
 			.otherwise({
 				redirectTo: '/'
 			});

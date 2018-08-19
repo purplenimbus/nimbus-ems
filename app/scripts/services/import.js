@@ -12,7 +12,18 @@ angular.module('nimbusEmsApp')
     this.render = function(){
     	var str = '',body = '';
 
-    	body += '<upload ng-if="!workbook.length"></upload>';
+        
+        body += uikit3.section({
+                    title:'Select Import Type',
+                    directive:'ng-show="!importType"',
+                    body:uikit3.select({
+                        default:'Select Import Type',
+                        options:'importTypes',
+                        directive:'ng-model="importType"'
+                    })
+                });
+
+    	body += '<upload ng-if="!workbook.length && !loading && importType"></upload>';
     	body += '<div uk-spinner ng-if="loading" class="uk-width-1-1 uk-text-center"></div>';
     	body += '<ul class="uk-list" ng-if="!loading && workbook.length">';
     	body += '	<li ng-repeat="(worksheetIndex , worksheet) in workbook">';
@@ -20,9 +31,9 @@ angular.module('nimbusEmsApp')
     	body += '		<table class="uk-table uk-table-divider uk-table-small">';
     	body += '			<thead>';
         body +=	'				<tr>';
-        body +=	'					<th class="uk-text-center"></th>';
-        body +=	'					<th ng-repeat="header in worksheet.header" class="">{{ header }}</th>';
-       	body +=	'					<th class="uk-text-center"></th>';
+        body +=	'					<th></th>';
+        body +=	'					<th ng-repeat="header in worksheet.header">{{ header }}</th>';
+       	body +=	'					<th></th>';
         body +=	'				</tr>';
         body += '			</thead>';
         body += '			<tbody>';
@@ -36,33 +47,41 @@ angular.module('nimbusEmsApp')
     	body += '		</div>';
 		body += '	</li>';
 		body += '<ul>';
+        body += '</div>';
 
-		var header = '<div class="uk-clearfix">';
-			header += '<div class="uk-float-left">Import</div>';
-			header += '<div class="uk-float-right" ng-if="workbook.length">';
-			header += uikit3.icons([{icon:'refresh',action:'reset()',cls:'uk-text-danger',tooltip:'reset'},{icon:'upload',action:'import()',cls:'uk-text-primary',tooltip:'import'}]);
+		var header = '<div class="uk-clearfix" ng-if="importType">';
+			header += '<div class="uk-float-left uk-text-uppercase">Import {{ importType.name }}</div>';
+			header += '<div class="uk-float-right" ng-if="workbook.length || importType">';
+			header += uikit3.icons([
+                        {icon:'refresh',action:'reset()',cls:'uk-text-danger',tooltip:'reset'},
+                        {icon:'upload',action:'import(importType.value)',cls:'uk-text-primary',tooltip:'import',directive:'ng-if="workbook.length"'},
+                    ]);
 			header += '</div>';
 			header += '</div>';
+
 		str = uikit3.card({header:header,body:body,classes:{card:'uk-card-default',body:'uk-padding-small',header:'uk-padding-small'}});
 
     	return str;
     };
 
-    this.parseWorkBook = function(workbook){
-    	var parsed = [];
+    this.parseWorkBook = function(workbook,type){
+    	var parsed = [],
+            obj = {},
+            self = this;
 
     	workbook.forEach(function(worksheet,worksheetKey){
-    		//console.log('parseWorkBook',worksheet.header,worksheet.data[0]);
-    		//ar obj = {};
+
     		parsed[worksheetKey] = [];
 
     		worksheet.data.forEach(function(row){
-    			//console.log('parseWorkBook',worksheet.header,row);
-    			var obj = {};
-
-    			worksheet.header.forEach(function(header,key){
-    				obj[header] = row[key];
-    			});
+    			
+    			switch(type){
+                    case 'users' :   obj = {meta:{}}; self.parseUsers(worksheet,row,obj); break;
+                    default :   obj = {}; worksheet.header.forEach(function(header,key){
+                                    obj[header] = row[key];
+                                }); break;
+                }
+                
 
     			parsed[worksheetKey].push(obj);
 
@@ -72,9 +91,37 @@ angular.module('nimbusEmsApp')
     	return parsed;
     };
 
-    this.import = function(worksheet){
-    	var data = this.parseWorkBook(worksheet);
 
-    	console.log('import',data);
+    this.parseUsers = function(worksheet,row,data){
+        worksheet.header.forEach(function(header,key){
+            if(header === 'firstname' || header === 'lastname' || header === 'email'){
+                data[header] = row[key];
+            }else if(header === 'address' || header === 'city' || header === 'state' || header === 'zip' || header === 'country'){
+                data.meta.address = {};
+                if(row[key].length){ data.meta.address[header] = row[key]; }
+            }else{
+                if(row[key].length){ data.meta[header] = row[key]; }
+            }
+        });
+
+        return data;
+    };
+
+    this.importTypes = function(){
+
+        return [{
+            id:1,
+            name:'users',
+            value:'user',
+        }/*,{
+            id:2,
+            name:'courses',
+            value:'courses',
+        },{
+            id:3,
+            name:'registrations',
+            value:'registrations'
+        }*/];
+
     };
   });

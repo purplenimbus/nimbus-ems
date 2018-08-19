@@ -72,7 +72,12 @@ angular.module('nimbusEmsApp')
 				str += attrs.placeholder ? 'placeholder="'+attrs.placeholder+'"' : '';
 				str += attrs.directive ? attrs.directive : '';
 				str += '">';
-				str += attrs.options ? '<option value="">Task Status</option><option ng-repeat="option in '+attrs.options+'" ng-value="option">{{ option.name | uppercase }}</option>' : '';
+
+				if(attrs.options){
+					str += '<option value="">'+attrs.default ? attrs.default : ''+'</option>';
+					str += '<option ng-repeat="option in '+attrs.options+'" ng-value="option">{{ option.name | uppercase }}</option>';
+				}
+
 				str += '</select>';
 				
 				return str;
@@ -266,7 +271,9 @@ angular.module('nimbusEmsApp')
 
 				list.forEach(function(v){
 					//console.log('Icons',v);
-					str += '<li>';
+					str += '<li ';
+					str += v.directive ? v.directive : '';
+					str += '>';
 					str += '<a uk-icon="icon: ';
 					str += v.icon ? v.icon : '';
 					str +=	'"';
@@ -278,6 +285,23 @@ angular.module('nimbusEmsApp')
 				});
 
 				str += '</ul>';
+
+				return str;
+			},
+			section : function(attrs = {}){
+				var str = '';
+				str += '<div class="uk-section uk-section-default" ';
+				str += attrs.directive ? attrs.directive : '';
+				str += '>';
+				str += '    <div class="uk-container">';
+				str += '        <h3>';
+				str += attrs.title ? attrs.title : '';
+				str += '		</h3>';
+				str += '        <div>';
+				str += attrs.body ? attrs.body : '';
+				str += '        </div>';
+				str += '    </div>';
+				str += '</div>';
 
 				return str;
 			}

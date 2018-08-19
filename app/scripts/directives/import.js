@@ -7,7 +7,7 @@
  * # import
  */
 angular.module('nimbusEmsApp')
-  .directive('import', function (uikit3,importService,csvParser) {
+  .directive('import', function (uikit3,importService,csvParser,eduApi,user) {
     return {
       template: importService.render(),
       restrict: 'E',
@@ -17,7 +17,6 @@ angular.module('nimbusEmsApp')
   			$scope.$on('upload',function(e,files){
   				$scope.loading = true;
     			csvParser.parse(files).then(function(result){
-    				console.log('parser result',result);
 	            	$timeout(function(){
 	            		$scope.workbook = result;
 	            		$scope.loading = false;
@@ -30,18 +29,30 @@ angular.module('nimbusEmsApp')
   			};
 
         	$scope.remove = function(worksheetIndex,row){
-        		console.log('remove',$scope.workbook[worksheetIndex]);
         		$scope.workbook[worksheetIndex].data.splice(row,1);
         	};
 
         	$scope.reset = function(){
         		$scope.$broadcast('reset');
         		$scope.workbook = [];
+        		$scope.importType = false;
         	};
 
-        	$scope.import = function(){
-  				importService.import($scope.workbook);
+        	$scope.import = function(type){
+  				var data = importService.parseWorkBook($scope.workbook,$scope.importType.name);
+
+  				eduApi.api('POST',user.tenant.id+'/users/batch?type='+type,data)
+  				.then(function(result){
+  					console.log('import result',result);
+  				})
+  				.catch(function(error){
+  					console.log('import error',error);
+  				});
+
+  				//send data to api here
   			};
+
+  			$scope.importTypes = importService.importTypes();
       },
       link: function postLink(scope,element) {
         element.on('$destroy', function () {
