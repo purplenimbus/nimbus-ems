@@ -20,6 +20,7 @@ angular.module('nimbusEmsApp')
 	            	$timeout(function(){
 	            		$scope.workbook = result;
 	            		$scope.loading = false;
+	            		//console.log('csvParser scope',$scope);
 	            	},1000);
 	            });
         	});
@@ -41,13 +42,15 @@ angular.module('nimbusEmsApp')
         	$scope.import = function(type){
   				var data = importService.parseWorkBook($scope.workbook,$scope.importType.name);
 
-  				eduApi.api('POST',user.tenant.id+'/users/batch?type='+type,data)
+  				console.log('import data',data);
+
+  				/*eduApi.api('POST',user.tenant.id+'/users/batch?type='+type,data)
   				.then(function(result){
   					console.log('import result',result);
   				})
   				.catch(function(error){
   					console.log('import error',error);
-  				});
+  				});*/
 
   				//send data to api here
   			};

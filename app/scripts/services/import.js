@@ -32,7 +32,7 @@ angular.module('nimbusEmsApp')
     	body += '			<thead>';
         body +=	'				<tr>';
         body +=	'					<th></th>';
-        body +=	'					<th ng-repeat="header in worksheet.header">{{ header }}</th>';
+        body +=	'					<th ng-repeat="(key,header) in worksheet.data[0]">{{ key }}</th>';
        	body +=	'					<th></th>';
         body +=	'				</tr>';
         body += '			</thead>';
@@ -73,12 +73,18 @@ angular.module('nimbusEmsApp')
 
     		parsed[worksheetKey] = [];
 
+            //console.log('parseWorkBook',worksheet,worksheetKey);
+
+            worksheet.header = Object.keys(worksheet.data[0]);
+
+            delete worksheet.header.$$hashKey;
+
     		worksheet.data.forEach(function(row){
     			
     			switch(type){
-                    case 'users' :   obj = {meta:{}}; self.parseUsers(worksheet,row,obj); break;
-                    default :   obj = {}; worksheet.header.forEach(function(header,key){
-                                    obj[header] = row[key];
+                    case 'users' :   obj = {meta:{address:{}}}; self.parseUsers(worksheet,row,obj); break;
+                    default :   obj = {}; worksheet.header.forEach(function(header){
+                                    obj[header] = row[header];
                                 }); break;
                 }
                 
@@ -93,17 +99,15 @@ angular.module('nimbusEmsApp')
 
 
     this.parseUsers = function(worksheet,row,data){
-        worksheet.header.forEach(function(header,key){
+        worksheet.header.forEach(function(header){
             if(header === 'firstname' || header === 'lastname' || header === 'email'){
-                data[header] = row[key];
+                data[header] = row[header];
             }else if(header === 'address' || header === 'city' || header === 'state' || header === 'zip' || header === 'country'){
-                data.meta.address = {};
-                if(row[key].length){ data.meta.address[header] = row[key]; }
+                if(row[header].length){ data.meta.address[header] = row[header];}
             }else{
-                if(row[key].length){ data.meta[header] = row[key]; }
+                if(row[header].length){ data.meta[header] = row[header]; }
             }
         });
-
         return data;
     };
 
@@ -113,15 +117,11 @@ angular.module('nimbusEmsApp')
             id:1,
             name:'users',
             value:'user',
-        }/*,{
-            id:2,
-            name:'courses',
-            value:'courses',
         },{
-            id:3,
-            name:'registrations',
-            value:'registrations'
-        }*/];
+            id:2,
+            name:'other',
+            value:'',
+        }];
 
     };
   });
