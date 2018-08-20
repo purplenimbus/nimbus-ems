@@ -7,7 +7,7 @@
  * # import
  */
 angular.module('nimbusEmsApp')
-  .directive('import', function (uikit3,importService,csvParser,eduApi,user) {
+  .directive('import', function (uikit3,importService,csvParser,eduApi,user,$window,sweetAlert) {
     return {
       template: importService.render(),
       restrict: 'E',
@@ -42,17 +42,47 @@ angular.module('nimbusEmsApp')
         	$scope.import = function(type){
   				var data = importService.parseWorkBook($scope.workbook,$scope.importType.name);
 
-  				console.log('import data',data);
+  				//console.log('import data',JSON.stringify(data));
 
-  				/*eduApi.api('POST',user.tenant.id+'/users/batch?type='+type,data)
-  				.then(function(result){
-  					console.log('import result',result);
-  				})
-  				.catch(function(error){
-  					console.log('import error',error);
-  				});*/
+  				sweetAlert.alert({
+				   	title: 'Import '+$scope.importType.name+'?',
+				   	icon: "warning",
+				   	buttons:{
+						cancel: sweetAlert.button({text:'Cancel',className:'uk-button uk-button-danger',value:false}),
+						confirm: sweetAlert.button({text:'Import'})
+					}
+				}).then((e)=>{
+					console.log('prompt choice',e);
+					$scope.loading = true;
 
-  				//send data to api here
+					if(e){
+						eduApi.api('POST',user.tenant.id+'/users/batch?type='+type,data)
+		  				.then((result) => {
+		  					console.log('import result',result);
+		  					$scope.loading = false;
+		  					sweetAlert.alert({
+							   	title: 'Imported',
+							   	icon: "success",
+							   	buttons:{
+									confirm: sweetAlert.button({text:'ok'})
+								}
+							});
+		  				})
+		  				.catch((error) => {
+		  					console.log('import error',error);
+		  					$scope.loading = false;
+		  					sweetAlert.alert({
+							   	title: 'Somethings wrong!',
+							   	icon: "error",
+							   	buttons:{
+									confirm: sweetAlert.button({text:'ok'})
+								}
+							});
+		  				});
+					}
+
+					$scope.loading = false;
+				});
   			};
 
   			$scope.importTypes = importService.importTypes();

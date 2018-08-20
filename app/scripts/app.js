@@ -19,7 +19,7 @@ angular
 		'siyfion.sfTypeahead',
 		'satellizer',
 		'chart.js',
-		'ngStorage'
+		'ngStorage',
 	])
 	.config(function ($routeProvider,$locationProvider,$authProvider,apiConst,$sceDelegateProvider) {
 		$sceDelegateProvider.resourceUrlWhitelist([

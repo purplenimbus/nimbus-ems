@@ -74,7 +74,7 @@ angular.module('nimbusEmsApp')
 				str += '">';
 
 				if(attrs.options){
-					str += '<option value="">'+attrs.default ? attrs.default : ''+'</option>';
+					str += '<option value="">'+(attrs.default ? attrs.default : '')+'</option>';
 					str += '<option ng-repeat="option in '+attrs.options+'" ng-value="option">{{ option.name | uppercase }}</option>';
 				}
 

@@ -17,7 +17,7 @@ angular.module('nimbusEmsApp')
                     title:'Select Import Type',
                     directive:'ng-show="!importType"',
                     body:uikit3.select({
-                        default:'Select Import Type',
+                        default:'Type',
                         options:'importTypes',
                         directive:'ng-model="importType"'
                     })
@@ -96,7 +96,6 @@ angular.module('nimbusEmsApp')
 
     	return parsed;
     };
-
 
     this.parseUsers = function(worksheet,row,data){
         worksheet.header.forEach(function(header){
