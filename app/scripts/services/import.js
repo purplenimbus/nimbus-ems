@@ -18,8 +18,7 @@ angular.module('nimbusEmsApp')
                     directive:'ng-show="!importType"',
                     body:uikit3.select({
                         default:'Type',
-                        options:'importTypes',
-                        directive:'ng-model="importType"'
+                        directive:'ng-model="importType" ng-options="option as option.name for option in importTypes track by item.id"'
                     })
                 });
 
@@ -32,12 +31,12 @@ angular.module('nimbusEmsApp')
     	body += '			<thead>';
         body +=	'				<tr>';
         body +=	'					<th></th>';
-        body +=	'					<th ng-repeat="(key,header) in worksheet.data[0]">{{ key }}</th>';
+        body +=	'					<th ng-repeat="(key,header) in worksheet.data[0]" class="uk-link" ng-click="orderBy(key)">{{ key }}</th>';
        	body +=	'					<th></th>';
         body +=	'				</tr>';
         body += '			</thead>';
         body += '			<tbody>';
-        body +=	'				<tr ng-repeat="rows in worksheet.data">';
+        body +=	'				<tr ng-repeat="rows in worksheet.data | orderBy:workSheetOrder | filter:search">';
         body +=	'					<td>{{ $index }}</td>';
         body +=	'					<td ng-repeat="column in rows track by $index">'+uikit3.input({model:'column' , cls:'uk-form-small'})+'</td>';
         body +=	'					<td>'+uikit3.icons([{icon:'close',action:'remove(worksheetIndex,$index)',tooltip:'remove row', cls:'uk-text-danger'}])+'</td>';
@@ -49,12 +48,17 @@ angular.module('nimbusEmsApp')
 		body += '<ul>';
         body += '</div>';
 
-		var header = '<div class="uk-clearfix" ng-if="importType">';
-			header += '<div class="uk-float-left uk-text-uppercase">Import {{ importType.name }}</div>';
+		var header = '<div class="uk-clearfix">';
+			header += '<div class="uk-float-left uk-text-uppercase uk-text-small">';
+            header += '<form class="uk-search uk-search-default" ng-if="importType && workbook.length">';
+            header += '<span uk-search-icon></span>';
+            header += uikit3.input({cls:'uk-search-input uk-form-small',directive:'ng-model="search"',type:'search',placeholder:'Search'});
+            header += '</form>';
+            header += '</div>';
 			header += '<div class="uk-float-right" ng-if="workbook.length || importType">';
 			header += uikit3.icons([
-                        {icon:'refresh',action:'reset()',cls:'uk-text-danger',tooltip:'reset'},
-                        {icon:'upload',action:'import(importType.value)',cls:'uk-text-primary',tooltip:'import',directive:'ng-if="workbook.length"'},
+                        {icon:'reply',action:'reset()',cls:'uk-text-danger',tooltip:'reset'},
+                        {icon:'cloud-upload',action:'import(importType.value)',cls:'uk-text-primary',tooltip:'import',directive:'ng-if="workbook.length"'},
                     ]);
 			header += '</div>';
 			header += '</div>';
@@ -114,11 +118,11 @@ angular.module('nimbusEmsApp')
 
         return [{
             id:1,
-            name:'users',
+            name:'Users',
             value:'user',
         },{
             id:2,
-            name:'other',
+            name:'Select Type',
             value:'',
         }];
 

@@ -13,7 +13,8 @@ angular.module('nimbusEmsApp')
       restrict: 'E',
       controller : function($scope,$timeout){
       		$scope.workbook = [];
-      		
+      		//$scope.importType = false;
+
   			$scope.$on('upload',function(e,files){
   				$scope.loading = true;
     			csvParser.parse(files).then(function(result){
@@ -49,7 +50,7 @@ angular.module('nimbusEmsApp')
 				   	icon: "warning",
 				   	buttons:{
 						cancel: sweetAlert.button({text:'Cancel',className:'uk-button uk-button-danger',value:false}),
-						confirm: sweetAlert.button({text:'Import'})
+						confirm: sweetAlert.button({text:'Import',value:true})
 					}
 				}).then((e)=>{
 					console.log('prompt choice',e);
@@ -86,6 +87,11 @@ angular.module('nimbusEmsApp')
   			};
 
   			$scope.importTypes = importService.importTypes();
+
+  			$scope.orderBy = function(key) {
+  				console.log('orderBy',key);
+			    $scope.workSheetOrder = key;
+			};
       },
       link: function postLink(scope,element) {
         element.on('$destroy', function () {

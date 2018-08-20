@@ -14,7 +14,7 @@ angular.module('nimbusEmsApp')
 			input : function(attrs){
 				var str = '';
 				
-				str += attrs.placeholder ? '<label class="uk-form-label uk-text-capitalize" for="form-stacked-text">'+attrs.placeholder+'</label>' : '';
+				str += attrs.label ? '<label class="uk-form-label uk-text-capitalize" for="form-stacked-text">'+attrs.label+'</label>' : '';
 				str += '<input ';
 				str += attrs.cls ? 'class="uk-input '+attrs.cls+'"' : 'class="uk-input"';
 				str += attrs.type ? 'type="'+attrs.type+'"' : 'type="text"';
@@ -71,14 +71,7 @@ angular.module('nimbusEmsApp')
 				str += attrs.cls ? 'class="uk-select '+attrs.cls+'"' : 'class="uk-select"';
 				str += attrs.placeholder ? 'placeholder="'+attrs.placeholder+'"' : '';
 				str += attrs.directive ? attrs.directive : '';
-				str += '">';
-
-				if(attrs.options){
-					str += '<option value="">'+(attrs.default ? attrs.default : '')+'</option>';
-					str += '<option ng-repeat="option in '+attrs.options+'" ng-value="option">{{ option.name | uppercase }}</option>';
-				}
-
-				str += '</select>';
+				str += '"></select>';
 				
 				return str;
 			},
