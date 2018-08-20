@@ -86,7 +86,7 @@ angular.module('nimbusEmsApp')
     		worksheet.data.forEach(function(row){
     			
     			switch(type){
-                    case 'users' :   obj = {meta:{address:{}}}; self.parseUsers(worksheet,row,obj); break;
+                    case 'Users' :   obj = {meta:{address:{}}}; self.parseUsers(worksheet,row,obj); break;
                     default :   obj = {}; worksheet.header.forEach(function(header){
                                     obj[header] = row[header];
                                 }); break;

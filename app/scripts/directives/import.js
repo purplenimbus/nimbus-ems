@@ -45,10 +45,10 @@ angular.module('nimbusEmsApp')
         	$scope.import = function(type){
   				var data = importService.parseWorkBook($scope.workbook,type.name);
 
-  				console.log('import data',type);
+  				console.log('import data',data);
 
   				sweetAlert.alert({
-				   	title: 'Import '+type.name+'?',
+				   	title: 'Import '+data[0].length+' '+type.name+'?',
 				   	icon: "warning",
 				   	buttons:{
 						cancel: sweetAlert.button({text:'Cancel',className:'uk-button uk-button-danger',value:false}),
@@ -64,7 +64,8 @@ angular.module('nimbusEmsApp')
 		  					console.log('import result',result);
 		  					$scope.loading = false;
 		  					sweetAlert.alert({
-							   	title: 'Imported',
+							   	title: 'Success',
+							   	text : result.data.message,
 							   	icon: "success",
 							   	buttons:{
 									confirm: sweetAlert.button({text:'ok'})
@@ -76,6 +77,7 @@ angular.module('nimbusEmsApp')
 		  					$scope.loading = false;
 		  					sweetAlert.alert({
 							   	title: 'Somethings wrong!',
+							   	text: error.xhrStatus,
 							   	icon: "error",
 							   	text : error.data.message,
 							   	buttons:{
