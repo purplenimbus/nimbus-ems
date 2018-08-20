@@ -18,7 +18,7 @@ angular.module('nimbusEmsApp')
                     directive:'ng-show="!importType"',
                     body:uikit3.select({
                         default:'Type',
-                        directive:'ng-model="importType" ng-options="option as option.name for option in importTypes track by item.id"'
+                        directive:'ng-model="importType" ng-options="option as option.name for option in importTypes track by option.id"'
                     })
                 });
 
@@ -58,7 +58,7 @@ angular.module('nimbusEmsApp')
 			header += '<div class="uk-float-right" ng-if="workbook.length || importType">';
 			header += uikit3.icons([
                         {icon:'reply',action:'reset()',cls:'uk-text-danger',tooltip:'reset'},
-                        {icon:'cloud-upload',action:'import(importType.value)',cls:'uk-text-primary',tooltip:'import',directive:'ng-if="workbook.length"'},
+                        {icon:'cloud-upload',action:'import(importType)',cls:'uk-text-primary',tooltip:'import',directive:'ng-if="workbook.length"'},
                     ]);
 			header += '</div>';
 			header += '</div>';
@@ -120,10 +120,6 @@ angular.module('nimbusEmsApp')
             id:1,
             name:'Users',
             value:'user',
-        },{
-            id:2,
-            name:'Select Type',
-            value:'',
         }];
 
     };

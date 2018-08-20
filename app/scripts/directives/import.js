@@ -13,9 +13,11 @@ angular.module('nimbusEmsApp')
       restrict: 'E',
       controller : function($scope,$timeout){
       		$scope.workbook = [];
+      		$scope.importTypes = importService.importTypes();
       		//$scope.importType = false;
 
   			$scope.$on('upload',function(e,files){
+  				//console.log('files',files[1]);
   				$scope.loading = true;
     			csvParser.parse(files).then(function(result){
 	            	$timeout(function(){
@@ -41,12 +43,12 @@ angular.module('nimbusEmsApp')
         	};
 
         	$scope.import = function(type){
-  				var data = importService.parseWorkBook($scope.workbook,$scope.importType.name);
+  				var data = importService.parseWorkBook($scope.workbook,type.name);
 
-  				//console.log('import data',JSON.stringify(data));
+  				console.log('import data',type);
 
   				sweetAlert.alert({
-				   	title: 'Import '+$scope.importType.name+'?',
+				   	title: 'Import '+type.name+'?',
 				   	icon: "warning",
 				   	buttons:{
 						cancel: sweetAlert.button({text:'Cancel',className:'uk-button uk-button-danger',value:false}),
@@ -57,7 +59,7 @@ angular.module('nimbusEmsApp')
 					$scope.loading = true;
 
 					if(e){
-						eduApi.api('POST',user.tenant.id+'/users/batch?type='+type,data)
+						eduApi.api('POST',user.tenant.id+'/users/batch?type='+type.value,data)
 		  				.then((result) => {
 		  					console.log('import result',result);
 		  					$scope.loading = false;
@@ -75,8 +77,9 @@ angular.module('nimbusEmsApp')
 		  					sweetAlert.alert({
 							   	title: 'Somethings wrong!',
 							   	icon: "error",
+							   	text : error.data.message,
 							   	buttons:{
-									confirm: sweetAlert.button({text:'ok'})
+									confirm: sweetAlert.button({text:'ok'}),
 								}
 							});
 		  				});
@@ -86,7 +89,6 @@ angular.module('nimbusEmsApp')
 				});
   			};
 
-  			$scope.importTypes = importService.importTypes();
 
   			$scope.orderBy = function(key) {
   				console.log('orderBy',key);
