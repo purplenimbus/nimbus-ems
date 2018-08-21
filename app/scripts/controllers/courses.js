@@ -9,9 +9,10 @@
  */
 angular.module('nimbusEmsApp')
 	.controller('CoursesCtrl', function ($scope,coursesData,grades,courseService,modal,form,uikit3,eduApi,user) {
+		$scope.showAdvanced = false;
 		$scope.asset = { 
 			meta : {
-				class_id : 1,
+				course_grade_id : 1,
 				course_schema : {
 		            lab: {value:5,enabled:true},
 		            exam: {value:35,enabled:true},
@@ -25,9 +26,10 @@ angular.module('nimbusEmsApp')
 
 		$scope.getSchema = function(){
 			return Object.keys($scope.asset.meta.course_schema);
-		}
+		};
 		
-		$scope.coursesList = coursesData.data,
+		$scope.coursesList = coursesData.data;
+
 		$scope.createCourseInit = false;
 				
 		//$scope.coursesList = coursesData.data ? coursesData.data : false;
@@ -48,10 +50,36 @@ angular.module('nimbusEmsApp')
 		
 		$scope.createCourse = function(){
 
+			var header = '';
+
+				header += '<div class="uk-clearfix uk-margin-bottom">';
+				header += '	<div class="uk-float-left">';
+				header += '<p class="uk-button uk-button-text title uk-text-capitalize uk-text-bold uk-margin-remove">Create Course</p>';
+				header += '	</div>';
+				header += '	<div class="uk-float-right">';
+
+				header += uikit3.button({
+								//icon:'upload-cloud',
+								directive:'ng-click="save(asset)"',
+								cls:'uk-button-primary uk-button-small',
+								label:'Save'
+							});
+
+				header += uikit3.button({
+								//icon:'close',
+								directive:'ng-click="modal.hide()"',
+								cls:'uk-button-danger uk-button-small',
+								label:'Close'
+							});
+
+				header += '	</div>';
+				header += '</div>';
+
 			var obj = {
-				title	:	'Create Course',
+				title	:	header,
+				type 	: 	'full',
 				body	:	form.editCourse($scope),
-				footer	:	uikit3.button({cls:'uk-button uk-button-text uk-margin-small-bottom',icon:'upload',label:'Save',directive:'ng-click="save(this.asset)"'})
+				//footer	:	uikit3.button({cls:'uk-button uk-button-text uk-margin-small-bottom',icon:'upload',label:'Save',directive:'ng-click="save(this.asset)"'})
 			};
 
 			if(!$scope.createCourseInit){

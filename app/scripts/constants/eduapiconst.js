@@ -10,10 +10,11 @@
 angular.module('nimbusEmsApp')
   	.constant('eduApiConst', {
   		defaultCourseSchema : {
-            lab: 5,
-            exam: 35,
-            quiz: 15,
-            midterm: 30,
-            assignment: 15,
+            lab: {value:5,enabled:true},
+            exam: {value:35,enabled:true},
+            quiz: {value:10,enabled:true},
+            midterm: {value:30,enabled:true},
+            assignment: {value:15,enabled:true},
+            attendance: {value:5,enabled:true}
         }
   	});

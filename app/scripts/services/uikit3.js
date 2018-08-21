@@ -171,13 +171,15 @@ angular.module('nimbusEmsApp')
 			fullModalBody : function(attrs){
 				var str = '';
 				
-				str +=	'<div class="uk-grid-collapse uk-child-width-1-2@s uk-flex-middle" uk-grid>';
+				str +=	'<div class="uk-grid-collapse ';
+				str +=  attrs.image ? 'uk-child-width-1-2@s' : 'uk-child-width-1-1@s';
+				str +=  ' uk-flex-middle" uk-grid>';
 				str +=		attrs.image ? '<div class="uk-background-cover" ': '';
 				str +=		attrs.image ? 'style="background-image: url('+attrs.image+');" ' : '';
 				str +=		attrs.image ? 'uk-height-viewport></div>': '';
 				str +=		'<div class="uk-padding-large">';
-				str +=			attrs.title ? '<h1 class="uk-text-capitalize">'+attrs.title+'</h1>' : '';
-				str +=			attrs.body ? '<p>'+attrs.body+'</p>' : '';
+				str +=			attrs.title ? attrs.title : '';
+				str +=			attrs.body ? attrs.body : '';
 				str +=		'</div>';
 				str +=	'</div>';
 				

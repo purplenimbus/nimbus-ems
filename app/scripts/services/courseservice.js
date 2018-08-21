@@ -17,7 +17,7 @@ angular.module('nimbusEmsApp')
 
 				var listName = field.name+'List',
 					dataSetName = field.name+'DataSet',
-					optionsName = field.name+'Options';;
+					optionsName = field.name+'Options';
 
 				$scope[listName] = new $window.Bloodhound({
 					datumTokenizer: function(d) { return $window.Bloodhound.tokenizers.whitespace(d[field.display]); },
