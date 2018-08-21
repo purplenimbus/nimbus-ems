@@ -27,6 +27,7 @@ angular.module('nimbusEmsApp')
 				str += attrs.model ? ' ng-model="'+attrs.model+'" ' : '';
 				str += attrs.directive ? attrs.directive : '';
 				str += attrs.placeholder ? ' placeholder="'+attrs.placeholder+'" ' : '';
+				str += attrs.name ? 'name="'+attrs.name+'"' : '';
 				
 				if(attrs.type === 'range'){
 					str += attrs.min ? ' min="'+attrs.min+'" ' : '';
@@ -73,6 +74,7 @@ angular.module('nimbusEmsApp')
 				str += attrs.cls ? 'class="uk-textarea '+attrs.cls+'"' : 'class="uk-textarea"';
 				str += attrs.placeholder ? 'placeholder="'+attrs.placeholder+'"' : '';
 				str += attrs.model ? 'ng-model="'+attrs.model+'"' : '';
+				str += attrs.name ? 'name="'+attrs.name+'"' : '';
 				str += '">';
 				str += '</textarea>';
 				
@@ -89,7 +91,22 @@ angular.module('nimbusEmsApp')
 				str += attrs.cls ? 'class="uk-select '+attrs.cls+'"' : 'class="uk-select"';
 				str += attrs.placeholder ? 'placeholder="'+attrs.placeholder+'"' : '';
 				str += attrs.directive ? attrs.directive : '';
+				str += attrs.name ? 'name="'+attrs.name+'"' : '';
 				str += '"></select>';
+				
+				return str;
+			},
+			checkbox : function(attrs){
+				var str = '';
+				
+				str += '<label><input type="checkbox" ';
+				str += attrs.name ? 'name="'+attrs.name+'"' : '';
+				str += attrs.cls ? 'class="uk-checkbox '+attrs.cls+' "' : '';
+				str += attrs.directive ? attrs.directive : '';
+				str += attrs.checked ? 'checked' : '';
+				str += '>';
+				str += attrs.label ? attrs.label : '';
+				str += '</label>';
 				
 				return str;
 			},

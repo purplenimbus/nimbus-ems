@@ -13,14 +13,19 @@ angular.module('nimbusEmsApp')
 			meta : {
 				class_id : 1,
 				course_schema : {
-		            lab: 5,
-		            exam: 35,
-		            quiz: 15,
-		            midterm: 30,
-		            assignment: 15,
+		            lab: {value:5,enabled:true},
+		            exam: {value:35,enabled:true},
+		            quiz: {value:10,enabled:true},
+		            midterm: {value:30,enabled:true},
+		            assignment: {value:15,enabled:true},
+		            attendance: {value:5,enabled:true}
 		        }
 			} 
 		};
+
+		$scope.getSchema = function(){
+			return Object.keys($scope.asset.meta.course_schema);
+		}
 		
 		$scope.coursesList = coursesData.data,
 		$scope.createCourseInit = false;
@@ -69,7 +74,7 @@ angular.module('nimbusEmsApp')
 			});
 			
 		};
-		
+
 		$scope.save = function(data){ 
 			console.log('save course',data);
 			//courseService.saveCourse(data); 

@@ -31,10 +31,11 @@ angular.module('nimbusEmsApp')
 			
 			str += form ?  '</form>' : '';
 			
-			console.log('formService form',str);
+			//console.log('formService form',str);
 			
 			return str;
-		}
+		};
+
 		this.login = function(){
 			var str = '';
 			
@@ -152,24 +153,32 @@ angular.module('nimbusEmsApp')
 			//str += 				uikit3.typeaheadPreview({image:'{{asset.meta.instructor.image_url}}'});
 			//str += '		</div>';			
 			//str += '	</div>';
-			str += '	<p class="uk-heading-line uk-text-left uk-text-capitalize uk-text-small uk-text-bold"><span>Course Breakdown</span></p>';
+			str += '	<p class="uk-heading-line uk-text-center uk-text-capitalize uk-text-small uk-text-bold"><span>Course Breakdown</span></p>';
 
-			str += 		this.build(Object.keys($scope.asset.meta.course_schema).map((breakDown,key) => {
-            				console.log('courseSchema',breakDown,$scope.asset.meta.course_schema[breakDown]);
-							return {
-								type:'range',
-								attrs:{
-									directive:'ng-model="asset.meta.course_schema.'+breakDown+'"',
+			str += '<div class="uk-margin">';
+			str += '	<ul uk-grid>';
+			str += '		<li ng-repeat="schema in getSchema()">'+uikit3.checkbox({label:' {{ schema | uppercase }}',directive:'ng-model="asset.meta.course_schema[schema].enabled"',checked:true})+'</li>';
+			str += '	</ul>';
+			str += '</div>';
+
+			//str += 		this.build(Object.keys($scope.asset.meta.course_schema).map((breakDown) => {
+			str += '<div class="uk-margin">';
+			str += '	<ul uk-grid>';	
+            				//console.log('courseSchema',breakDown,$scope.asset.meta.course_schema[breakDown]);
+			str += 		'<li class="uk-width-1-1" ng-repeat="schema in getSchema()" ng-if="asset.meta.course_schema[schema].enabled">';
+			str +=			uikit3.range({
+									directive:'ng-model="asset.meta.course_schema[schema].value"',
 									type:'range',
 									cls:'uk-range',
-									label:breakDown+' {{ asset.meta.course_schema.'+breakDown+' }}',
+									label:'{{schema | uppercase }} {{ asset.meta.course_schema[schema].value }}',
 									min:0,
 									max:100,
-									step:5,
-									//value:$scope.courseSchema[breakDown]
-								}
-							}
-						}));
+									step:5
+							});
+			str +=		'</li>';
+						//}));
+			str += '	</ul>';
+			str += '</div>';
 
 			str += '	<div class="uk-margin">';
 			str += 			uikit3.textarea({model:'asset.meta.comments',placeholder:'Comments',label:false});
