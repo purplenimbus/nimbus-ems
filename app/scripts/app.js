@@ -67,28 +67,6 @@ angular
 				templateUrl: 'views/account.html',
 				controller: 'AccountCtrl',
 				controllerAs: 'account',
-				resolve:	{
-					profileData : function(eduApi,$window,user){
-						//console.log('before profileData');
-						
-						return eduApi.api('GET',user.tenant.id+'/users/'+user.id).then(function(result){
-							
-							//console.log('get user',result);
-							
-							return result.data[0];
-						}).catch(function(error){
-							console.log('get user error',error);
-							$window.UIkit.notification({
-								message: 'Couldnt get profile data',
-								status: 'danger',
-								pos: 'top-right',
-								timeout: 5000
-							});
-						});
-						
-						//return JSON.parse($cookies.get('auth'));//user.data[0];
-					}
-				}
 			})
 			.when('/inventory', {
 				templateUrl: 'views/inventory.html',

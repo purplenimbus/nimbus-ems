@@ -8,10 +8,10 @@
  * Controller of the nimbusEmsApp
  */
 angular.module('nimbusEmsApp')
-	.controller('ProfileCtrl', function ($scope,$window,$route,graphApi,modal,$localStorage) {
+	.controller('ProfileCtrl', function ($scope,$window,$route,graphApi,modal,$localStorage,user) {
 		
 		$scope.init = function(){
-			$scope.profileData = JSON.parse($localStorage.auth);
+			$scope.profileData = user;
 			$scope.initiated = true;
 		};
 		

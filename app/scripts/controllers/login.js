@@ -8,7 +8,7 @@
  * Controller of the nimbusEmsApp
  */
 angular.module('nimbusEmsApp')
-	.controller('LoginCtrl', function ($scope,$route,$rootScope,validation,$auth,auth,$window,user,$location,$http,$localStorage) {
+	.controller('LoginCtrl', function ($scope,$route,$rootScope,validation,$auth,auth,$window,user,$location,$http,userService) {
 		
 	if(!$auth.isAuthenticated){
 		auth.clearUser();
@@ -56,7 +56,8 @@ angular.module('nimbusEmsApp')
 					//console.log('Logged in Auth',$auth.isAuthenticated());
 					//console.log('Logged in token',$auth.getToken());
 					//console.log('Logged in payload',$auth.getPayload());
-					$localStorage.auth = JSON.stringify(result.data.user);
+					userService.updateLocalUser(result.data.user);
+					//$localStorage.auth = JSON.stringify(result.data.user);
 					//$scope.$emit();
 					//$rootScope.user.info = result.data.user;
 					angular.element('#modal .uk-modal-spinner').addClass('uk-hidden');//remove spinner

@@ -17,7 +17,7 @@ angular.module('nimbusEmsApp')
       		//$scope.importType = false;
       		$scope.selectImportType = function(type){
       			$scope.importType = type;
-      		}
+      		};
 
   			$scope.$on('upload',function(e,files){
   				//console.log('files',files[1]);
@@ -85,7 +85,6 @@ angular.module('nimbusEmsApp')
 		  					$scope.loading = false;
 		  					sweetAlert.alert({
 							   	title: 'Somethings wrong!',
-							   	text: error.xhrStatus,
 							   	icon: "error",
 							   	text : error.data.message,
 							   	buttons:{

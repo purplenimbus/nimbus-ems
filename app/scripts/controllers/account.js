@@ -8,57 +8,46 @@
  * Controller of the nimbusEmsApp
  */
 angular.module('nimbusEmsApp')
-	.controller('AccountCtrl', function ($scope,$window,profileData,eduApi,$route,apiConst,user) {
+	.controller('AccountCtrl', function ($scope,$window,eduApi,$route,apiConst,user,sweetAlert,userService) {
 	
 	$scope.init = function(){
-		
-		$scope.profileData = profileData;
-	
-		//console.log('profileData result',profileData);
-		
-		//$scope.loading = true;
-		
-		/*graphApi.api('GET','services?paginate='+apiConst.componentPagination+'&page=1').then(function(result){
-			console.log('init result',result);
-			$scope.services = result.data.data;
-			$scope.loading = false;
-		}).catch(function(){
-			$window.UIkit.notification({
-				message: 'Couldnt get servicesData',
-				status: 'danger',
-				pos: 'top-right',
-				timeout: 5000
-			});
-			$scope.loading = false;
-		});*/
+		$scope.profileData = user;
 	};
 	
 	$scope.save = function(data){
 		$scope.loading = true;
-		console.log('sending data',data);
-		eduApi.api('POST',user.tenant.id+'/users/'+data.id,data).then(function(result){
-			console.log('profile save result',result);
-			$window.UIkit.notification({
-									message: 'Profile Saved',
-									status: 'success',
-									pos: 'top-right',
-									timeout: 5000
-								});
-			
-			$scope.loading = false;
-						
-			//$route.reload();
-		})
-		.catch(function(){
-			//do something
-			$window.UIkit.notification({
-				message: 'Couldnt save profile data',
-				status: 'danger',
-				pos: 'top-right',
-				timeout: 5000
+		//console.log('sending data',data);
+		userService.saveUser(data)
+			.then((result) => {
+				console.log('profile save result',result);
+				
+				$scope.loading = false;
+				
+				sweetAlert.alert({
+				   	title: 'Profile Saved',
+				   	text : result.data.message,
+				   	icon: "success",
+				   	buttons:{
+						confirm: sweetAlert.button({text:'ok'})
+					}
+				}).then(() => {
+					userService.updateLocalUser(result.data);
+					$route.reload();
+				});
+			})
+			.catch((error) => {
+				//do something
+				$scope.loading = false;
+
+				sweetAlert.alert({
+				   	title: 'Something\'s Wrong',
+				   	text : error.data.message,
+				   	icon: "error",
+				   	buttons:{
+						confirm: sweetAlert.button({text:'ok'})
+					}
+				});
 			});
-			$scope.loading = false;
-		});
 	};
 	
     var serviceList = new $window.Bloodhound({
