@@ -16,12 +16,26 @@ angular.module('nimbusEmsApp')
 				
 				str += attrs.label ? '<label class="uk-form-label uk-text-capitalize" for="form-stacked-text">'+attrs.label+'</label>' : '';
 				str += '<input ';
-				str += attrs.cls ? 'class="uk-input '+attrs.cls+'"' : ' class="uk-input"';
-				str += attrs.type ? ' type="'+attrs.type+'"' : ' type="text"';
-				str += attrs.model ? ' ng-model="'+attrs.model+'"' : '';
+
+				if(attrs.cls){
+					str += 'class="';
+					str += attrs.type !== 'range' ? 'uk-input' : attrs.cls;
+					str += '" ';
+				}
+
+				str += attrs.type ? ' type="'+attrs.type+'" ' : ' type="text" ';
+				str += attrs.model ? ' ng-model="'+attrs.model+'" ' : '';
 				str += attrs.directive ? attrs.directive : '';
-				str += attrs.placeholder ? ' placeholder="'+attrs.placeholder+'"' : '';
-				str += attrs.required ? ' required' : '';
+				str += attrs.placeholder ? ' placeholder="'+attrs.placeholder+'" ' : '';
+				
+				if(attrs.type === 'range'){
+					str += attrs.min ? ' min="'+attrs.min+'" ' : '';
+					str += attrs.max ? ' max="'+attrs.max+'" ' : '';
+					str += attrs.value ? ' value="'+attrs.value+'" ' : '';
+					str += attrs.step ? ' step="'+attrs.step+'" ' : '';
+				}
+
+				str += attrs.required ? 'required' : '';
 				str += '>';
 				
 				return str;
@@ -63,6 +77,9 @@ angular.module('nimbusEmsApp')
 				str += '</textarea>';
 				
 				return str;
+			},
+			range : function(attrs){			
+				return this.input(attrs);
 			},
 			select : function(attrs){
 				var str = '';

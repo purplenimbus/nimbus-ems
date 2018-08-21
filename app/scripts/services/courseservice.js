@@ -13,7 +13,7 @@ angular.module('nimbusEmsApp')
 
 		this.initTypeAhead = function($scope,fields = []){
 			fields.forEach(function(field){
-				console.log('field',field);
+				//console.log('field',field);
 
 				var listName = field.name+'List',
 					dataSetName = field.name+'DataSet',

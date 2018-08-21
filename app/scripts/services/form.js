@@ -10,13 +10,14 @@
 angular.module('nimbusEmsApp')
 	.service('form', function (uikit3) {
 		// AngularJS will instantiate a singleton by calling "new" on this function
-		this.build = function(data){
+		this.build = function(data,form = false){
 			var str = '',
 				self  = this;
 
-			str += '<form action="javascript:void(0)">';
+			str += form ? '<form action="javascript:void(0)">' : '';
 			
 			data.forEach(function(value){
+
 				switch(typeof value){
 					case 'object' : if(value.type){
 										str += uikit3[value.type](value.attrs ? value.attrs : {});
@@ -28,7 +29,7 @@ angular.module('nimbusEmsApp')
 				
 			});
 			
-			str += '</form>';
+			str += form ?  '</form>' : '';
 			
 			console.log('formService form',str);
 			
@@ -113,7 +114,7 @@ angular.module('nimbusEmsApp')
 			return str;
 		};
 		
-		this.editCourse = function(){
+		this.editCourse = function($scope){
 			var str = '';
 			
 			str += '<form>';
@@ -131,7 +132,7 @@ angular.module('nimbusEmsApp')
 						cls:'uk-input uk-search-input uk-width-1-1 typeahead uk-text-capitalize',
 						placeholder:'Subject'
 					});
-			str += '		</div>';
+			str += '	</div>';
 			str += '		<div class="uk-width-1-2@m uk-width-1-2@xs">';
 			str += '			<select class="uk-select" ng-model="asset.meta.course_grade_id" ng-options="class.id as class.name for class in classes"></select>';
 			str += '		</div>';
@@ -151,8 +152,25 @@ angular.module('nimbusEmsApp')
 			//str += 				uikit3.typeaheadPreview({image:'{{asset.meta.instructor.image_url}}'});
 			//str += '		</div>';			
 			//str += '	</div>';
-			//str += '	<p class="uk-heading-line uk-text-left uk-text-capitalize uk-text-small uk-text-bold"><span>Course Breakdown</span></p>';
-			//str += uikit3.input();
+			str += '	<p class="uk-heading-line uk-text-left uk-text-capitalize uk-text-small uk-text-bold"><span>Course Breakdown</span></p>';
+
+			str += 		this.build(Object.keys($scope.asset.meta.course_schema).map((breakDown,key) => {
+            				console.log('courseSchema',breakDown,$scope.asset.meta.course_schema[breakDown]);
+							return {
+								type:'range',
+								attrs:{
+									directive:'ng-model="asset.meta.course_schema.'+breakDown+'"',
+									type:'range',
+									cls:'uk-range',
+									label:breakDown+' {{ asset.meta.course_schema.'+breakDown+' }}',
+									min:0,
+									max:100,
+									step:5,
+									//value:$scope.courseSchema[breakDown]
+								}
+							}
+						}));
+
 			str += '	<div class="uk-margin">';
 			str += 			uikit3.textarea({model:'asset.meta.comments',placeholder:'Comments',label:false});
 			str += '	</div>';

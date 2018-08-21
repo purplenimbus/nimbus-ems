@@ -12,6 +12,13 @@ angular.module('nimbusEmsApp')
 		$scope.asset = { 
 			meta : {
 				class_id : 1,
+				course_schema : {
+		            lab: 5,
+		            exam: 35,
+		            quiz: 15,
+		            midterm: 30,
+		            assignment: 15,
+		        }
 			} 
 		};
 		
@@ -35,9 +42,10 @@ angular.module('nimbusEmsApp')
 		};
 		
 		$scope.createCourse = function(){
+
 			var obj = {
 				title	:	'Create Course',
-				body	:	form.editCourse(),
+				body	:	form.editCourse($scope),
 				footer	:	uikit3.button({cls:'uk-button uk-button-text uk-margin-small-bottom',icon:'upload',label:'Save',directive:'ng-click="save(this.asset)"'})
 			};
 
@@ -53,7 +61,7 @@ angular.module('nimbusEmsApp')
 				}]);
 			}
 
-			console.log('$scope createCourse',$scope);
+			console.log('$scope createCourse',$scope.asset);
 
 			modal.modal(obj,$scope).then(function(result){
 				$scope.modal = result;
