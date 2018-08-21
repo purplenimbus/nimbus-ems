@@ -168,7 +168,7 @@ angular
 			});
 			
 	})
-	.run(function($rootScope, $location, $cookies, $http,$auth) {
+	.run(function($rootScope, $location, $cookies, $http,$auth,$window) {
 		// keep user logged in after page refresh
 		
 		$rootScope.globals = $cookies.get('auth') || {};
@@ -178,6 +178,11 @@ angular
 		}
 		
 		var history = [];
+
+		$rootScope.$on('$routeChangeStart', function() { 
+   			//close any open menus or modals
+			$window.UIkit.offcanvas('#side-menu').hide();
+		});
 
 		$rootScope.$on('$routeChangeSuccess', function() {
 			history.push($location.$$path);

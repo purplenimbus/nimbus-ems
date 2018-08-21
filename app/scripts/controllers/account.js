@@ -105,11 +105,4 @@ angular.module('nimbusEmsApp')
 	
 	$scope.init();
 	
-	$scope.$on('$routeChangeStart', function() { 
-		//close any open menus or modals
-		$scope.$on('$routeChangeStart', function() { 
-		   //close any open menus or modals
-			$window.UIkit.offcanvas('#side-menu').hide();
-		});
-	});
   });
