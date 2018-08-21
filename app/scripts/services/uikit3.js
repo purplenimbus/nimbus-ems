@@ -222,6 +222,10 @@ angular.module('nimbusEmsApp')
 			card : function(attrs={}){
 				let str = '';
 
+				if(!attrs.classes){
+					attrs.classes = {};
+				}
+
 				str += '<div class="uk-card ';
 				str += attrs.classes.card ? attrs.classes.card : '';
 				str += '">';
@@ -243,7 +247,9 @@ angular.module('nimbusEmsApp')
 				}
 
 			    str += '<div class="uk-card-body ';
-			    str += attrs.classes.body ? attrs.classes.body : '';
+			    if(attrs.classes){
+			    	str += attrs.classes.body ? attrs.classes.body : '';
+				}
 			    str += '">';
 			    str += attrs.body;
 			    str += '</div>';

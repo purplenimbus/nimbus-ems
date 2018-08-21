@@ -10,16 +10,25 @@
 angular.module('nimbusEmsApp')
   .service('importService', function (uikit3) {
     this.render = function(){
-    	var str = '',body = '';
+    	var str = '',body = '',header='',selection='';
 
-        
+        selection += '<ul class="uk-child-width-1-3@m uk-child-width-1-2@xs" uk-grid>';
+        selection += '<li ng-repeat="type in importTypes">';
+        selection += '<a title="{{ type.name }}" class="uk-text-center" ng-click="selectImportType(type)">';
+        selection +=    uikit3.card({
+                            body:   '<span class="uk-margin-small-right" uk-icon="icon:{{ type.icon }};ratio: 3.5"></span>'+
+                                    '<h3 class="uk-card-title">Import {{ type.name }}</h3>',
+                            classes : { card:'uk-card-default uk-card-hover' }
+                        });
+        selection += '</a>';
+        selection += '</li>';
+        selection += '';
+
         body += uikit3.section({
-                    title:'Select Import Type',
+                    //title:'Select Import Type',
                     directive:'ng-show="!importType"',
-                    body:uikit3.select({
-                        default:'Type',
-                        directive:'ng-model="importType" ng-options="option as option.name for option in importTypes track by option.id"'
-                    })
+                    body:selection,
+                    cls:'uk-text-center'
                 });
 
     	body += '<upload ng-if="!workbook.length && !loading && importType"></upload>';
@@ -38,7 +47,7 @@ angular.module('nimbusEmsApp')
         body += '			<tbody>';
         body +=	'				<tr ng-repeat="rows in worksheet.data | orderBy:workSheetOrder | filter:search">';
         body +=	'					<td>{{ $index }}</td>';
-        body +=	'					<td ng-repeat="column in rows track by $index">'+uikit3.input({model:'column' , cls:'uk-form-small'})+'</td>';
+        body +=	'					<td ng-repeat="column in rows track by $index">'+uikit3.input({model:'column' , cls:'uk-form-small uk-form-blank uk-text-capitalize' , disabled:true})+'</td>';
         body +=	'					<td>'+uikit3.icons([{icon:'close',action:'remove(worksheetIndex,$index)',tooltip:'remove row', cls:'uk-text-danger'}])+'</td>';
         body += '				</tr>';
         body += '			</tbody>';
@@ -48,20 +57,20 @@ angular.module('nimbusEmsApp')
 		body += '<ul>';
         body += '</div>';
 
-		var header = '<div class="uk-clearfix">';
-			header += '<div class="uk-float-left uk-text-uppercase uk-text-small">';
-            header += '<form class="uk-search uk-search-default" ng-if="importType && workbook.length">';
-            header += '<span uk-search-icon></span>';
-            header += uikit3.input({cls:'uk-search-input uk-form-small',directive:'ng-model="search"',type:'search',placeholder:'Search'});
-            header += '</form>';
-            header += '</div>';
-			header += '<div class="uk-float-right" ng-if="workbook.length || importType">';
-			header += uikit3.icons([
-                        {icon:'reply',action:'reset()',cls:'uk-text-danger',tooltip:'reset'},
-                        {icon:'cloud-upload',action:'import(importType)',cls:'uk-text-primary',tooltip:'import',directive:'ng-if="workbook.length"'},
-                    ]);
-			header += '</div>';
-			header += '</div>';
+		header = '<div class="uk-clearfix">';
+		header += '<div class="uk-float-left uk-text-uppercase uk-text-small">';
+        header += '<form class="uk-search uk-search-default" ng-if="importType && workbook.length">';
+        header += '<span uk-search-icon></span>';
+        header += uikit3.input({cls:'uk-search-input uk-form-small',directive:'ng-model="search"',type:'search',placeholder:'Search'});
+        header += '</form>';
+        header += '</div>';
+		header += '<div class="uk-float-right" ng-if="workbook.length || importType">';
+		header += uikit3.icons([
+                    {icon:'reply',action:'reset()',cls:'uk-text-danger',tooltip:'reset'},
+                    {icon:'cloud-upload',action:'import(importType)',cls:'uk-text-primary',tooltip:'import',directive:'ng-if="workbook.length"'},
+                 ]);
+		header += '</div>';
+		header += '</div>';
 
 		str = uikit3.card({header:header,body:body,classes:{card:'uk-card-default',body:'uk-padding-small',header:'uk-padding-small'}});
 
@@ -120,6 +129,8 @@ angular.module('nimbusEmsApp')
             id:1,
             name:'Users',
             value:'user',
+            icon:'users',
+            description:''
         }];
 
     };

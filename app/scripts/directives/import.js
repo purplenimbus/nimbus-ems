@@ -15,6 +15,9 @@ angular.module('nimbusEmsApp')
       		$scope.workbook = [];
       		$scope.importTypes = importService.importTypes();
       		//$scope.importType = false;
+      		$scope.selectImportType = function(type){
+      			$scope.importType = type;
+      		}
 
   			$scope.$on('upload',function(e,files){
   				//console.log('files',files[1]);
@@ -43,6 +46,8 @@ angular.module('nimbusEmsApp')
         	};
 
         	$scope.import = function(type){
+        		$scope.loading = true;
+
   				var data = importService.parseWorkBook($scope.workbook,type.name);
 
   				console.log('import data',data);
@@ -56,13 +61,14 @@ angular.module('nimbusEmsApp')
 					}
 				}).then((e)=>{
 					console.log('prompt choice',e);
-					$scope.loading = true;
+					
 
 					if(e){
 						eduApi.api('POST',user.tenant.id+'/users/batch?type='+type.value,data)
 		  				.then((result) => {
 		  					console.log('import result',result);
 		  					$scope.loading = false;
+
 		  					sweetAlert.alert({
 							   	title: 'Success',
 							   	text : result.data.message,
@@ -71,6 +77,8 @@ angular.module('nimbusEmsApp')
 									confirm: sweetAlert.button({text:'ok'})
 								}
 							});
+
+							$scope.reset();
 		  				})
 		  				.catch((error) => {
 		  					console.log('import error',error);
