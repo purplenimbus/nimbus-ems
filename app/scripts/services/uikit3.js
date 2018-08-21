@@ -19,6 +19,7 @@ angular.module('nimbusEmsApp')
 				str += attrs.cls ? 'class="uk-input '+attrs.cls+'"' : 'class="uk-input"';
 				str += attrs.type ? 'type="'+attrs.type+'"' : 'type="text"';
 				str += attrs.model ? 'ng-model="'+attrs.model+'"' : '';
+				str += attrs.directive ? attrs.directive : '';
 				str += attrs.placeholder ? 'placeholder="'+attrs.placeholder+'"' : '';
 				str += attrs.required ? 'required' : '';
 				str += '>';

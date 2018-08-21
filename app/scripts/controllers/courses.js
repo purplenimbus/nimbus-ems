@@ -8,14 +8,15 @@
  * Controller of the nimbusEmsApp
  */
 angular.module('nimbusEmsApp')
-	.controller('CoursesCtrl', function ($scope,coursesData,grades,courseService) {
+	.controller('CoursesCtrl', function ($scope,coursesData,grades,courseService,modal,form,uikit3,eduApi,user) {
 		$scope.asset = { 
 			meta : {
 				class_id : 1,
 			} 
 		};
 		
-		$scope.coursesList = coursesData.data;
+		$scope.coursesList = coursesData.data,
+		$scope.createCourseInit = false;
 				
 		//$scope.coursesList = coursesData.data ? coursesData.data : false;
 		
@@ -33,7 +34,36 @@ angular.module('nimbusEmsApp')
 			
 		};
 		
-		$scope.course = courseService;
+		$scope.createCourse = function(){
+			var obj = {
+				title	:	'Create Course',
+				body	:	form.editCourse(),
+				footer	:	uikit3.button({cls:'uk-button uk-button-text uk-margin-small-bottom',icon:'upload',label:'Save',directive:'ng-click="save(this.asset)"'})
+			};
+
+			if(!$scope.createCourseInit){
+				courseService.initTypeAhead($scope,[{
+					name:'subjects',
+					display:'name',
+					endPoint:eduApi.apiEndPoint+'subjects'
+				},{
+					name:'instructors',
+					display:'firstname',
+					endPoint:eduApi.apiEndPoint+user.tenant.id+'/users?user_type=teacher'
+				}]);
+			}
+
+			console.log('$scope createCourse',$scope);
+
+			modal.modal(obj,$scope).then(function(result){
+				$scope.modal = result;
+				$scope.createCourseInit = true;
+			});
+			
+		};
 		
-		$scope.save = function(data){ courseService.save(data); };
+		$scope.save = function(data){ 
+			console.log('save course',data);
+			//courseService.saveCourse(data); 
+		};
 	});

@@ -111,18 +111,20 @@ angular
 				controller: 'CoursesCtrl',
 				controllerAs: 'courses',
 				resolve:	{
-					coursesData : function(eduApi,$window,apiConst,tenant){
-						
-						return eduApi.api('GET',tenant.id+'/courses?paginate='+apiConst.componentPagination+'&page=1').then(function(result){
-							console.log('eduApi course result',result);
+					coursesData : function(eduApi,$window,apiConst,user,sweetAlert){
+						return eduApi.api('GET',user.tenant.id+'/courses?paginate='+apiConst.componentPagination+'&page=1')
+						.then((result) => {
 							return result.data;
-						}).catch(function(error){
+						})
+						.catch((error) => {
 							console.log('eduApi course error',error);
-							$window.UIkit.notification({
-								message: 'Couldnt get courseData',
-								status: 'danger',
-								pos: 'top-right',
-								timeout: 5000
+							sweetAlert.alert({
+							   	title: 'Something\'s Wrong',
+							   	text : error.data.message,
+							   	icon: "error",
+							   	buttons:{
+									confirm: sweetAlert.button({text:'ok'})
+								}
 							});
 						});
 						

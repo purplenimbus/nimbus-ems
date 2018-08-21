@@ -8,10 +8,11 @@
  * Controller of the nimbusEmsApp
  */
 angular.module('nimbusEmsApp')
-	.controller('AccountCtrl', function ($scope,$window,eduApi,$route,apiConst,user,sweetAlert,userService) {
+	.controller('AccountCtrl', function ($scope,$window,eduApi,$route,apiConst,user,sweetAlert,userService,$localStorage) {
 	
 	$scope.init = function(){
-		$scope.profileData = user;
+		//console.log('profile init',$localStorage.auth);
+		$scope.profileData = JSON.parse($localStorage.auth); //to get the latest data?
 	};
 	
 	$scope.save = function(data){
@@ -19,7 +20,7 @@ angular.module('nimbusEmsApp')
 		//console.log('sending data',data);
 		userService.saveUser(data)
 			.then((result) => {
-				console.log('profile save result',result);
+				//console.log('profile save result',result);
 				
 				$scope.loading = false;
 				
