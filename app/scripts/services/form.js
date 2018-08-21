@@ -133,7 +133,7 @@ angular.module('nimbusEmsApp')
 					});
 			str += '		</div>';
 			str += '		<div class="uk-width-1-2@m uk-width-1-2@xs">';
-			str += '			<select class="uk-select" ng-model="asset.meta.class_id" ng-options="class.id as class.name for class in classes"></select>';
+			str += '			<select class="uk-select" ng-model="asset.meta.course_grade_id" ng-options="class.id as class.name for class in classes"></select>';
 			str += '		</div>';
 			str += '	</div>';
 
@@ -145,16 +145,17 @@ angular.module('nimbusEmsApp')
 						cls:'uk-input uk-search-input uk-width-1-1 typeahead uk-text-capitalize',
 						placeholder:'Instructor'
 					});
-			str += '	</div>';
+			str += '	</div>';		
 			//str += '	<div class="uk-margin typeahead">';
 			//str += '		<div ng-if="asset.meta.instructor" class="preview">';			
 			//str += 				uikit3.typeaheadPreview({image:'{{asset.meta.instructor.image_url}}'});
 			//str += '		</div>';			
 			//str += '	</div>';
-			
-			//str += '	<div class="uk-margin">';
-			//str += 			uikit3.textarea({model:'asset.description',placeholder:'Course Description',label:false});
-			//str += '	</div>';
+			//str += '	<p class="uk-heading-line uk-text-left uk-text-capitalize uk-text-small uk-text-bold"><span>Course Breakdown</span></p>';
+			//str += uikit3.input();
+			str += '	<div class="uk-margin">';
+			str += 			uikit3.textarea({model:'asset.meta.comments',placeholder:'Comments',label:false});
+			str += '	</div>';
 			str += '</form>';
 			
 			return str;

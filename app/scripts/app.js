@@ -158,11 +158,11 @@ angular
 			  controller: 'SettingsCtrl',
 			  controllerAs: 'settings'
 			})
-.when('/tools', {
-  templateUrl: 'views/tools.html',
-  controller: 'ToolsCtrl',
-  controllerAs: 'tools'
-})
+			.when('/tools', {
+			  templateUrl: 'views/tools.html',
+			  controller: 'ToolsCtrl',
+			  controllerAs: 'tools'
+			})
 			.otherwise({
 				redirectTo: '/'
 			});
