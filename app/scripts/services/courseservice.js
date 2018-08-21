@@ -36,7 +36,6 @@ angular.module('nimbusEmsApp')
 						//header: '<h3 class="uk-text-muted uk-text-small">Users</h3>',
 						//TO DO Move strings below to its own function
 						suggestion: function(data){ 
-							console.log(dataSetName,data,field);						
 							var str = 		'<li class="uk-text-capitalize">'+data[field.display]+'</li>';
 
 							return str;

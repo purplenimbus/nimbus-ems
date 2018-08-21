@@ -16,12 +16,12 @@ angular.module('nimbusEmsApp')
 				
 				str += attrs.label ? '<label class="uk-form-label uk-text-capitalize" for="form-stacked-text">'+attrs.label+'</label>' : '';
 				str += '<input ';
-				str += attrs.cls ? 'class="uk-input '+attrs.cls+'"' : 'class="uk-input"';
-				str += attrs.type ? 'type="'+attrs.type+'"' : 'type="text"';
-				str += attrs.model ? 'ng-model="'+attrs.model+'"' : '';
+				str += attrs.cls ? 'class="uk-input '+attrs.cls+'"' : ' class="uk-input"';
+				str += attrs.type ? ' type="'+attrs.type+'"' : ' type="text"';
+				str += attrs.model ? ' ng-model="'+attrs.model+'"' : '';
 				str += attrs.directive ? attrs.directive : '';
-				str += attrs.placeholder ? 'placeholder="'+attrs.placeholder+'"' : '';
-				str += attrs.required ? 'required' : '';
+				str += attrs.placeholder ? ' placeholder="'+attrs.placeholder+'"' : '';
+				str += attrs.required ? ' required' : '';
 				str += '>';
 				
 				return str;
@@ -191,7 +191,13 @@ angular.module('nimbusEmsApp')
 				
 				return str;
 			},
-			
+			typeahead : function(attrs){
+				var str = '';
+
+					str += this.input(attrs);//'<input type="text" datasets="subjectsDataSet" options="subjectsOptions" ng-model="asset.meta.subject" sf-typeahead class="uk-input uk-search-input uk-width-1-1 typeahead uk-text-capitalize" placeholder="Subject"/>';
+				
+				return str;
+			},
 			typeaheadPreview : function(attrs){
 				
 				var str = '';

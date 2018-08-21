@@ -117,14 +117,20 @@ angular.module('nimbusEmsApp')
 			var str = '';
 			
 			str += '<form>';
-				str += '	<div class="uk-margin uk-grid-small" uk-grid>';
+			str += '	<div class="uk-margin uk-grid-small" uk-grid>';
 			str += '		<div class="uk-width-1-1">';
 			str += uikit3.inputIcon({model:'asset.name',icon:'user',type:'text',required:true,placeholder:'Course Title' , cls:'uk-text-capitalize'});
 			str += '		</div>';
 			str += '	</div>';
 			str += '	<div class="uk-margin uk-grid-small" uk-grid>';
 			str += '		<div class="uk-width-1-2@m uk-width-1-2@xs">';
-			str += '			<input type="text" datasets="subjectsDataSet" options="subjectsOptions" ng-model="asset.meta.subject" sf-typeahead class="uk-input uk-search-input uk-width-1-1 typeahead uk-text-capitalize" placeholder="Subject"/>';//uikit3.inputIcon({model:'newAsset.name',icon:'user',type:'text',required:true,label:'Course Name'});
+			str += uikit3.typeahead({
+						directive:'datasets="subjectsDataSet" options="subjectsOptions" ng-model="asset.meta.subject" sf-typeahead',
+						type:'text',
+						required:true,
+						cls:'uk-input uk-search-input uk-width-1-1 typeahead uk-text-capitalize',
+						placeholder:'Subject'
+					});
 			str += '		</div>';
 			str += '		<div class="uk-width-1-2@m uk-width-1-2@xs">';
 			str += '			<select class="uk-select" ng-model="asset.meta.class_id" ng-options="class.id as class.name for class in classes"></select>';
@@ -132,11 +138,19 @@ angular.module('nimbusEmsApp')
 			str += '	</div>';
 
 			str += '	<div class="uk-margin typeahead">';
-			str += '		<input type="text" datasets="instructorsDataSet" options="instructorsOptions" ng-model="asset.meta.instructor" sf-typeahead class="uk-input uk-search-input uk-width-1-1 typeahead uk-text-capitalize" placeholder="Instructor"/>';//uikit3.inputIcon({model:'newAsset.name',icon:'user',type:'text',required:true,label:'Course Name'});
+			str += uikit3.typeahead({
+						directive:'datasets="instructorsDataSet" options="instructorsOptions" ng-model="asset.meta.instructor" sf-typeahead',
+						type:'text',
+						required:true,
+						cls:'uk-input uk-search-input uk-width-1-1 typeahead uk-text-capitalize',
+						placeholder:'Instructor'
+					});
+			str += '	</div>';
+			//str += '	<div class="uk-margin typeahead">';
 			//str += '		<div ng-if="asset.meta.instructor" class="preview">';			
 			//str += 				uikit3.typeaheadPreview({image:'{{asset.meta.instructor.image_url}}'});
 			//str += '		</div>';			
-			str += '	</div>';
+			//str += '	</div>';
 			
 			//str += '	<div class="uk-margin">';
 			//str += 			uikit3.textarea({model:'asset.description',placeholder:'Course Description',label:false});
