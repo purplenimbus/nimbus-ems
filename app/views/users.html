@@ -15,12 +15,11 @@
 					<td><input class="uk-checkbox" type="checkbox"></td>
 					<td><img class="uk-preserve-width uk-border-circle" src="{{ user.image_url }}" width="40" alt=""></td>
 					<td class="uk-table-link">
-						<a class="uk-link-reset uk-text-capitalize" ng-href="#!/profile/{{ user.id }}">{{ user.firstname }}, {{ user.lastname }}</a>
+						<a class="uk-link-reset uk-text-capitalize" ng-click="view(user)">{{ user.firstname }}, {{ user.lastname }} <span class="uk-text-small uk-text-muted">{{ user.meta.user_type }}</span></a>
 					</td>
 					<td>
 						<ul class="uk-iconnav">
-							<li><a href="#" uk-icon="icon: file-edit" title="edit"></a></li>
-							<li><a href="#" uk-icon="icon: trash" title="delete"></a></li>
+							<li><a ng-click="edit(user)" uk-icon="icon: file-edit" title="edit"></a></li>
 						</ul>
 					</td>
 				</tr>

@@ -14,7 +14,7 @@ angular.module('nimbusEmsApp')
 
         selection += '<ul class="uk-child-width-1-3@m uk-child-width-1-2@s" uk-grid>';
         selection += '<li ng-repeat="type in importTypes">';
-        selection += '<a title="{{ type.name }}" class="uk-text-center" ng-click="selectImportType(type)">';
+        selection += '<a title="{{ type.name }}" class="uk-text-center uk-link-reset" ng-click="selectImportType(type)">';
         selection +=    uikit3.card({
                             body:   '<span class="uk-margin-small-right" uk-icon="icon:{{ type.icon }};ratio: 3.5"></span>'+
                                     '<h3 class="uk-card-title">Import {{ type.name }}</h3>',

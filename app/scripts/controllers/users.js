@@ -15,7 +15,7 @@ angular.module('nimbusEmsApp')
 
 		console.log('data',usersData);
 		
-		///$scope.usersList = usersData.data;
+		$scope.usersList = usersData.data;
 				
 		var list = new $window.Bloodhound({
 			datumTokenizer: function(d) { console.log('bloodhound d',d); return $window.Bloodhound.tokenizers.whitespace(d.fname); },
@@ -90,11 +90,14 @@ angular.module('nimbusEmsApp')
 			});
 		};
 		
+		$scope.edit = function(user){
+			console.log('edit',user);
+		}
+
+		$scope.view = function(user){
+			console.log('view',user);
+		}
+
 		console.log('UsersCtrl',$scope);
-		
-		$scope.$on('$routeChangeStart', function() { 
-			//close any open menus or modals
-			$window.UIkit.offcanvas('#side-menu').hide();
-		});
 
   });
