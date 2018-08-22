@@ -109,12 +109,19 @@ angular.module('nimbusEmsApp')
 		};
 
 		$scope.next = function(page){
+
 			$scope.loading = true;
 			eduApi.api('GET',user.tenant.id+'/courses?paginate='+apiConst.widgetPagination+'&page='+page)
 			.then((result) => {
-				var newArray = $scope.coursesList.data.concat(result.data.data);
+
+				result.data.data = $scope.coursesList.data.concat(result.data.data);
+				//merge old data and new;
 				
-				$scope.coursesList.data = newArray;
+				//console.log('newData',result.data);
+				$scope.coursesList = result.data;
+
+
+				//console.log('next page : ',page,$scope.coursesList);
 				//userList.initialize(true);
 
 				$scope.loading = false;
@@ -129,9 +136,4 @@ angular.module('nimbusEmsApp')
 			});
 		};
 		
-		$($window).scroll(function() {
-		   if($(window).scrollTop() + $(window).height() == $(document).height()) {
-		       $scope.next();
-		   }
-		});
 	});
