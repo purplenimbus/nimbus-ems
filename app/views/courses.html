@@ -1,6 +1,9 @@
 <div ng-include="'views/partials/_toolbar.html'"></div>
 <section class="uk-padding-small">
 	<main class="uk-grid-small" uk-grid>
+		<div ng-if="!coursesList.length" class="uk-placeholder uk-text-center uk-danger uk-text-muted uk-margin-remove uk-padding-small">
+			<span class="uk-margin-small-right" uk-icon="ban"></span> {{ noCoursesMessage }}
+		</div>
 		<div class="uk-width-1-3@m" ng-repeat="course in coursesList">
 			<div class="uk-card uk-card-default uk-card-hover">
 				<div class="uk-card-header uk-clear-fix uk-padding-small">

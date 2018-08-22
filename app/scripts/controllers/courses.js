@@ -30,6 +30,10 @@ angular.module('nimbusEmsApp')
 		
 		$scope.coursesList = coursesData.data;
 
+		if(!coursesData.length){
+			$scope.noCoursesMessage = 'No Courses , Try Importing Some';
+		}
+
 		$scope.createCourseInit = false;
 				
 		//$scope.coursesList = coursesData.data ? coursesData.data : false;

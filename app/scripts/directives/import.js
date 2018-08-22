@@ -64,7 +64,7 @@ angular.module('nimbusEmsApp')
 					$scope.loading = true;
 					$scope.$apply();
 					if(e){
-						eduApi.api('POST',user.tenant.id+'/'+type.name.toLowerCase()+'/batch?type='+type.value,data)
+						eduApi.api('POST',user.tenant.id+'/courses/batch?type='+type.value,data)
 		  				.then((result) => {
 		  					console.log('import result',result);
 		  					$scope.loading = false;

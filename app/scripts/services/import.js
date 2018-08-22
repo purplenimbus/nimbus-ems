@@ -59,9 +59,10 @@ angular.module('nimbusEmsApp')
 
 		header = '<div class="uk-clearfix">';
 		header += '<div class="uk-float-left uk-text-uppercase uk-text-small">';
+        header += '<span ng-if="importType && !workbook.length"><span uk-icon="icon: {{ importType.icon }}"></span> Import {{ importType.name }}</span>';
         header += '<form class="uk-search uk-search-default" ng-if="importType && workbook.length">';
         header += '<span uk-search-icon></span>';
-        header += uikit3.input({cls:'uk-search-input uk-form-small',directive:'ng-model="search"',type:'search',placeholder:'Search'});
+        header += uikit3.input({cls:'uk-search-input uk-form-small',directive:'ng-model="search"',type:'search',placeholder:'Search {{ importType.name }}'});
         header += '</form>';
         header += '</div>';
 		header += '<div class="uk-float-right" ng-if="workbook.length || importType">';
@@ -168,8 +169,14 @@ angular.module('nimbusEmsApp')
             description:''
         },{
             id:3,
-            name:'Courses',
-            value:'course',
+            name:'Classes',
+            value:'coursegrade',
+            icon:'grid',
+            description:''
+        },{
+            id:3,
+            name:'Curriculum',
+            value:'curriculum',
             icon:'thumbnails',
             description:''
         }];

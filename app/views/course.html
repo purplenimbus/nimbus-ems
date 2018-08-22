@@ -23,7 +23,7 @@
 							</div>
 							<div class="uk-card-body uk-overflow-auto uk-padding-remove">
 								<div class="uk-text-center uk-padding-small" ng-if="loadingHome"><div uk-spinner></div></div>
-								<div ng-if="message || !loadingHome" class="uk-placeholder uk-text-center uk-danger uk-text-muted uk-margin-remove uk-padding-small">
+								<div ng-if="message && !loadingHome" class="uk-placeholder uk-text-center uk-danger uk-text-muted uk-margin-remove uk-padding-small">
 									<span class="uk-margin-small-right" uk-icon="ban"></span> {{ message }}
 								</div>
 								<table class="uk-table uk-table-hover uk-table-middle uk-table-small uk-margin-remove" ng-if="!loadingHome && students && !message">
