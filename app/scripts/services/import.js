@@ -12,7 +12,7 @@ angular.module('nimbusEmsApp')
     this.render = function(){
     	var str = '',body = '',header='',selection='';
 
-        selection += '<ul class="uk-child-width-1-3@m uk-child-width-1-2@xs" uk-grid>';
+        selection += '<ul class="uk-child-width-1-3@m uk-child-width-1-2@s" uk-grid>';
         selection += '<li ng-repeat="type in importTypes">';
         selection += '<a title="{{ type.name }}" class="uk-text-center" ng-click="selectImportType(type)">';
         selection +=    uikit3.card({
@@ -79,14 +79,12 @@ angular.module('nimbusEmsApp')
 
     this.parseWorkBook = function(workbook,type){
     	var parsed = [],
-            obj = {},
+            obj = {meta:{}},
             self = this;
 
     	workbook.forEach(function(worksheet,worksheetKey){
 
     		parsed[worksheetKey] = [];
-
-            //console.log('parseWorkBook',worksheet,worksheetKey);
 
             worksheet.header = Object.keys(worksheet.data[0]);
 
@@ -94,8 +92,39 @@ angular.module('nimbusEmsApp')
 
     		worksheet.data.forEach(function(row){
     			
-    			switch(type){
+                /*  TO DO PRESEVER IN A METHOD OR SOMETHING FOR THE FUTURE
+                    worksheet.header.forEach(function(header){
+                    
+                    if(header.includes('meta')){
+                        
+                        var headers = header.split(':'),
+                            metaKey = headers.splice(0,1)[0];
+                        
+                        headers.forEach((metaHeader) => {
+
+                            if(metaHeader.includes('.')){
+                                var childKeys  = metaHeader.split('.'),
+                                    parentKey = childKeys.splice(0,1)[0];
+
+                                obj[metaKey][parentKey] = {childKeys:''};
+                                console.log('subObject',obj[metaKey],parentKey,childKeys);
+
+
+
+                            }else{
+                                if(row[header].length){ obj[metaKey][metaHeader] =  row[header] };
+                            }
+
+                        });
+
+                    }else{
+                         if(row[header].length){ obj[header] = row[header] };
+                    }
+                });*/
+
+                switch(type){
                     case 'Users' :   obj = {meta:{address:{}}}; self.parseUsers(worksheet,row,obj); break;
+                    //case 'Subjects' :   obj = {meta:{address:{}}}; self.parseUsers(worksheet,row,obj); break;
                     default :   obj = {}; worksheet.header.forEach(function(header){
                                     obj[header] = row[header];
                                 }); break;
@@ -130,6 +159,18 @@ angular.module('nimbusEmsApp')
             name:'Users',
             value:'user',
             icon:'users',
+            description:'',
+        },{
+            id:2,
+            name:'Subjects',
+            value:'subject',
+            icon:'list',
+            description:''
+        },{
+            id:3,
+            name:'Courses',
+            value:'course',
+            icon:'thumbnails',
             description:''
         }];
 

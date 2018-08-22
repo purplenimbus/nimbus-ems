@@ -61,10 +61,10 @@ angular.module('nimbusEmsApp')
 					}
 				}).then((e)=>{
 					console.log('prompt choice',e);
-					
-
+					$scope.loading = true;
+					$scope.$apply();
 					if(e){
-						eduApi.api('POST',user.tenant.id+'/users/batch?type='+type.value,data)
+						eduApi.api('POST',user.tenant.id+'/'+type.name.toLowerCase()+'/batch?type='+type.value,data)
 		  				.then((result) => {
 		  					console.log('import result',result);
 		  					$scope.loading = false;
