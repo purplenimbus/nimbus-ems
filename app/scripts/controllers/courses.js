@@ -8,7 +8,7 @@
  * Controller of the nimbusEmsApp
  */
 angular.module('nimbusEmsApp')
-	.controller('CoursesCtrl', function ($scope,coursesData,grades,courseService,modal,form,uikit3,eduApi,user) {
+	.controller('CoursesCtrl', function ($scope,coursesData,grades,courseService,modal,form,uikit3,eduApi,user,apiConst,$window) {
 		$scope.showAdvanced = false;
 		$scope.asset = { 
 			meta : {
@@ -28,7 +28,7 @@ angular.module('nimbusEmsApp')
 			return Object.keys($scope.asset.meta.course_schema);
 		};
 		
-		$scope.coursesList = coursesData.data;
+		$scope.coursesList = coursesData;
 
 		if(!coursesData.length){
 			$scope.noCoursesMessage = 'No Content';
@@ -38,19 +38,15 @@ angular.module('nimbusEmsApp')
 				
 		//$scope.coursesList = coursesData.data ? coursesData.data : false;
 		
-		$scope.courseAverage = function(index){
-			return grades.getAverage($scope.coursesList[index]);
+		$scope.courseAverage = function(course){
+			return grades.getAverage(course);
 		};
 		
-		$scope.courseGrade = function(index){
-			return grades.getGrade(grades.getAverage($scope.coursesList[index]));
+		$scope.courseGrade = function(course){
+			return grades.getGrade(grades.getAverage(course));
 		};
 		
 		console.log('CoursesCtrl scope',$scope);
-		
-		$scope.next = function(){
-			
-		};
 		
 		$scope.createCourse = function(){
 
@@ -111,4 +107,31 @@ angular.module('nimbusEmsApp')
 			console.log('save course',data);
 			//courseService.saveCourse(data); 
 		};
+
+		$scope.next = function(page){
+			$scope.loading = true;
+			eduApi.api('GET',user.tenant.id+'/courses?paginate='+apiConst.widgetPagination+'&page='+page)
+			.then((result) => {
+				var newArray = $scope.coursesList.data.concat(result.data.data);
+				
+				$scope.coursesList.data = newArray;
+				//userList.initialize(true);
+
+				$scope.loading = false;
+			}).catch((error) => {
+				console.log('eduApi error',error);
+				/*$window.UIkit.notification({
+					message: 'Couldnt get users',
+					status: 'danger',
+					pos: 'top-right',
+					timeout: 5000
+				});*/
+			});
+		};
+		
+		$($window).scroll(function() {
+		   if($(window).scrollTop() + $(window).height() == $(document).height()) {
+		       $scope.next();
+		   }
+		});
 	});

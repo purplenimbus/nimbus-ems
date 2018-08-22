@@ -1,12 +1,12 @@
 <div ng-include="'views/partials/_toolbar.html'"></div>
 <section class="uk-padding-small">
 	<main class="uk-grid-small" uk-grid>
-		<div ng-if="!coursesList.length" class="uk-width-1-1">
+		<div ng-if="!coursesList.data.length" class="uk-width-1-1">
 			<div class="uk-placeholder uk-text-center uk-danger uk-text-muted uk-margin-remove uk-padding-small">
 				<span class="uk-margin-small-right" uk-icon="ban"></span> {{ noCoursesMessage }}
 			</div>
 		</div>
-		<div class="uk-width-1-3@m" ng-repeat="course in coursesList">
+		<div class="uk-width-1-3@m" ng-repeat="course in coursesList.data">
 			<div class="uk-card uk-card-default uk-card-hover">
 				<div class="uk-card-header uk-clear-fix uk-padding-small">
 					<a ng-href="#!/learning/course/{{ course.id }}" class="uk-button uk-button-text uk-align-left title uk-text-capitalize uk-text-bold uk-margin-remove">
@@ -37,15 +37,15 @@
 									Class Average
 									</span>
 									<span class="uk-align-right uk-margin-remove">
-									{{ courseAverage($index) }}
+									{{ courseAverage(course) }}
 									</span>
 								</li>
 								<li class="uk-clear-fix">
 									<span class="uk-align-left uk-margin-remove">
 									Class Grade
 									</span>
-									<span class="uk-align-right uk-margin-remove uk-text-{{ courseGrade($index).className }}">
-									{{ courseGrade($index).grade }}
+									<span class="uk-align-right uk-margin-remove uk-text-{{ courseGrade(course).className }}">
+									{{ courseGrade(course).grade }}
 									</span>
 								</li>
 							</ul>		
@@ -54,5 +54,6 @@
 				</div>
 			</div>
 		</div>
+		<div uk-spinner ng-if="loading" class="uk-width-1-1 uk-text-center"></div>
 	</main>
 </section>
