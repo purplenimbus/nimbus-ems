@@ -23,5 +23,8 @@
 		<div ng-if="error && !loading" class="uk-placeholder uk-text-center uk-danger uk-text-danger uk-margin-remove uk-padding-small">
 			<span class="uk-margin-small-right" uk-icon="ban"></span> Error
 		</div>
+		<div ng-if="message" class="uk-placeholder uk-text-center uk-danger uk-text-muted uk-margin-remove uk-padding-small">
+			<span class="uk-margin-small-right" uk-icon="ban"></span> {{ message }}
+		</div>
 	</div>
 </div>

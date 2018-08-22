@@ -87,15 +87,19 @@ angular.module('nimbusEmsApp')
 			
 			$scope.students = [];
 			
-			//console.log('courseService params',params);
+			console.log('courseService params',params);
 			
 			eduApi.api('GET',user.tenant.id+'/registrations?course_id='+params.id+'&paginate='+apiConst.componentPagination+'&page=1&user_list=true').then(function(result){
-				//console.log('courseService result',result,$scope,params);
-				$scope.courseData = result.data;
+				console.log('courseService result',result);
 				//console.log('courseData',$scope.courseData);
-			
-				$scope.students = result.data.data;
-				$scope.pageTitle = result.data.data[0].course.name;
+
+				if(result.data.length && result.data.data){
+					$scope.courseData = result.data;
+					$scope.students = result.data.data;
+					$scope.pageTitle = result.data.data[0].course.name;
+				}else{
+					$scope.message = result.statusText ? result.statusText : 'No Data';
+				}
 				
 				$scope.loadingHome = false;
 			}).catch(function(error){

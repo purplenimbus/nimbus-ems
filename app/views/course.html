@@ -4,7 +4,7 @@
 		<article class="uk-article uk-width-1-1">
 			<ul uk-tab uk-switcher class="uk-margin-remove">
 				<li><a href="#">Overview</a></li>
-				<li><a href="#">Details</a></li>
+				<li ng-if="!message"><a href="#">Details</a></li>
 			</ul>
 			<ul class="uk-switcher uk-padding-small">
 				<li uk-grid data-tab="overview" class="uk-grid-small">
@@ -13,7 +13,7 @@
 							<div class="uk-card-header uk-clear-fix uk-padding-small">
 								<div class="uk-align-left uk-margin-remove uk-width-1-2">
 									<p class="uk-align-left title">Student List</p> <!-- add instructor element here -->
-									<user-pill fname="instructor.fname" class="uk-hidden"></user-pill>
+									<user-pill firstname="instructor.firstname" class="uk-hidden"></user-pill>
 								</div>
 								<div class="uk-align-right">
 									<ul class="uk-iconnav toolbar">
@@ -23,7 +23,10 @@
 							</div>
 							<div class="uk-card-body uk-overflow-auto uk-padding-remove">
 								<div class="uk-text-center uk-padding-small" ng-if="loadingHome"><div uk-spinner></div></div>
-								<table class="uk-table uk-table-hover uk-table-middle uk-table-small uk-margin-remove" ng-if="!loadingHome && students">
+								<div ng-if="message || !loadingHome" class="uk-placeholder uk-text-center uk-danger uk-text-muted uk-margin-remove uk-padding-small">
+									<span class="uk-margin-small-right" uk-icon="ban"></span> {{ message }}
+								</div>
+								<table class="uk-table uk-table-hover uk-table-middle uk-table-small uk-margin-remove" ng-if="!loadingHome && students && !message">
 									<thead>
 										<tr>
 											<th class="uk-table-shrink"></th>
@@ -49,7 +52,10 @@
 						</div>
 					</div>
 				</li>
-				<li uk-grid data-tab="outline" class="uk-grid-small uk-margin-remove">
+				<li uk-grid data-tab="outline" class="uk-grid-small uk-margin-remove" ng-if="!message">
+					<div ng-if="outlineMessage && !loadingOutline" class="uk-placeholder uk-text-center uk-danger uk-text-muted uk-margin-remove uk-padding-small">
+						<span class="uk-margin-small-right" uk-icon="ban"></span> {{ outlineMessage }}
+					</div>
 					<div class="uk-text-center uk-padding-small" ng-if="loadingOutline"><div uk-spinner></div></div>
 					<div class="uk-width-1-3@m uk-padding-remove">
 						<div class="uk-card uk-card-default uk-visible@s" ng-if="outline && !loadingOutline">

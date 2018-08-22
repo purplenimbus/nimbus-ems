@@ -51,8 +51,8 @@ angular.module('nimbusEmsApp')
 			api : function(requestType,parameters,data){
 								
 				switch(requestType){
-					case 'GET' : return $http.jsonp(self.apiEndPoint+parameters,{method:requestType});//$http.get(apiEndPoint+parameters);
-					case 'POST' : return $http.post(self.apiEndPoint+parameters,data); //$http.jsonp(self.apiEndPoint+parameters,{method:requestType,data:data});
+					case 'GET' : return $http.get(self.apiEndPoint+parameters);
+					case 'POST' : return $http.post(self.apiEndPoint+parameters,data);
 				}
 				
 			}

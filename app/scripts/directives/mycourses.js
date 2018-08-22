@@ -46,7 +46,11 @@ angular.module('nimbusEmsApp')
 				//check for logged in
 			 	eduApi.api('GET',user.tenant.id+'/registrations?user_id='+user.id+'&paginate='+apiConst.componentPagination+'&page=1').then(function(result){
 					console.log('eduApi course result',result);
-					$scope.courses = result.data.data;
+					if(result.data.length && result.data.data){
+						$scope.courses = result.data.data;
+					}else{
+						$scope.message = result.statusText ? result.statusText : 'No Data';
+					}
 					$scope.loading  = false;
 				}).catch(function(error){
 					$scope.loading  = false;

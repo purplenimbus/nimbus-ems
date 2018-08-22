@@ -26,8 +26,8 @@
 
     <div class="uk-offcanvas-content">
 		<div ng-include="'views/partials/_navbar.html'"></div>
-		
-		<div id="view" ng-view=""></div>
+		<div uk-spinner ng-if="$root.showLoader" class="uk-width-1-1 uk-text-center uk-margin"></div>
+		<div id="view" ng-view="" ng-if="!$root.showLoader"></div>
 		<!-- This is the off-canvas -->
 		<div id="side-menu" uk-offcanvas ng-controller="NavCtrl">
 		  <div class="uk-offcanvas-bar uk-offcanvas-bar-animation uk-offcanvas-slide">

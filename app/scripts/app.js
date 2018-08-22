@@ -182,11 +182,14 @@ angular
 		$rootScope.$on('$routeChangeStart', function() { 
    			//close any open menus or modals
 			$window.UIkit.offcanvas('#side-menu').hide();
+			$rootScope.showLoader = true;
 		});
 
 		$rootScope.$on('$routeChangeSuccess', function() {
 			history.push($location.$$path);
+			$rootScope.showLoader = false;
 		});
+		
 
 		$rootScope.$on('$locationChangeStart', function () {
 

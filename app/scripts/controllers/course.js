@@ -40,19 +40,28 @@ angular.module('nimbusEmsApp')
 		
 		$scope.loadOutline = function(){
 			$scope.loadingOutline = true;
-			console.log('loadOutline',$scope,user);
+			//console.log('loadOutline',$scope,user);
 			
 			//TO DO do validation here
-			
-			eduApi.api('GET',user.tenant.id+'/lessons?course_id='+$scope.courseData.data[0].course.id+'&paginate='+apiConst.componentPagination+'&page=1').then(function(result){
-				console.log('outline loaded',result);
-				$scope.loadingOutline = false;
-				$scope.outline = result.data.data;
-			})
-			.catch(function(){
-				//TO DO do something
-				$scope.loadingOutline = true;
-			});
+			if($scope.courseData){
+				eduApi.api('GET',user.tenant.id+'/lessons?course_id='+$scope.courseData.data[0].course.id+'&paginate='+apiConst.componentPagination+'&page=1')
+				.then((result) => {
+					console.log('outline loaded',result);
+					if(result.data.length && result.data.data){
+						$scope.outline = result.data.data;
+					}else{
+						$scope.outlineMessage = result.statusText ? result.statusText : 'No Data';
+					}
+					
+					$scope.loadingOutline = false;
+				})
+				.catch((error) => {
+					$scope.outlineMessage = error.statusText ? error.statusText : 'Error';
+					$scope.loadingOutline = true;
+				});
+			}else{
+				$scope.outlineMessage = 'No Course Data';
+			}
 		};
 		
 		angular.element('.uk-switcher').on({
