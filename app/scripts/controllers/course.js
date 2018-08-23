@@ -8,7 +8,7 @@
  * Controller of the nimbusEmsApp
  */
 angular.module('nimbusEmsApp')
-	.controller('CourseCtrl', function ($scope,$window,grades,eduApi,apiConst,modal,courseService,user,$route) {
+	.controller('CourseCtrl', function ($scope,$window,grades,eduApi,apiConst,modal,courseService,user,$route,sweetAlert) {
 		$scope.init = function(){
 			
 			var params = $route.current.params;
@@ -18,7 +18,24 @@ angular.module('nimbusEmsApp')
 				lname : 'badass'
 			};
 			
-			return courseService.initCourse($scope,params);
+			courseService.initCourse($scope,params).then(function(result){
+				console.log('courseService result',result);
+				$scope.courseData = result.data;
+				
+				$scope.loadingHome = false;
+			}).catch(function(error){
+				console.log('courseService error',error);
+				$scope.loadingHome = false;
+				sweetAlert.alert({
+							   	title: 'Somethings wrong!',
+							   	icon: "error",
+							   	text : error.data.message,
+							   	buttons:{
+									confirm: sweetAlert.button({text:'ok'}),
+								}
+							});
+				
+			});
 		
 		};
 		
@@ -77,5 +94,7 @@ angular.module('nimbusEmsApp')
 		$scope.init();
 		
 		$scope.course = courseService;
+
+		console.log('course init',$scope);
 		
 	});

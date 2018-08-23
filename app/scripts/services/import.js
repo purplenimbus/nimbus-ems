@@ -57,7 +57,7 @@ angular.module('nimbusEmsApp')
 		body += '<ul>';
         body += '</div>';
 
-		header = '<div class="uk-clearfix">';
+		header = '<div class="uk-clearfix" ng-if="!loading">';
 		header += '<div class="uk-float-left uk-text-uppercase uk-text-small">';
         header += '<span ng-if="importType && !workbook.length"><span uk-icon="icon: {{ importType.icon }}"></span> Import {{ importType.name }}</span>';
         header += '<form class="uk-search uk-search-default" ng-if="importType && workbook.length">';

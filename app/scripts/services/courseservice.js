@@ -31,7 +31,7 @@ angular.module('nimbusEmsApp')
 					name	: field.name || '',
 					display	: field.display || '',
 					source	: $scope[listName].ttAdapter() || false,
-					limit	: field.limit || 10,
+					limit	: field.limit || 2,
 					templates: {
 						//header: '<h3 class="uk-text-muted uk-text-small">Users</h3>',
 						//TO DO Move strings below to its own function
@@ -60,15 +60,6 @@ angular.module('nimbusEmsApp')
 				};
 			
 			});
-
-			$scope.classes = [
-				{ id:1,name:'JS 1'},
-				{ id:2,name:'JS 2'},
-				{ id:3,name:'JS 3'},
-				{ id:4,name:'SS 1'},
-				{ id:5,name:'SS 2'},
-				{ id:6,name:'SS 3'}
-			];
 		};
 
 		this.saveCourse = function(data){
@@ -89,29 +80,27 @@ angular.module('nimbusEmsApp')
 			
 			console.log('courseService params',params);
 			
-			eduApi.api('GET',user.tenant.id+'/registrations?course_id='+params.id+'&paginate='+apiConst.componentPagination+'&page=1&user_list=true').then(function(result){
-				console.log('courseService result',result);
-				//console.log('courseData',$scope.courseData);
-
-				if(result.data.length && result.data.data){
-					$scope.courseData = result.data;
-					$scope.students = result.data.data;
-					$scope.pageTitle = result.data.data[0].course.name;
-				}else{
-					$scope.message = result.statusText ? result.statusText : 'No Data';
-				}
-				
-				$scope.loadingHome = false;
-			}).catch(function(error){
-				console.log('courseService error',error);
-				$scope.loadingHome = false;
-				$window.UIkit.notification({
-					message: 'Couldnt get courseData',
-					status: 'danger',
-					pos: 'top-right',
-					timeout: 5000
-				});
-				
-			});
+			return eduApi.api('GET',user.tenant.id+'/registrations?course_id='+params.id+'&paginate='+apiConst.componentPagination+'&page=1');
 		};
+
+		this.getClasses = function(){
+			return 	[
+				{ id:1,name:'primary 1'},
+				{ id:2,name:'primary 2'},
+				{ id:3,name:'primary 3'},
+				{ id:4,name:'primary 4'},
+				{ id:5,name:'primary 5'},
+				{ id:6,name:'primary 6'},
+				{ id:7,name:'JS 1'},
+				{ id:8,name:'JS 2'},
+				{ id:9,name:'JS 3'},
+				{ id:10,name:'SS 1'},
+				{ id:11,name:'SS 2'},
+				{ id:12,name:'a level'}
+			];
+		};
+
+		this.getCourses = function(page=false,classId = false){
+			return eduApi.api('GET',user.tenant.id+'/courses?paginate='+apiConst.widgetPagination+(page ? '&page='+page : '')+(classId ? '&course_grade_id='+classId : ''));
+		}
 	});

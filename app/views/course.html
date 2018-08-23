@@ -4,7 +4,7 @@
 		<article class="uk-article uk-width-1-1">
 			<ul uk-tab uk-switcher class="uk-margin-remove">
 				<li><a href="#">Overview</a></li>
-				<li ng-if="!message"><a href="#">Details</a></li>
+				<li ng-if="courseData.data"><a href="#">Details</a></li>
 			</ul>
 			<ul class="uk-switcher uk-padding-small">
 				<li uk-grid data-tab="overview" class="uk-grid-small">
@@ -23,7 +23,7 @@
 							</div>
 							<div class="uk-card-body uk-overflow-auto uk-padding-remove">
 								<div class="uk-text-center uk-padding-small" ng-if="loadingHome"><div uk-spinner></div></div>
-								<div ng-if="message && !loadingHome" class="uk-placeholder uk-text-center uk-danger uk-text-muted uk-margin-remove uk-padding-small">
+								<div ng-if="message && !loadingHome && !courseData.data" class="uk-placeholder uk-text-center uk-danger uk-text-muted uk-margin-remove uk-padding-small">
 									<span class="uk-margin-small-right" uk-icon="ban"></span> {{ message }}
 								</div>
 								<table class="uk-table uk-table-hover uk-table-middle uk-table-small uk-margin-remove" ng-if="!loadingHome && students && !message">
@@ -31,13 +31,13 @@
 										<tr>
 											<th class="uk-table-shrink"></th>
 											<th class="uk-table-small">Name</th>
-											<th ng-repeat="(key , grade) in students[0].course.meta.course_schema" class="uk-width-small uk-text-small uk-visible@s uk-visible@m">{{ key }}</th>
+											<th ng-repeat="(key , grade) in courseData.data[0].course.meta.course_schema" class="uk-width-small uk-text-small uk-visible@s uk-visible@m">{{ key }}</th>
 											<th class="uk-table-small uk-text-small uk-visible@s">Total</th>
 											<th class="uk-table-shrink uk-text-small">Grade</th>
 										</tr>
 									</thead>
 									<tbody>
-										<tr ng-repeat="student in students">
+										<tr ng-repeat="student in courseData.data">
 											<td><img class="uk-preserve-width uk-border-circle" src="{{ student.user.image || 'http://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png' }}" width="40" alt=""></td>
 											<td class="uk-table-link">
 												<span class="uk-link-reset uk-text-capitalize">{{ student.user.firstname }}, {{ student.user.lastname }}</span>
@@ -52,7 +52,7 @@
 						</div>
 					</div>
 				</li>
-				<li uk-grid data-tab="outline" class="uk-grid-small uk-margin-remove" ng-if="!message">
+				<li uk-grid data-tab="outline" class="uk-grid-small uk-margin-remove" ng-if="courseData.data">
 					<div ng-if="outlineMessage && !loadingOutline" class="uk-placeholder uk-text-center uk-danger uk-text-muted uk-margin-remove uk-padding-small">
 						<span class="uk-margin-small-right" uk-icon="ban"></span> {{ outlineMessage }}
 					</div>

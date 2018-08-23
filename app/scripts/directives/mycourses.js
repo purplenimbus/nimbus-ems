@@ -44,24 +44,15 @@ angular.module('nimbusEmsApp')
 				//var user = user ? user : $rootScope.user.info;
 				
 				//check for logged in
-			 	eduApi.api('GET',user.tenant.id+'/registrations?user_id='+user.id+'&paginate='+apiConst.componentPagination+'&page=1').then(function(result){
+			 	eduApi.api('GET',user.tenant.id+'/registrations?user_id='+user.id+'&paginate='+apiConst.componentPagination+'&page=1')
+			 	.then((result) => {
 					console.log('eduApi course result',result);
-					if(result.data.length && result.data.data){
-						$scope.courses = result.data.data;
-					}else{
-						$scope.message = result.statusText ? result.statusText : 'No Data';
-					}
+					$scope.coursesData = result.data;
 					$scope.loading  = false;
-				}).catch(function(error){
-					$scope.loading  = false;
-					$window.UIkit.notification({
-						message: 'Couldnt get your courses',
-						status: 'danger',
-						pos: 'top-right',
-						timeout: 5000
-					});
-					$scope.error = true;
+				}).catch((error) => {
 					console.log('eduApi course error',error);
+					$scope.error = error.statusText;
+					$scope.loading  = false;
 				});
 			};
 			

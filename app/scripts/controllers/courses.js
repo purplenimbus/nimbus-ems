@@ -24,10 +24,6 @@ angular.module('nimbusEmsApp')
 			} 
 		};
 
-		$scope.getSchema = function(){
-			return Object.keys($scope.asset.meta.course_schema);
-		};
-		
 		$scope.coursesList = coursesData;
 
 		if(!coursesData.length){
@@ -35,9 +31,15 @@ angular.module('nimbusEmsApp')
 		}
 
 		$scope.createCourseInit = false;
-				
-		//$scope.coursesList = coursesData.data ? coursesData.data : false;
-		
+
+		$scope.classes = courseService.getClasses();
+
+		$scope.classFilter = $scope.classes[0];
+
+		$scope.getSchema = function(){
+			return Object.keys($scope.asset.meta.course_schema);
+		};
+						
 		$scope.courseAverage = function(course){
 			return grades.getAverage(course);
 		};
@@ -46,8 +48,28 @@ angular.module('nimbusEmsApp')
 			return grades.getGrade(grades.getAverage(course));
 		};
 		
-		console.log('CoursesCtrl scope',$scope);
-		
+		$scope.filterByClass = function(classId){
+			console.log('filterByClass',classId);
+			courseService.getCourses(false,classId)
+			.then((result) => {
+
+				$scope.coursesList = result.data;
+
+				$scope.loading = false;
+			}).catch((error) => {
+				console.log('eduApi error',error);
+
+				$window.UIkit.notification({
+					message: error.data.message,
+					status: 'danger',
+					pos: 'top-right',
+					timeout: 5000
+				});
+
+				$scope.loading = false;
+			});
+		};
+
 		$scope.createCourse = function(){
 
 			var header = '';
@@ -100,7 +122,6 @@ angular.module('nimbusEmsApp')
 				$scope.modal = result;
 				$scope.createCourseInit = true;
 			});
-			
 		};
 
 		$scope.save = function(data){ 
@@ -111,28 +132,24 @@ angular.module('nimbusEmsApp')
 		$scope.next = function(page){
 
 			$scope.loading = true;
-			eduApi.api('GET',user.tenant.id+'/courses?paginate='+apiConst.widgetPagination+'&page='+page)
+			courseService.getCourses(page,(user.meta.course_grade_id || false))
 			.then((result) => {
 
 				result.data.data = $scope.coursesList.data.concat(result.data.data);
-				//merge old data and new;
-				
-				//console.log('newData',result.data);
+
 				$scope.coursesList = result.data;
-
-
-				//console.log('next page : ',page,$scope.coursesList);
-				//userList.initialize(true);
 
 				$scope.loading = false;
 			}).catch((error) => {
 				console.log('eduApi error',error);
-				/*$window.UIkit.notification({
+				$window.UIkit.notification({
 					message: 'Couldnt get users',
 					status: 'danger',
 					pos: 'top-right',
 					timeout: 5000
-				});*/
+				});
+
+				$scope.loading = false;
 			});
 		};
 		

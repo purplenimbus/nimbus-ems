@@ -7,7 +7,12 @@
 					<a ng-if="route.current.$$route.controllerAs === 'dashboard'" uk-icon="icon:  settings" ng-click="showSettings('dashboard')"></a>
 					<a ng-if="route.current.$$route.controllerAs === 'learning'" uk-icon="icon:  settings" ng-click="showSettings('learningDashboard')"></a>
 				</li>-->
-				<li><a ng-if="route.current.$$route.controllerAs === 'courses'" ng-click="createCourse()" uk-icon="icon: plus" data-target="#create"></a></li>
+				<li ng-if="route.current.$$route.controllerAs === 'courses'">
+					<select class="uk-select uk-text-capitalize" ng-select="filterByClass(classFilter)" ng-options="class as class.name for class in classes track by class.id" ng-model="classFilter"></select>
+				</li>
+				<li ng-if="false">
+					<a ng-click="createCourse()" uk-icon="icon: plus" data-target="#create"></a>
+				</li>
 				<li><a ng-click="offcanvas('nav').show()" uk-icon="icon:  more-vertical" data-target="#nav"></a></li>
 			</ul>
 		</div>
