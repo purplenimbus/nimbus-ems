@@ -8,7 +8,7 @@
  * Service in the nimbusEmsApp.
  */
 angular.module('nimbusEmsApp')
-	.service('offcanvas', function ($window) {
+	.service('offcanvas', function ($window,uikit3,$compile) {
 		// AngularJS will instantiate a singleton by calling "new" on this function		
 		this.offcanvas = function(type){
 			
@@ -23,4 +23,19 @@ angular.module('nimbusEmsApp')
 			//console.log('offcanvas shown',e);
 		});	
 		
+		this.open  = function(attrs,$scope){
+	      angular.element('#uk-offcanvas-content')
+	        .append($compile(uikit3.offcanvas(attrs))($scope));
+
+	      	$window.UIkit.offcanvas('#offcanvas').show();
+	      
+	      	angular.element('#offcanvas').on('hidden',function(){
+	        	angular.element(this).remove();
+	      	});
+	    };
+
+	    this.close = function(){
+	      //$window.UIkit.offcanvas('#offcanvas').hide();
+	    };
+
 	});

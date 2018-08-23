@@ -113,7 +113,7 @@ angular
 				resolve:	{
 					coursesData : function(eduApi,$window,apiConst,$localStorage,sweetAlert,courseService){
 						var user = JSON.parse($localStorage.auth);
-						console.log('before CoursesData',user);
+						//console.log('before CoursesData',user);
 						return eduApi.api('GET',user.tenant.id+'/courses?paginate='+apiConst.widgetPagination+'&page=1'+(user.meta.course_grade_id ? '&course_grade_id='+user.meta.course_grade_id : '')).then((result) => {
 
 							console.log(result);

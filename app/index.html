@@ -24,7 +24,7 @@
     <!-- Add your site or application content here -->
 
 
-    <div class="uk-offcanvas-content">
+    <div id="uk-offcanvas-content">
 		<div ng-include="'views/partials/_navbar.html'"></div>
 		<div uk-spinner ng-if="$root.showLoader" class="uk-width-1-1 uk-text-center uk-margin"></div>
 		<div id="view" ng-view="" ng-if="!$root.showLoader"></div>

@@ -8,7 +8,7 @@
  * Controller of the nimbusEmsApp
  */
 angular.module('nimbusEmsApp')
-	.controller('CoursesCtrl', function ($scope,coursesData,grades,courseService,modal,form,uikit3,eduApi,user,apiConst,$window) {
+	.controller('CoursesCtrl', function ($scope,coursesData,grades,courseService,modal,form,uikit3,eduApi,user,apiConst,$window,offcanvas) {
 		$scope.showAdvanced = false;
 		$scope.asset = { 
 			meta : {
@@ -152,5 +152,10 @@ angular.module('nimbusEmsApp')
 				$scope.loading = false;
 			});
 		};
+
+		$scope.view  = function(item,type,edit = false){
+			console.log('view',item,type,edit);
+			offcanvas.open({title:'<h3 class="uk-text-capitalize">Title</h3>',body:''},$scope);
+		}
 		
 	});

@@ -124,17 +124,17 @@ angular.module('nimbusEmsApp')
 				str += '</div>';
 				return str;
 			},
-			offcanvas: function () {
-				var str = '';
-				
-				str += '<div id="my-id" uk-offcanvas>';
-				str += '    <div class="uk-offcanvas-bar">';
-				str += '        <button class="uk-offcanvas-close" type="button" uk-close></button>';
-				str += '    </div>';
-				str += '</div>';
-				
-				return str;
-			},
+			offcanvas : function(attrs){
+		        var str = '<div id="offcanvas" uk-offcanvas="flip: true;mode: push">';
+		            str += '<div class="uk-offcanvas-bar">';
+		            str += attrs.title ? attrs.title : '';
+		            str += attrs.body ? attrs.body : '';
+		            str +=    '<button class="uk-offcanvas-close" type="button" uk-close></button>';
+		            str += '</div>';
+		            str += '</div>';
+
+		        return str;
+		    },
 			
 			modal : function(attrs){
 				var str = '',
