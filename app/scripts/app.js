@@ -244,10 +244,12 @@ angular
 			});
 			
 	})
-	.run(function($rootScope, $location, $cookies, $http,$auth,$window) {
+	.run(function($rootScope, $location, $cookies, $http,$auth,$window,$localStorage) {
 		// keep user logged in after page refresh
 		
 		$rootScope.globals = $cookies.get('auth') || {};
+
+		$rootScope.user = JSON.parse($localStorage.auth) || false;
 		
 		if ($rootScope.globals && $auth.isAuthenticated()) {			
 			$http.defaults.headers.common.Authorization = 'Bearer ' + $auth.getToken(); // jshint ignore:line

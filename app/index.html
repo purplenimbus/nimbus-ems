@@ -34,13 +34,13 @@
 
 			<button class="uk-offcanvas-close" type="button" uk-close></button>
 			<ul class="uk-nav-default uk-nav-parent-icon" uk-nav>
-				<li ng-repeat="(key , nav) in navSettings" ng-if="!nav.disabled" ng-class="nav.children ? 'uk-parent' : ''">
+				<li ng-repeat="(key , nav) in navSettings" ng-if="!nav.disabled && $root.user.access_level >= nav.access_level" ng-class="nav.children ? 'uk-parent' : ''">
 					<a ng-href="#!/{{ nav.url }}">
 						<span class="uk-margin-small-right" uk-icon="icon: {{ nav.icon }}"></span> 
 						{{ key | uppercase }}
 					</a>
 					<ul class="uk-nav-sub" ng-if="nav.children">
-						<li ng-repeat="(childKey,child) in nav.children">
+						<li ng-repeat="(childKey,child) in nav.children" ng-if="$root.user.access_level >= child.access_level">
 							<a ng-href="#!/{{ child.url }}">
 								<span class="uk-margin-small-right" uk-icon="icon: {{ child.icon }}"></span>
 								{{ childKey | uppercase }}
@@ -48,9 +48,9 @@
 						</li>
 					</ul>
 				</li>
-				<li class="uk-nav-divider" ng-if="auth.isAuthenticated()"></li>
-                <li ng-if="auth.isAuthenticated()"><a ng-href="#!/tools" class="uk-text-uppercase"><span class="uk-margin-small-right" uk-icon="icon: bolt"></span> tools</a></li>
-                <li ng-if="auth.isAuthenticated()"><a ng-href="#!/settings" class="uk-text-uppercase"><span class="uk-margin-small-right" uk-icon="icon: cog"></span> settings</a></li>
+				<li class="uk-nav-divider" ng-if="auth.isAuthenticated() && $root.user.access_level > nav.access_level"></li>
+                <li ng-if="auth.isAuthenticated() && $root.user.access_level > nav.access_level"><a ng-href="#!/tools" class="uk-text-uppercase"><span class="uk-margin-small-right" uk-icon="icon: bolt"></span> tools</a></li>
+                <li ng-if="auth.isAuthenticated() && $root.user.access_level > nav.access_level"><a ng-href="#!/settings" class="uk-text-uppercase"><span class="uk-margin-small-right" uk-icon="icon: cog"></span> settings</a></li>
 			</ul>
 		  </div>
 		</div>

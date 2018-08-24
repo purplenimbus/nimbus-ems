@@ -53,6 +53,7 @@ angular.module('nimbusEmsApp')
 				disabled:false,
 				icon: 'home',
 				url:'',
+				access_level : 1,
 			},
 			/*users : {
 				display:true,
@@ -71,36 +72,42 @@ angular.module('nimbusEmsApp')
 				disabled:false,
 				icon: 'laptop',
 				url:'learning',
+				access_level : 1,
 				children:{
 					courses:{
 						display:true,
 						disabled:false,
 						icon: 'thumbnails',
-						url:'learning/courses'
+						url:'learning/courses',
+						access_level : 1,
 					},
 					students : {
 						display:true,
 						disabled:false,
 						icon: 'users',
 						url:'users/students',
+						access_level : 2,
 					},
 					teachers : {
 						display:true,
 						disabled:false,
 						icon: 'user',
 						url:'users/teachers',
+						access_level : 2,
 					},
 					parents : {
 						display:true,
 						disabled:false,
 						icon: 'happy',
 						url:'users/parents',
+						access_level : 2,
 					},
 					other : {
 						display:true,
 						disabled:false,
 						icon: 'hashtag',
 						url:'users/non-academic',
+						access_level : 2,
 					}
 				}
 			}
