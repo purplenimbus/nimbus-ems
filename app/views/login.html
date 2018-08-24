@@ -10,14 +10,14 @@
 					<div class="uk-margin">
 						<div class="uk-inline">
 							<span class="uk-form-icon" uk-icon="icon: user"></span>
-							<input class="uk-input" type="email" ng-model="email" name="email" required> 
+							<input ng-class="loginError ? 'uk-form-danger' : ''" class="uk-input" type="email" ng-model="email" name="email" required> 
 						</div>
 					</div>
 
 					<div class="uk-margin">
 						<div class="uk-inline">
 							<span class="uk-form-icon uk-form-icon" uk-icon="icon: lock"></span>
-							<input class="uk-input" type="password" ng-model="password" name="email" required>
+							<input ng-class="loginError ? 'uk-form-danger' : ''" class="uk-input" type="password" ng-model="password" name="email" required>
 						</div>
 					</div>
 				</div>

@@ -67,6 +67,7 @@ angular.module('nimbusEmsApp')
 				}).catch(function(error){
 					$scope.loginLoading = false;
 					console.log('Login Error',error);
+					$scope.loginError = error.data.error;
 					//TO DO Add Error Message to login modal
 					angular.element('#modal .uk-modal-dialog').removeClass('success')
 											.addClass('error');
