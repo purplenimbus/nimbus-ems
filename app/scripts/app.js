@@ -249,7 +249,7 @@ angular
 		
 		$rootScope.globals = $cookies.get('auth') || {};
 
-		$rootScope.user = JSON.parse($localStorage.auth) || false;
+		$rootScope.user = $localStorage.auth ? JSON.parse($localStorage.auth) : false;
 		
 		if ($rootScope.globals && $auth.isAuthenticated()) {			
 			$http.defaults.headers.common.Authorization = 'Bearer ' + $auth.getToken(); // jshint ignore:line

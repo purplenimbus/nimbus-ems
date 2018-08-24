@@ -12,15 +12,19 @@ angular.module('nimbusEmsApp')
 		$scope.init = function(){
 			
 			var params = $route.current.params;
+
+
 			
-			$scope.instuctor = {
-				fname : 'joey',
-				lname : 'badass'
-			};
+			console.log();
 			
 			courseService.initCourse($scope,params).then(function(result){
 				console.log('courseService result',result);
 				$scope.courseData = result.data;
+
+				if($scope.courseData.data.length){
+					$scope.pageTitle = $scope.courseData.data[0].course.name;
+					$scope.pageTitle += ' | '+$scope.courseData.data[0].course.code;
+				}
 				
 				$scope.loadingHome = false;
 			}).catch(function(error){
@@ -29,7 +33,7 @@ angular.module('nimbusEmsApp')
 				sweetAlert.alert({
 							   	title: 'Somethings wrong!',
 							   	icon: "error",
-							   	text : error.data.message,
+							   	text : error.data.message || 'error',
 							   	buttons:{
 									confirm: sweetAlert.button({text:'ok'}),
 								}

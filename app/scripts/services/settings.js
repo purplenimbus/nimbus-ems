@@ -79,35 +79,35 @@ angular.module('nimbusEmsApp')
 						disabled:false,
 						icon: 'thumbnails',
 						url:'learning/courses',
-						access_level : 1,
+						access_level : 2,
 					},
 					students : {
 						display:true,
 						disabled:false,
 						icon: 'users',
 						url:'users/students',
-						access_level : 2,
+						access_level : 3,
 					},
 					teachers : {
 						display:true,
 						disabled:false,
 						icon: 'user',
 						url:'users/teachers',
-						access_level : 2,
+						access_level : 3,
 					},
 					parents : {
 						display:true,
 						disabled:false,
 						icon: 'happy',
 						url:'users/parents',
-						access_level : 2,
+						access_level : 3,
 					},
 					other : {
 						display:true,
 						disabled:false,
 						icon: 'hashtag',
 						url:'users/non-academic',
-						access_level : 2,
+						access_level : 3,
 					}
 				}
 			}
