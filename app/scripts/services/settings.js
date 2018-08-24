@@ -78,11 +78,29 @@ angular.module('nimbusEmsApp')
 						icon: 'thumbnails',
 						url:'learning/courses'
 					},
-					users : {
+					students : {
 						display:true,
 						disabled:false,
 						icon: 'users',
-						url:'users',
+						url:'users/students',
+					},
+					teachers : {
+						display:true,
+						disabled:false,
+						icon: 'user',
+						url:'users/teachers',
+					},
+					parents : {
+						display:true,
+						disabled:false,
+						icon: 'happy',
+						url:'users/parents',
+					},
+					other : {
+						display:true,
+						disabled:false,
+						icon: 'hashtag',
+						url:'users/non-academic',
 					}
 				}
 			}

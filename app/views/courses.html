@@ -1,5 +1,5 @@
 <div ng-include="'views/partials/_toolbar.html'"></div>
-<section class="uk-padding-small">
+<section>
 	<div ng-if="!coursesList.data.length" class="uk-width-1-1">
 		<div class="uk-placeholder uk-text-center uk-danger uk-text-muted uk-margin-remove uk-padding-small">
 			<span class="uk-margin-small-right" uk-icon="ban"></span> {{ noCoursesMessage }}
@@ -14,7 +14,7 @@
 					<th class="uk-table-small">Class</th>
 					<th class="uk-table-small">Instuctor</th>
 					<th class="uk-width-small">
-						<select class="uk-select uk-text-capitalize uk-text-small" ng-select="filterByClass(classFilter)" ng-options="class as class.name for class in classes track by class.id" ng-model="classFilter"></select>
+						<select class="uk-select uk-text-capitalize uk-text-small" ng-select="filterByClass(classFilter)" ng-options="class as class.name for class in classes track by class.id" ng-model="classFilter" ng-if="false"></select>
 					</th>
 				</tr>
 			</thead>
@@ -31,15 +31,19 @@
 						{{ course.grade.name | uppercase }}
 					</td>
 					<td>
-						<a class="uk-link-reset uk-text-capitalize" ng-if="course.instructor" ng-click="view(course.instructor,'person')">
+						<a  class="uk-link-reset uk-text-capitalize" 
+							ng-if="course.instructor" 
+							ng-disabled="offCanvasOpen">
 							{{ course.instructor.firstname }} {{ course.instructor.lastname }}
 						</a>
-						<a class="uk-text-capitalize uk-text-danger" ng-if="!course.instructor" ng-click="view(course,'course',true)">
+						<a  class="uk-text-capitalize uk-text-danger" 
+							ng-if="!course.instructor" 
+							ng-disabled="offCanvasOpen">
 							{{ 'no instructor assigned' }}
 						</a>
 					</td>
 					<td>
-						<ul class="uk-iconnav">
+						<ul class="uk-iconnav" ng-if="false">
 							<li><a ng-click="view(course,'course',true)" uk-icon="icon: file-edit" title="edit"></a></li>
 						</ul>
 					</td>
@@ -98,7 +102,7 @@
 			</div>
 		</div>
 	</main>
-	<div class="uk-width-1-1">
+	<div class="uk-width-1-1 uk-padding-small">
 		<button ng-if="coursesList.next_page_url" ng-click="next(coursesList.current_page + 1)" class="uk-button uk-button-primary uk-width-1-1 uk-margin-small-bottom">Load More <div uk-spinner ng-if="loading"></div></button>
 	</div>
 </section>

@@ -298,7 +298,11 @@ angular.module('nimbusEmsApp')
 			    str += '</div>';
 
 			    if(attrs.footer){
-				    str += '<div class="uk-card-footer">';
+				    str += '<div class="uk-card-footer ';
+				    if(attrs.classes){
+			    		str += attrs.classes.footer ? attrs.classes.footer : '';
+					}
+				    str += '">';
 				    str += attrs.footer;
 				    str += '</div>';
 				}

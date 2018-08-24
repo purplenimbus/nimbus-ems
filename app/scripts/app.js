@@ -39,14 +39,86 @@ angular
 				controller: 'DashboardCtrl',
 				controllerAs: 'dashboard'
 			})
-			.when('/users', {
+			.when('/users/students', {
 				templateUrl: 'views/users.html',
 				controller: 'UsersCtrl',
-				controllerAs: 'users',
+				controllerAs: 'student',
 				resolve:	{
 					usersData : function(eduApi,$window,apiConst,user){
 						//console.log('usersData before resolve',user);
-						return eduApi.api('GET',user.tenant.id+'/users?paginate='+apiConst.componentPagination+'&page=1').then(function(result){
+						return eduApi.api('GET',user.tenant.id+'/users?paginate='+apiConst.componentPagination+'&page=1&user_type=student').then(function(result){
+							console.log('usersData result',result);
+							return result.data;
+						}).catch(function(error){
+							console.log('usersData error',error);
+							$window.UIkit.notification({
+								message: 'Couldnt get usersData',
+								status: 'danger',
+								pos: 'top-right',
+								timeout: 5000
+							});
+							
+						});
+						
+					}
+				}
+			})
+			.when('/users/teachers', {
+				templateUrl: 'views/users.html',
+				controller: 'UsersCtrl',
+				controllerAs: 'teacher',
+				resolve:	{
+					usersData : function(eduApi,$window,apiConst,user){
+						//console.log('usersData before resolve',user);
+						return eduApi.api('GET',user.tenant.id+'/users?paginate='+apiConst.componentPagination+'&page=1&user_type=teacher').then(function(result){
+							console.log('usersData result',result);
+							return result.data;
+						}).catch(function(error){
+							console.log('usersData error',error);
+							$window.UIkit.notification({
+								message: 'Couldnt get usersData',
+								status: 'danger',
+								pos: 'top-right',
+								timeout: 5000
+							});
+							
+						});
+						
+					}
+				}
+			})
+			.when('/users/parents', {
+				templateUrl: 'views/users.html',
+				controller: 'UsersCtrl',
+				controllerAs: 'parent',
+				resolve:	{
+					usersData : function(eduApi,$window,apiConst,user){
+						//console.log('usersData before resolve',user);
+						return eduApi.api('GET',user.tenant.id+'/users?paginate='+apiConst.componentPagination+'&page=1&user_type=parent').then(function(result){
+							console.log('usersData result',result);
+							return result.data;
+						}).catch(function(error){
+							console.log('usersData error',error);
+							$window.UIkit.notification({
+								message: 'Couldnt get usersData',
+								status: 'danger',
+								pos: 'top-right',
+								timeout: 5000
+							});
+							
+						});
+						
+					}
+				}
+			})
+			.when('/users/non-academic', {
+				templateUrl: 'views/users.html',
+				controller: 'UsersCtrl',
+				controllerAs: 'non academic',
+				resolve:	{
+					usersData : function(eduApi,$window,apiConst,user){
+						//console.log('usersData before resolve',user);
+						return eduApi.api('GET',user.tenant.id+'/users?paginate='+apiConst.componentPagination+'&page=1&user_type=non academic').then(function(result){
 							console.log('usersData result',result);
 							return result.data;
 						}).catch(function(error){
@@ -111,7 +183,7 @@ angular
 				controller: 'CoursesCtrl',
 				controllerAs: 'courses',
 				resolve:	{
-					coursesData : function(eduApi,$window,apiConst,$localStorage,sweetAlert,courseService){
+					coursesData : function(eduApi,$window,apiConst,$localStorage,sweetAlert){
 						var user = JSON.parse($localStorage.auth);
 						//console.log('before CoursesData',user);
 						return eduApi.api('GET',user.tenant.id+'/courses?paginate='+apiConst.widgetPagination+'&page=1'+(user.meta.course_grade_id ? '&course_grade_id='+user.meta.course_grade_id : '')).then((result) => {

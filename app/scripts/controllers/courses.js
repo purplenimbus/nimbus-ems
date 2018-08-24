@@ -8,7 +8,7 @@
  * Controller of the nimbusEmsApp
  */
 angular.module('nimbusEmsApp')
-	.controller('CoursesCtrl', function ($scope,coursesData,grades,courseService,modal,form,uikit3,eduApi,user,apiConst,$window,offcanvas) {
+	.controller('CoursesCtrl', function ($scope,coursesData,grades,courseService,modal,form,uikit3,eduApi,user,apiConst,$window,offcanvas,card) {
 		$scope.showAdvanced = false;
 		$scope.asset = { 
 			meta : {
@@ -35,6 +35,8 @@ angular.module('nimbusEmsApp')
 		$scope.classes = courseService.getClasses();
 
 		$scope.classFilter = $scope.classes[0];
+
+		$scope.offCanvasOpen = false;
 
 		$scope.getSchema = function(){
 			return Object.keys($scope.asset.meta.course_schema);
@@ -154,8 +156,14 @@ angular.module('nimbusEmsApp')
 		};
 
 		$scope.view  = function(item,type,edit = false){
-			console.log('view',item,type,edit);
-			offcanvas.open({title:'<h3 class="uk-text-capitalize">Title</h3>',body:''},$scope);
-		}
+			
+			$scope.selected = item;
+			
+			offcanvas.open({title:false,body:card.type(type,'selected',$scope,edit)},$scope);
+
+			$scope.offCanvasOpen = true;
+
+			console.log(type+' card',$scope);
+		};
 		
 	});

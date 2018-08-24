@@ -124,7 +124,7 @@ angular.module('nimbusEmsApp')
                 });*/
 
                 switch(type){
-                    case 'Users' :   obj = {meta:{address:{}}}; self.parseUsers(worksheet,row,obj); break;
+                    case 'user' :   obj = {meta:{address:{}}}; self.parseUsers(worksheet,row,obj); break;
                     //case 'Subjects' :   obj = {meta:{address:{}}}; self.parseUsers(worksheet,row,obj); break;
                     default :   obj = {}; worksheet.header.forEach(function(header){
                                     obj[header] = row[header];
@@ -157,18 +157,12 @@ angular.module('nimbusEmsApp')
 
         return [{
             id:1,
-            name:'Users',
-            value:'user',
-            icon:'users',
-            description:'',
-        },{
-            id:2,
             name:'Subjects',
             value:'subject',
             icon:'list',
             description:''
         },{
-            id:3,
+            id:2,
             name:'Classes',
             value:'coursegrade',
             icon:'grid',
@@ -179,7 +173,19 @@ angular.module('nimbusEmsApp')
             value:'curriculum',
             icon:'thumbnails',
             description:''
-        }];
+        },{
+            id:4,
+            name:'Teachers',
+            value:'user',
+            icon:'user',
+            description:'',
+        },{
+            id:5,
+            name:'Students',
+            value:'user',
+            icon:'users',
+            description:'',
+        },];
 
     };
   });

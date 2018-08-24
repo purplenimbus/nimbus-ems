@@ -114,19 +114,19 @@ angular.module('nimbusEmsApp')
 			return str;
 		};
 		
-		this.editCourse = function(){
+		this.editCourse = function(key){
 			var str = '';
 			
 			str += '<form>';
 			str += '	<div class="uk-margin uk-grid-small" uk-grid>';
 			str += '		<div class="uk-width-1-1">';
-			str += uikit3.inputIcon({model:'asset.name',icon:'user',type:'text',required:true,placeholder:'Course Title' , cls:'uk-text-capitalize'});
+			str += uikit3.inputIcon({model:key+'.name',icon:'user',type:'text',required:true,placeholder:'Course Title' , cls:'uk-text-capitalize'});
 			str += '		</div>';
 			str += '	</div>';
 			str += '	<div class="uk-margin uk-grid-small" uk-grid>';
 			str += '		<div class="uk-width-1-2@m uk-width-1-2@xs">';
 			str += uikit3.typeahead({
-						directive:'datasets="subjectsDataSet" options="subjectsOptions" ng-model="asset.meta.subject" sf-typeahead',
+						directive:'datasets="subjectsDataSet" options="subjectsOptions" ng-model="'+key+'.meta.subject" sf-typeahead',
 						type:'text',
 						required:true,
 						cls:'uk-input uk-search-input uk-width-1-1 typeahead uk-text-capitalize',
@@ -140,7 +140,7 @@ angular.module('nimbusEmsApp')
 
 			str += '	<div class="uk-margin typeahead">';
 			str += uikit3.typeahead({
-						directive:'datasets="instructorsDataSet" options="instructorsOptions" ng-model="asset.meta.instructor" sf-typeahead',
+						directive:'datasets="instructorsDataSet" options="instructorsOptions" ng-model="'+key+'.meta.instructor" sf-typeahead',
 						type:'text',
 						required:true,
 						cls:'uk-input uk-search-input uk-width-1-1 typeahead uk-text-capitalize',
@@ -164,18 +164,18 @@ angular.module('nimbusEmsApp')
 			str += '	<div ng-if="showAdvanced">';
 			str += '		<div class="uk-margin">';
 			str += '			<ul uk-grid>';
-			str += '				<li ng-repeat="schema in getSchema()">'+uikit3.checkbox({label:' {{ schema | uppercase }}',directive:'ng-model="asset.meta.course_schema[schema].enabled"',checked:true})+'</li>';
+			str += '				<li ng-repeat="schema in getSchema()">'+uikit3.checkbox({label:' {{ schema | uppercase }}',directive:'ng-model="'+key+'.meta.course_schema[schema].enabled"',checked:true})+'</li>';
 			str += '			</ul>';
 			str += '		</div>';
 
 			str += '		<div class="uk-margin">';
 			str += '			<ul uk-grid>';	
-			str += '			<li class="uk-width-1-1" ng-repeat="schema in getSchema()" ng-if="asset.meta.course_schema[schema].enabled">';
+			str += '			<li class="uk-width-1-1" ng-repeat="schema in getSchema()" ng-if="'+key+'meta.course_schema[schema].enabled">';
 			str +=				uikit3.range({
-									directive:'ng-model="asset.meta.course_schema[schema].value"',
+									directive:'ng-model="'+key+'.meta.course_schema[schema].value"',
 									type:'range',
 									cls:'uk-range',
-									label:'{{schema | uppercase }} {{ asset.meta.course_schema[schema].value }}',
+									label:'{{schema | uppercase }} {{ '+key+'.meta.course_schema[schema].value }}',
 									min:0,
 									max:100,
 									step:5
@@ -185,7 +185,7 @@ angular.module('nimbusEmsApp')
 			str += '		</div>';
 			str += '	</div>';
 			str += '	<div class="uk-margin">';
-			str += 			uikit3.textarea({model:'asset.meta.comments',placeholder:'Comments',label:false});
+			str += 			uikit3.textarea({model:key+'.meta.comments',placeholder:'Comments',label:false});
 			str += '	</div>';
 			
 

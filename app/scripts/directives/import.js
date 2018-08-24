@@ -48,7 +48,7 @@ angular.module('nimbusEmsApp')
         	$scope.import = function(type){
         		$scope.loading = true;
 
-  				var data = importService.parseWorkBook($scope.workbook,type.name);
+  				var data = importService.parseWorkBook($scope.workbook,type.value);
 
   				console.log('import data',data);
 

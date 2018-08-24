@@ -8,12 +8,14 @@
  * Controller of the nimbusEmsApp
  */
 angular.module('nimbusEmsApp')
-	.controller('UsersCtrl', function ($scope,$window,usersData,eduApi,user) {
+	.controller('UsersCtrl', function ($scope,$window,usersData,eduApi,user,$route) {
 		$scope.defaultPagination = 5;
 		
 		$scope.usersData = usersData;
 
-		console.log('data',usersData);
+		let userType = $route.current.$$route.controllerAs || false;
+
+		console.log('data',usersData,$route,userType);
 		
 		$scope.usersList = usersData.data;
 				
@@ -27,7 +29,7 @@ angular.module('nimbusEmsApp')
 				
 		$scope.userDataset = {
 			name	: 'users',
-			display	: 'fname',
+			display	: 'firsname',
 			source	: list.ttAdapter(),
 			//limit	: 10,
 			templates: {
@@ -67,7 +69,7 @@ angular.module('nimbusEmsApp')
 		
 		$scope.next = function(page){
 			$scope.loading = true;
-			eduApi.api('GET',user.tenant.id+'/users?paginate='+$scope.defaultPagination+'&page='+page).then(function(result){
+			eduApi.api('GET',user.tenant.id+'/users?paginate='+$scope.defaultPagination+'&page='+page+(userType ? '&user_type='+userType : '')).then(function(result){
 				
 				console.log('next page:'+page,result.data.data);
 				
@@ -92,11 +94,11 @@ angular.module('nimbusEmsApp')
 		
 		$scope.edit = function(user){
 			console.log('edit',user);
-		}
+		};
 
 		$scope.view = function(user){
 			console.log('view',user);
-		}
+		};
 
 		console.log('UsersCtrl',$scope);
 

@@ -30,12 +30,13 @@ angular.module('nimbusEmsApp')
 	      	$window.UIkit.offcanvas('#offcanvas').show();
 	      
 	      	angular.element('#offcanvas').on('hidden',function(){
+	      		$scope.offCanvasOpen = false;
 	        	angular.element(this).remove();
 	      	});
 	    };
 
 	    this.close = function(){
-	      //$window.UIkit.offcanvas('#offcanvas').hide();
+	      $window.UIkit.offcanvas('#offcanvas').hide();
 	    };
 
 	});

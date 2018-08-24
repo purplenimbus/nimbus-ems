@@ -102,5 +102,5 @@ angular.module('nimbusEmsApp')
 
 		this.getCourses = function(page=false,classId = false){
 			return eduApi.api('GET',user.tenant.id+'/courses?paginate='+apiConst.widgetPagination+(page ? '&page='+page : '')+(classId ? '&course_grade_id='+classId : ''));
-		}
+		};
 	});
