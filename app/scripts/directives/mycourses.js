@@ -42,11 +42,11 @@ angular.module('nimbusEmsApp')
 				
 				//check for logged in
 			 	eduApi.api('GET',$scope.user.tenant.id+'/registrations?user_id='+$scope.user.id+'&paginate='+apiConst.componentPagination+'&page=1')
-			 	.then((result) => {
+			 	.then(function(result){
 					console.log('eduApi course result',result);
 					$scope.coursesData = result.data;
 					$scope.loading  = false;
-				}).catch((error) => {
+				}).catch(function(error){
 					console.log('eduApi course error',error);
 					$scope.error = error.statusText;
 					$scope.loading  = false;

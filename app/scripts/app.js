@@ -186,13 +186,13 @@ angular
 					coursesData : function(eduApi,$window,apiConst,$localStorage,sweetAlert){
 						var user = JSON.parse($localStorage.auth);
 						console.log('before CoursesData',user);
-						return eduApi.api('GET',user.tenant.id+'/courses?paginate='+apiConst.widgetPagination+'&page=1').then((result) => {
+						return eduApi.api('GET',user.tenant.id+'/courses?paginate='+apiConst.widgetPagination+'&page=1').then(function(result){
 
 							console.log(result);
 
 							return result.data;
 						})
-						.catch((error) => {
+						.catch(function(error){
 							console.log('eduApi course error',error);
 							sweetAlert.alert({
 							   	title: 'Something\'s Wrong',

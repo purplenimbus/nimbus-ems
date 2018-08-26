@@ -66,7 +66,7 @@ angular.module('nimbusEmsApp')
 			//TO DO do validation here
 			if($scope.courseData){
 				eduApi.api('GET',user.tenant.id+'/lessons?course_id='+$scope.courseData.data[0].course.id+'&paginate='+apiConst.componentPagination+'&page=1')
-				.then((result) => {
+				.then(function(result){
 					console.log('outline loaded',result);
 					if(result.data.length && result.data.data){
 						$scope.outline = result.data.data;
@@ -76,7 +76,7 @@ angular.module('nimbusEmsApp')
 					
 					$scope.loadingOutline = false;
 				})
-				.catch((error) => {
+				.catch(function(error){
 					$scope.outlineMessage = error.statusText ? error.statusText : 'Error';
 					$scope.loadingOutline = true;
 				});

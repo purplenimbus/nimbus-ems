@@ -53,12 +53,12 @@ angular.module('nimbusEmsApp')
 		$scope.filterByClass = function(classId){
 			console.log('filterByClass',classId);
 			courseService.getCourses(false,classId)
-			.then((result) => {
+			.then(function(result){
 
 				$scope.coursesList = result.data;
 
 				$scope.loading = false;
-			}).catch((error) => {
+			}).catch(function(error){
 				console.log('eduApi error',error);
 
 				$window.UIkit.notification({
@@ -135,14 +135,14 @@ angular.module('nimbusEmsApp')
 
 			$scope.loading = true;
 			courseService.getCourses(page,(user.meta.course_grade_id || false))
-			.then((result) => {
+			.then(function(result){
 
 				result.data.data = $scope.coursesList.data.concat(result.data.data);
 
 				$scope.coursesList = result.data;
 
 				$scope.loading = false;
-			}).catch((error) => {
+			}).catch(function(error){
 				console.log('eduApi error',error);
 				$window.UIkit.notification({
 					message: 'Couldnt get users',
@@ -155,7 +155,7 @@ angular.module('nimbusEmsApp')
 			});
 		};
 
-		$scope.view  = function(item,type,edit = false){
+		$scope.view  = function(item,type,edit){
 			
 			$scope.selected = item;
 			

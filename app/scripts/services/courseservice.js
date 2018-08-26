@@ -11,7 +11,7 @@ angular.module('nimbusEmsApp')
 	.service('courseService', function (modal,form,uikit3,$window,eduApi,user,apiConst) {
 		//this.newAsset = {};
 
-		this.initTypeAhead = function($scope,fields = []){
+		this.initTypeAhead = function($scope,fields){
 			fields.forEach(function(field){
 				//console.log('field',field);
 
@@ -100,7 +100,7 @@ angular.module('nimbusEmsApp')
 			];
 		};
 
-		this.getCourses = function(page=false,classId = false){
+		this.getCourses = function(page,classId){
 			return eduApi.api('GET',user.tenant.id+'/courses?paginate='+apiConst.widgetPagination+(page ? '&page='+page : '')+(classId ? '&course_grade_id='+classId : ''));
 		};
 	});

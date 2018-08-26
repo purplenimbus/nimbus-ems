@@ -101,7 +101,7 @@ angular.module('nimbusEmsApp')
                         var headers = header.split(':'),
                             metaKey = headers.splice(0,1)[0];
                         
-                        headers.forEach((metaHeader) => {
+                        headers.forEach(function(metaHeader){
 
                             if(metaHeader.includes('.')){
                                 var childKeys  = metaHeader.split('.'),

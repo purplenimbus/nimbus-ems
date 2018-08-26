@@ -10,7 +10,7 @@
 angular.module('nimbusEmsApp')
 	.service('form', function (uikit3) {
 		// AngularJS will instantiate a singleton by calling "new" on this function
-		this.build = function(data,form = false){
+		this.build = function(data,form){
 			var str = '';
 
 			str += form ? '<form action="javascript:void(0)">' : '';

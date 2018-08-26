@@ -20,7 +20,7 @@ angular.module('nimbusEmsApp')
 		console.log('sending data',data);
 
 		userService.saveUser(data)
-			.then((result) => {
+			.then(function(result){
 				//console.log('profile save result',result);
 				
 				$scope.loading = false;
@@ -32,12 +32,12 @@ angular.module('nimbusEmsApp')
 				   	buttons:{
 						confirm: sweetAlert.button({text:'ok'})
 					}
-				}).then(() => {
+				}).then(function(){
 					userService.updateLocalUser(result.data);
 					$route.reload();
 				});
 			})
-			.catch((error) => {
+			.catch(function(error){
 				//do something
 				$scope.loading = false;
 

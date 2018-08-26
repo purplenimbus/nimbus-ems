@@ -59,13 +59,13 @@ angular.module('nimbusEmsApp')
 						cancel: sweetAlert.button({text:'Cancel',className:'uk-button uk-button-danger',value:false}),
 						confirm: sweetAlert.button({text:'Import',value:true})
 					}
-				}).then((e)=>{
+				}).then(function(e){
 					console.log('prompt choice',e);
 					$scope.loading = true;
 					$scope.$apply();
 					if(e){
 						eduApi.api('POST',user.tenant.id+'/courses/batch?type='+type.value,data)
-		  				.then((result) => {
+		  				.then(function(result){
 		  					console.log('import result',result);
 		  					$scope.loading = false;
 
@@ -80,7 +80,7 @@ angular.module('nimbusEmsApp')
 
 							$scope.reset();
 		  				})
-		  				.catch((error) => {
+		  				.catch(function(error){
 		  					console.log('import error',error);
 		  					$scope.loading = false;
 		  					sweetAlert.alert({

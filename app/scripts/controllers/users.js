@@ -13,7 +13,7 @@ angular.module('nimbusEmsApp')
 		
 		$scope.usersData = usersData;
 
-		let userType = $route.current.$$route.controllerAs || false;
+		var userType = $route.current.$$route.controllerAs || false;
 
 		console.log('data',usersData,$route,userType);
 		

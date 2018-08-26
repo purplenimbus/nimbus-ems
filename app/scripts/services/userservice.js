@@ -10,11 +10,11 @@
 angular.module('nimbusEmsApp')
   	.service('userService', function (eduApi,$localStorage,$rootScope) {
   		var user = JSON.stringify($localStorage.auth);
-    	this.saveUser = (data) => {
+    	this.saveUser = function(data){
     		return eduApi.api('POST',user.tenant.id+'/users/'+data.id,data);
     	};
 
-    	this.updateLocalUser = (user) => {
+    	this.updateLocalUser = function(user){
     		$localStorage.auth = JSON.stringify(user);
     		$rootScope.user = JSON.parse($localStorage.auth) || false;
     	};

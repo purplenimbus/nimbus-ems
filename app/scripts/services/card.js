@@ -14,7 +14,7 @@ angular.module('nimbusEmsApp')
     		return uikit3.card(self[type](key,$scope,edit));
     	};
 
-    	this.person = (key,$scope,edit = false) => {
+    	this.person = function(key,$scope,edit){
     		var body = '';
 
     		console.log('person card');
@@ -30,7 +30,7 @@ angular.module('nimbusEmsApp')
     		};
     	};
 
-    	this.course = (key,$scope,edit = false) => {
+    	this.course = function(key,$scope,edit){
     		var body = '';
 
     		console.log('course card');

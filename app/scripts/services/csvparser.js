@@ -9,7 +9,7 @@
  */
 angular.module('nimbusEmsApp')
   	.service('csvParser', function ($window,$q) {
-    	this.parse = function(files = false){
+    	this.parse = function(files){
     		var workbook = [],
     			deferred = $q.defer();
 			

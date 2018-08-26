@@ -110,7 +110,7 @@ angular.module('nimbusEmsApp')
 				
 				return str;
 			},
-			upload : function(attrs={}){
+			upload : function(attrs){
 
 				var str = '';
 				str += attrs.placeholder ? '<label class="uk-form-label uk-text-capitalize" for="form-stacked-text">'+attrs.placeholder+'</label>' : '';
@@ -262,8 +262,8 @@ angular.module('nimbusEmsApp')
 				
 				return str;
 			},
-			card : function(attrs={}){
-				let str = '';
+			card : function(attrs){
+				var str = '';
 
 				if(!attrs.classes){
 					attrs.classes = {};
@@ -310,7 +310,7 @@ angular.module('nimbusEmsApp')
 
 				return str;
 			},
-			icons : function(list = []){
+			icons : function(list){
 				var str = '';
 
 				str = '<ul class="uk-iconnav">';
@@ -334,7 +334,7 @@ angular.module('nimbusEmsApp')
 
 				return str;
 			},
-			section : function(attrs = {}){
+			section : function(attrs){
 				var str = '';
 				str += '<div class="uk-section uk-section-default" ';
 				str += attrs.directive ? attrs.directive : '';

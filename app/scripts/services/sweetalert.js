@@ -11,10 +11,10 @@ angular.module('nimbusEmsApp')
   .factory('sweetAlert', function ($window) {
     // Service logic
     return {
-      alert: (attrs = {}) => {
+      alert: function(attrs){
         return $window.swal(attrs);
       },
-      button:(attrs) => {
+      button: function(attrs){
         return  {
           text: attrs.text || '',
           value: attrs.value || false,

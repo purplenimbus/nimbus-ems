@@ -13,7 +13,7 @@ angular.module('nimbusEmsApp')
       	restrict: 'E',
       	controller : function($scope,upload){
           $scope.files = [];
-      		const options = {
+      		var options = {
 		        url: '',
 		        multiple: true,
 		        beforeAll: function (el,files) {
