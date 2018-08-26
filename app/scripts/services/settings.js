@@ -72,14 +72,14 @@ angular.module('nimbusEmsApp')
 				disabled:false,
 				icon: 'laptop',
 				url:'learning',
-				access_level : 1,
+				access_level : 3,
 				children:{
 					courses:{
 						display:true,
 						disabled:false,
 						icon: 'thumbnails',
 						url:'learning/courses',
-						access_level : 2,
+						access_level : 3,
 					},
 					students : {
 						display:true,
@@ -106,7 +106,7 @@ angular.module('nimbusEmsApp')
 						display:true,
 						disabled:false,
 						icon: 'hashtag',
-						url:'users/non-academic',
+						url:'users/other',
 						access_level : 3,
 					}
 				}

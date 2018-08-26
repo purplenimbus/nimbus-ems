@@ -17,7 +17,8 @@ angular.module('nimbusEmsApp')
 	
 	$scope.save = function(data){
 		$scope.loading = true;
-		//console.log('sending data',data);
+		console.log('sending data',data);
+
 		userService.saveUser(data)
 			.then((result) => {
 				//console.log('profile save result',result);

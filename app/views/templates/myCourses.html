@@ -15,7 +15,8 @@
 			<p class="uk-heading-line uk-text-center uk-text-capitalize uk-hidden"><span>{{ user.firstname }} {{ user.lastname }}</span></p>
 			<ul class="uk-list uk-margin-remove uk-list-divider">
 				<li class="uk-clear-fix" ng-repeat="course in coursesData.data" >
-					<span class="uk-align-left uk-margin-remove uk-text-capitalize"><a ng-href="#!/learning/course/{{ course.course.id }}">{{ course.course.name }}</a></span>
+					<span ng-if="user.user_type.name ==='teacher' && user.id === course.instructor.id" class="uk-align-left uk-margin-remove uk-text-capitalize"><a ng-href="#!/learning/course/{{ course.course.id }}">{{ course.course.name }}</a></span>
+					<span ng-if="user.user_type.name == 'student'" class="uk-align-left uk-margin-remove uk-text-capitalize">{{ course.course.name }}</span>
 					<span ng-if="getTotal(course)" class="uk-align-right uk-margin-remove uk-text-{{getGrade(course).className}}">{{ getTotal(course) }}</span>
 				</li>
 			</ul>
@@ -23,7 +24,7 @@
 		<div ng-if="error && !loading" class="uk-placeholder uk-text-center uk-danger uk-text-danger uk-margin-remove uk-padding-small">
 			<span class="uk-margin-small-right" uk-icon="ban"></span> {{ error }}
 		</div>
-		<div ng-if="!coursesData.data && !loading" class="uk-placeholder uk-text-center uk-danger uk-text-muted uk-margin-remove uk-padding-small">
+		<div ng-if="!coursesData.data && !loading && !error" class="uk-placeholder uk-text-center uk-danger uk-text-muted uk-margin-remove uk-padding-small">
 			<span class="uk-margin-small-right" uk-icon="ban"></span> {{ 'no courses found' | uppercase }}
 		</div>
 	</div>

@@ -8,7 +8,8 @@
  * Service in the nimbusEmsApp.
  */
 angular.module('nimbusEmsApp')
-  	.service('userService', function (eduApi,user,$localStorage,$rootScope) {
+  	.service('userService', function (eduApi,$localStorage,$rootScope) {
+  		var user = JSON.stringify($localStorage.auth);
     	this.saveUser = (data) => {
     		return eduApi.api('POST',user.tenant.id+'/users/'+data.id,data);
     	};

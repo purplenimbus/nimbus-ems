@@ -13,9 +13,7 @@ angular.module('nimbusEmsApp')
 		restrict: 'E',
 		scope:true,
 		controller : function($scope,eduApi,$route,apiConst,$window,grades,$auth,$cookies,format,$rootScope,$localStorage){
-			
-			//console.log('auth',$auth.getPayload(),$rootScope);
-			
+						
 			$scope.widgetTitle = function(fname){ return format.widgetTitle(fname); };
 			
 			$scope.getTotal = function(course){	
@@ -36,15 +34,14 @@ angular.module('nimbusEmsApp')
 			
 			$scope.init = function(){
 				$scope.loading  = true;
-				//$scope.user = JSON.parse($cookies.get('auth'));
+				$scope.error  = false;
 				
-				var user = JSON.parse($localStorage.auth);
-				
-				//console.log('me!!',user);
-				//var user = user ? user : $rootScope.user.info;
+				$scope.user = JSON.parse($localStorage.auth);
+
+				console.log('mygroup',$scope.user);
 				
 				//check for logged in
-			 	eduApi.api('GET',user.tenant.id+'/registrations?user_id='+user.id+'&paginate='+apiConst.componentPagination+'&page=1')
+			 	eduApi.api('GET',$scope.user.tenant.id+'/registrations?user_id='+$scope.user.id+'&paginate='+apiConst.componentPagination+'&page=1')
 			 	.then((result) => {
 					console.log('eduApi course result',result);
 					$scope.coursesData = result.data;
