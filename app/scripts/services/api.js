@@ -43,8 +43,7 @@ angular.module('nimbusEmsApp')
 	.factory('eduApi', function ($http) {
 		var self = this;
 		// Service logic
-		self.apiEndPoint = 'http://edu.nimbus.com:7070/api/v1/'; //http://nimbus-learning-api.herokuapp.com/v1/
-
+		self.apiEndPoint = 'https://nimbus-learning-api.herokuapp.com/api/v1/';
 		// Public API here
 		return {
 			apiEndPoint : self.apiEndPoint,
